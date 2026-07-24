@@ -41,7 +41,7 @@ export function Navbar() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-7 xl:flex">
+        <nav className="hidden items-center gap-6 xl:flex">
           {links.map((l) => {
             const active = pathname === l.to || (l.to !== "/" && pathname.startsWith(l.to));
             return (
