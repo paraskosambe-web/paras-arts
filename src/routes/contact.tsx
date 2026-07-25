@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
+import { api } from "@/lib/api";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -20,6 +21,23 @@ const inputCls =
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    const fd = new FormData(e.currentTarget);
+    try {
+      await api.post("/messages", Object.fromEntries(fd.entries()));
+      setSent(true);
+    } catch (err: any) {
+      setError(err?.response?.data?.message ?? err.message ?? "Failed to send.");
+    } finally {
+      setBusy(false);
+    }
+  }
   return (
     <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
       <SectionHeader eyebrow="Talk to the Studio" title="We reply personally." description="For commissions, press, wholesale or collaboration enquiries, please write below." />

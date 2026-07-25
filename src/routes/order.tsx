@@ -111,19 +111,21 @@ function OrderPage() {
                 <Upload size={16} />
               </div>
               <div className="flex-1">
-                <input type="file" accept="image/*" className="block text-sm text-white/70 file:mr-4 file:rounded-full file:border-0 file:bg-gold-gradient file:px-4 file:py-2 file:text-[#121212] file:text-xs file:tracking-[0.2em] file:uppercase" />
+                <input name="referenceImage" type="file" accept="image/*" className="block text-sm text-white/70 file:mr-4 file:rounded-full file:border-0 file:bg-gold-gradient file:px-4 file:py-2 file:text-[#121212] file:text-xs file:tracking-[0.2em] file:uppercase" />
                 <p className="mt-2 text-xs text-muted-foreground">High-resolution, well-lit photograph works best.</p>
               </div>
             </div>
           </Field>
           <Field label="Additional notes" span={2}>
-            <textarea rows={5} className={inputCls + " resize-none"} placeholder="Tell us about the piece, the occasion, the feeling you'd like to preserve…" />
+            <textarea name="notes" rows={5} className={inputCls + " resize-none"} placeholder="Tell us about the piece, the occasion, the feeling you'd like to preserve…" />
           </Field>
         </div>
 
+        {error && <p className="mt-6 text-xs text-destructive">{error}</p>}
+
         <div className="mt-10 flex items-center justify-between gap-4 border-t border-white/10 pt-8">
           <p className="text-xs text-muted-foreground">By submitting, you agree to be contacted by the studio.</p>
-          <button type="submit" className="btn-gold">Submit enquiry</button>
+          <button disabled={busy} type="submit" className="btn-gold">{busy ? "Submitting…" : "Submit enquiry"}</button>
         </div>
       </form>
     </div>
