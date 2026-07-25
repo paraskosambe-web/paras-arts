@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Upload } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
+import { api } from "@/lib/api";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
@@ -39,6 +40,26 @@ const inputCls =
 
 function OrderPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    try {
+      await api.post("/orders", fd, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setSubmitted(true);
+    } catch (err: any) {
+      setError(err?.response?.data?.message ?? err.message ?? "Failed to submit — please try again.");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   if (submitted) {
     return (
@@ -62,34 +83,28 @@ function OrderPage() {
         description="Share your details. Every enquiry is reviewed personally by the studio."
       />
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setSubmitted(true);
-        }}
-        className="mt-16 rounded-3xl gold-border p-8 md:p-12"
-      >
+      <form onSubmit={onSubmit} className="mt-16 rounded-3xl gold-border p-8 md:p-12">
         <div className="grid gap-6 md:grid-cols-2">
-          <Field label="Full name"><input required className={inputCls} placeholder="Your name" /></Field>
-          <Field label="Email"><input required type="email" className={inputCls} placeholder="you@example.com" /></Field>
-          <Field label="Phone"><input className={inputCls} placeholder="+91 …" /></Field>
-          <Field label="WhatsApp"><input className={inputCls} placeholder="+91 …" /></Field>
-          <Field label="Address" span={2}><input className={inputCls} placeholder="Delivery address" /></Field>
-          <Field label="Country"><input className={inputCls} placeholder="India" /></Field>
+          <Field label="Full name"><input required name="fullName" className={inputCls} placeholder="Your name" /></Field>
+          <Field label="Email"><input required name="email" type="email" className={inputCls} placeholder="you@example.com" /></Field>
+          <Field label="Phone"><input name="phone" className={inputCls} placeholder="+91 …" /></Field>
+          <Field label="WhatsApp"><input name="whatsapp" className={inputCls} placeholder="+91 …" /></Field>
+          <Field label="Address" span={2}><input name="address" className={inputCls} placeholder="Delivery address" /></Field>
+          <Field label="Country"><input name="country" className={inputCls} placeholder="India" /></Field>
           <Field label="Sketch type">
-            <select className={inputCls}>
+            <select name="sketchType" className={inputCls}>
               {["Custom Portrait", "Couple Portrait", "Family Portrait", "Pet Portrait", "Car / Motorcycle", "Other"].map((o) => (
                 <option key={o}>{o}</option>
               ))}
             </select>
           </Field>
           <Field label="Paper size">
-            <select className={inputCls}>
+            <select name="paperSize" className={inputCls}>
               {["A4 · 210×297 mm", "A3 · 297×420 mm", "A2 · 420×594 mm", "Custom"].map((o) => <option key={o}>{o}</option>)}
             </select>
           </Field>
-          <Field label="Budget (INR)"><input className={inputCls} placeholder="e.g. 8000" /></Field>
-          <Field label="Preferred delivery date"><input type="date" className={inputCls} /></Field>
+          <Field label="Budget (INR)"><input name="budget" type="number" className={inputCls} placeholder="e.g. 8000" /></Field>
+          <Field label="Preferred delivery date"><input name="preferredDate" type="date" className={inputCls} /></Field>
           <Field label="Reference image" span={2}>
             <div className="flex items-center gap-4 rounded-xl border border-dashed border-white/15 bg-white/[0.02] px-5 py-6">
               <div className="grid h-10 w-10 place-items-center rounded-full bg-gold-gradient text-[#121212]">
