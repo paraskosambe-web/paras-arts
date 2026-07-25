@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
+import { api } from "@/lib/api";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -20,6 +21,23 @@ const inputCls =
 
 function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setBusy(true);
+    setError("");
+    const fd = new FormData(e.currentTarget);
+    try {
+      await api.post("/messages", Object.fromEntries(fd.entries()));
+      setSent(true);
+    } catch (err: any) {
+      setError(err?.response?.data?.message ?? err.message ?? "Failed to send.");
+    } finally {
+      setBusy(false);
+    }
+  }
   return (
     <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
       <SectionHeader eyebrow="Talk to the Studio" title="We reply personally." description="For commissions, press, wholesale or collaboration enquiries, please write below." />
@@ -65,29 +83,27 @@ function ContactPage() {
               <p className="mt-3 text-muted-foreground">We'll reply within 24 hours.</p>
             </div>
           ) : (
-            <form
-              onSubmit={(e) => { e.preventDefault(); setSent(true); }}
-              className="space-y-5"
-            >
+            <form onSubmit={onSubmit} className="space-y-5">
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="block">
                   <span className="mb-2 block text-[10px] tracking-[0.3em] uppercase text-gold-light">Name</span>
-                  <input required className={inputCls} placeholder="Your name" />
+                  <input required name="name" className={inputCls} placeholder="Your name" />
                 </label>
                 <label className="block">
                   <span className="mb-2 block text-[10px] tracking-[0.3em] uppercase text-gold-light">Email</span>
-                  <input required type="email" className={inputCls} placeholder="you@example.com" />
+                  <input required name="email" type="email" className={inputCls} placeholder="you@example.com" />
                 </label>
               </div>
               <label className="block">
                 <span className="mb-2 block text-[10px] tracking-[0.3em] uppercase text-gold-light">Subject</span>
-                <input className={inputCls} placeholder="Commission enquiry" />
+                <input name="subject" className={inputCls} placeholder="Commission enquiry" />
               </label>
               <label className="block">
                 <span className="mb-2 block text-[10px] tracking-[0.3em] uppercase text-gold-light">Message</span>
-                <textarea rows={6} className={inputCls + " resize-none"} placeholder="Tell us more…" />
+                <textarea required name="message" rows={6} className={inputCls + " resize-none"} placeholder="Tell us more…" />
               </label>
-              <button type="submit" className="btn-gold w-full">Send message</button>
+              {error && <p className="text-xs text-destructive">{error}</p>}
+              <button disabled={busy} type="submit" className="btn-gold w-full">{busy ? "Sending…" : "Send message"}</button>
             </form>
           )}
         </div>

@@ -127,14 +127,16 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isAuthPage = pathname === "/admin-login";
+  const isAdminArea = pathname.startsWith("/admin") && !isAuthPage;
+  const chromeless = isAuthPage || isAdminArea;
 
   return (
     <QueryClientProvider client={queryClient}>
-      {!isAuthPage && <Navbar />}
-      <main key={pathname} className={isAuthPage ? "" : "pt-20 animate-fade-in"}>
+      {!chromeless && <Navbar />}
+      <main key={pathname} className={chromeless ? "" : "pt-20 animate-fade-in"}>
         <Outlet />
       </main>
-      {!isAuthPage && <Footer />}
+      {!chromeless && <Footer />}
     </QueryClientProvider>
   );
 }

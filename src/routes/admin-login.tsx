@@ -1,8 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { Lock, Mail, ArrowRight } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import heroImg from "@/assets/hero.jpg";
+import { login } from "@/lib/auth";
 
 export const Route = createFileRoute("/admin-login")({
   head: () => ({
@@ -20,6 +21,24 @@ const inputCls =
 
 function AdminLoginPage() {
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const navigate = useNavigate();
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setError("");
+    setBusy(true);
+    const fd = new FormData(e.currentTarget);
+    try {
+      await login(String(fd.get("email")), String(fd.get("password")));
+      navigate({ to: "/admin" });
+    } catch (err: any) {
+      setError(err?.response?.data?.message ?? err.message ?? "Login failed");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
       <div className="relative hidden overflow-hidden lg:block">
@@ -43,27 +62,24 @@ function AdminLoginPage() {
           <h1 className="mt-3 font-display text-4xl">Sign in</h1>
           <p className="mt-3 text-sm text-muted-foreground">Access is restricted to studio staff.</p>
 
-          <form
-            onSubmit={(e) => { e.preventDefault(); setError("Invalid credentials — this is a demo screen."); }}
-            className="mt-10 space-y-5"
-          >
+          <form onSubmit={onSubmit} className="mt-10 space-y-5">
             <label className="block">
               <span className="mb-2 block text-[10px] tracking-[0.3em] uppercase text-gold-light">Email</span>
               <div className="relative">
                 <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-light" />
-                <input required type="email" placeholder="admin@parasarts.com" className={inputCls} />
+                <input required name="email" type="email" placeholder="admin@parasarts.com" className={inputCls} />
               </div>
             </label>
             <label className="block">
               <span className="mb-2 block text-[10px] tracking-[0.3em] uppercase text-gold-light">Password</span>
               <div className="relative">
                 <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-gold-light" />
-                <input required type="password" placeholder="••••••••" className={inputCls} />
+                <input required name="password" type="password" placeholder="••••••••" className={inputCls} />
               </div>
             </label>
             {error && <p className="text-xs text-destructive">{error}</p>}
-            <button type="submit" className="btn-gold w-full">
-              Sign in <ArrowRight size={14} />
+            <button disabled={busy} type="submit" className="btn-gold w-full">
+              {busy ? "Signing in…" : "Sign in"} <ArrowRight size={14} />
             </button>
           </form>
 
