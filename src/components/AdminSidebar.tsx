@@ -12,7 +12,8 @@ import {
 import { Logo } from "./Logo";
 import { logout } from "@/lib/auth";
 
-const items = [
+type Item = { to: string; label: string; icon: typeof LayoutDashboard; exact?: boolean };
+const items: Item[] = [
   { to: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { to: "/admin/artworks", label: "Artworks", icon: ImageIcon },
   { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
@@ -20,7 +21,7 @@ const items = [
   { to: "/admin/testimonials", label: "Testimonials", icon: Star },
   { to: "/admin/services", label: "Services", icon: Wrench },
   { to: "/admin/faqs", label: "FAQs", icon: HelpCircle },
-] as const;
+];
 
 export function AdminSidebar() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
