@@ -45,7 +45,7 @@ export function AdminSidebar() {
           return (
             <Link
               key={it.to}
-              to={it.to}
+              to={it.to as unknown as "/admin"}
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all ${
                 active
                   ? "bg-gold-gradient text-[#121212]"
