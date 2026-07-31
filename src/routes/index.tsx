@@ -8,7 +8,7 @@ import art3 from "@/assets/art-3.jpg";
 import art4 from "@/assets/art-4.jpg";
 import art5 from "@/assets/art-5.jpg";
 import art6 from "@/assets/art-6.jpg";
-import aboutImg from "@/assets/about.jpg";
+import artistImg from "@/assets/artist.jpg.asset.json";
 import { SectionHeader } from "@/components/SectionHeader";
 
 export const Route = createFileRoute("/")({
