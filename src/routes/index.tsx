@@ -2,12 +2,15 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Award, Brush, ChevronDown, Clock, Gem, Heart, Palette, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
 import { useState } from "react";
 import heroImg from "@/assets/hero.jpg";
-import art1 from "@/assets/art-1.jpg";
-import art2 from "@/assets/art-2.jpg";
-import art3 from "@/assets/art-3.jpg";
-import art4 from "@/assets/art-4.jpg";
-import art5 from "@/assets/art-5.jpg";
-import art6 from "@/assets/art-6.jpg";
+import gThor from "@/assets/gallery-thor.jpg.asset.json";
+import gStrange from "@/assets/gallery-strange.jpg.asset.json";
+import gKrishna from "@/assets/gallery-krishna.jpg.asset.json";
+import gGanesha from "@/assets/gallery-ganesha.jpg.asset.json";
+import gGaneshaTurban from "@/assets/gallery-ganesha-turban.jpg.asset.json";
+import gChild from "@/assets/gallery-child.jpg.asset.json";
+import gBmw from "@/assets/gallery-bmw.jpg.asset.json";
+import gPorsche from "@/assets/gallery-porsche.jpg.asset.json";
+import gRonaldo from "@/assets/gallery-ronaldo.jpg.asset.json";
 import artistImg from "@/assets/artist.jpg.asset.json";
 import { SectionHeader } from "@/components/SectionHeader";
 
@@ -27,7 +30,17 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const featured = [art1, art2, art3, art4, art5, art6];
+const featured = [
+  { src: gThor.url, title: "The God of Thunder", label: "Graphite Study" },
+  { src: gGanesha.url, title: "Shree Ganesha", label: "Devotional Series" },
+  { src: gPorsche.url, title: "Porsche GT3", label: "Automotive" },
+  { src: gKrishna.url, title: "Bal Krishna", label: "Devotional Series" },
+  { src: gStrange.url, title: "The Sorcerer", label: "Portrait" },
+  { src: gBmw.url, title: "BMW M4", label: "Automotive" },
+  { src: gChild.url, title: "Innocence", label: "Portrait" },
+  { src: gGaneshaTurban.url, title: "Ganpati Bappa", label: "Devotional Series" },
+  { src: gRonaldo.url, title: "Cristiano Ronaldo", label: "Portrait" },
+];
 
 const services = [
   { icon: Brush, title: "Custom Portrait", desc: "One subject, timeless likeness — from favourite photographs to legacy commissions.", price: "from ₹4,800" },
@@ -142,24 +155,24 @@ function HomePage() {
         </div>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((src, i) => (
+          {featured.map((item, i) => (
             <Link
-              key={i}
+              key={item.title}
               to="/portfolio"
               className="group relative overflow-hidden rounded-2xl card-luxe"
             >
               <div className="aspect-[4/5] overflow-hidden">
                 <img
-                  src={src}
-                  alt=""
+                  src={item.src}
+                  alt={`${item.title} — hand-drawn pencil sketch by Paras Arts`}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110"
                 />
               </div>
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6">
-                <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">Commission №{String(i + 1).padStart(2, "0")}</div>
-                <div className="mt-2 font-display text-xl">Handcrafted in the Studio</div>
+                <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{item.label} · №{String(i + 1).padStart(2, "0")}</div>
+                <div className="mt-2 font-display text-xl">{item.title}</div>
               </div>
             </Link>
           ))}
