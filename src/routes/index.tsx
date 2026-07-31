@@ -155,24 +155,24 @@ function HomePage() {
         </div>
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((src, i) => (
+          {featured.map((item, i) => (
             <Link
-              key={i}
+              key={item.title}
               to="/portfolio"
               className="group relative overflow-hidden rounded-2xl card-luxe"
             >
               <div className="aspect-[4/5] overflow-hidden">
                 <img
-                  src={src}
-                  alt=""
+                  src={item.src}
+                  alt={`${item.title} — hand-drawn pencil sketch by Paras Arts`}
                   loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110"
                 />
               </div>
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6">
-                <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">Commission №{String(i + 1).padStart(2, "0")}</div>
-                <div className="mt-2 font-display text-xl">Handcrafted in the Studio</div>
+                <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{item.label} · №{String(i + 1).padStart(2, "0")}</div>
+                <div className="mt-2 font-display text-xl">{item.title}</div>
               </div>
             </Link>
           ))}
