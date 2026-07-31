@@ -30,7 +30,17 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const featured = [art1, art2, art3, art4, art5, art6];
+const featured = [
+  { src: gThor.url, title: "The God of Thunder", label: "Graphite Study" },
+  { src: gGanesha.url, title: "Shree Ganesha", label: "Devotional Series" },
+  { src: gPorsche.url, title: "Porsche GT3", label: "Automotive" },
+  { src: gKrishna.url, title: "Bal Krishna", label: "Devotional Series" },
+  { src: gStrange.url, title: "The Sorcerer", label: "Portrait" },
+  { src: gBmw.url, title: "BMW M4", label: "Automotive" },
+  { src: gChild.url, title: "Innocence", label: "Portrait" },
+  { src: gGaneshaTurban.url, title: "Ganpati Bappa", label: "Devotional Series" },
+  { src: gRonaldo.url, title: "Cristiano Ronaldo", label: "Portrait" },
+];
 
 const services = [
   { icon: Brush, title: "Custom Portrait", desc: "One subject, timeless likeness — from favourite photographs to legacy commissions.", price: "from ₹4,800" },
