@@ -1,14 +1,14 @@
-import logo from "@/assets/logo.png";
+import logoMark from "@/assets/logo-mark.png.asset.json";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-3">
       <img
-        src={logo}
+        src={logoMark.url}
         alt="Paras Arts"
         width={44}
         height={44}
-        className="h-11 w-11 object-contain drop-shadow-[0_0_20px_rgba(201,138,43,0.35)]"
+        className="h-11 w-11 rounded-md object-contain drop-shadow-[0_0_20px_rgba(201,138,43,0.35)]"
       />
       {!compact && (
         <div className="flex flex-col leading-none">
@@ -16,7 +16,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
             PARAS ARTS
           </span>
           <span className="mt-1 text-[10px] tracking-[0.3em] text-muted-foreground">
-            HANDCRAFTED · SINCE 2019
+            WHERE EVERY FRAME REMEMBERS
           </span>
         </div>
       )}
