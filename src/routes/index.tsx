@@ -166,35 +166,99 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ABOUT */}
-      <section className="mx-auto grid max-w-7xl gap-16 px-6 py-28 lg:grid-cols-2 lg:items-center lg:px-10">
-        <div className="relative">
-          <div className="relative overflow-hidden rounded-3xl gold-border">
-            <img src={aboutImg} alt="Inside the studio" className="aspect-[4/3] w-full object-cover" loading="lazy" />
+      {/* ABOUT — THE ARTIST */}
+      <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
+        <div className="max-w-3xl">
+          <div className="text-[11px] tracking-[0.4em] uppercase text-gold-light">The Artist</div>
+          <h2 className="mt-4 font-display text-4xl leading-[1.05] md:text-6xl">
+            Paras <span className="text-gold-gradient italic">Kosambe.</span>
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-white/75">
+            Paras Kosambe is a self-taught pencil artist and the founder of Paras Arts. What began in 2019 as a
+            sketchbook habit became a practice devoted to one idea: that a handmade portrait can hold a memory
+            better than any photograph.
+          </p>
+        </div>
+
+        <div className="mt-16 grid items-stretch gap-10 lg:grid-cols-5">
+          <div className="overflow-hidden rounded-3xl gold-border lg:col-span-2">
+            <img
+              src={artistImg.url}
+              alt="Paras Kosambe, founder and artist at Paras Arts"
+              className="h-full w-full object-cover"
+              loading="lazy"
+            />
           </div>
-          <div className="absolute -bottom-8 -right-6 hidden rounded-2xl border border-gold-light/30 bg-[#121212] p-6 shadow-luxe md:block">
-            <div className="font-display text-4xl text-gold-gradient">7+</div>
-            <div className="mt-1 text-[11px] tracking-[0.3em] uppercase text-muted-foreground">Years at the desk</div>
+          <div className="flex flex-col justify-center lg:col-span-3">
+            <SectionHeader align="left" eyebrow="In his words" title="I draw slowly, on purpose." />
+            <p className="mt-6 leading-relaxed text-white/75">
+              "Every commission starts with sitting quietly with a photograph until I understand the person in it —
+              the way light falls on a cheekbone, the tension in a smile, the story hiding in the eyes. Only then
+              does the first line go down. From there it is thousands of small decisions, layered in graphite over
+              many days."
+            </p>
+            <p className="mt-4 leading-relaxed text-white/75">
+              "I still work alone, and I keep the studio small on purpose. I take a limited number of pieces each
+              month so nothing is rushed and nothing is repeated. Every frame that leaves my desk carries a name I
+              remember."
+            </p>
+            <div className="mt-8 font-display text-2xl text-gold-gradient">— Paras Kosambe</div>
           </div>
         </div>
-        <div>
-          <SectionHeader
-            align="left"
-            eyebrow="The Atelier"
-            title="A quieter kind of craft."
-            description="Paras Arts is a small, deliberate studio — no assistants, no assembly line. Each commission is drawn from start to finish by a single artist, over dozens of hours, in a single sustained conversation with the paper."
-          />
-          <ul className="mt-8 space-y-4 text-sm text-white/75">
-            {["Faber-Castell 9000 & Staedtler Mars graphite series", "Fabriano and Strathmore archival papers", "Museum-grade fixative & UV-safe framing available"].map((x) => (
-              <li key={x} className="flex items-start gap-3">
-                <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-gold" />
-                {x}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-10">
-            <Link to="/about" className="btn-ghost-gold">Read more <ArrowRight size={14} /></Link>
+
+        <div className="mt-20 grid gap-16 md:grid-cols-2">
+          <div>
+            <SectionHeader align="left" eyebrow="The Journey" title="From sketchbook to studio." />
+            <ul className="mt-6 space-y-4 text-white/75">
+              {[
+                ["2019", "First commissioned portrait — a family gift that turned a hobby into a calling."],
+                ["2021", "Full-time practice begins; hyper-realism becomes the signature style."],
+                ["2023", "Commissions cross borders, shipping framed originals internationally."],
+                ["Today", "Paras Arts — a one-artist studio built on patience, precision and trust."],
+              ].map(([k, v]) => (
+                <li key={k} className="border-b border-white/10 pb-4">
+                  <div className="text-xs tracking-[0.3em] uppercase text-gold-light">{k}</div>
+                  <div className="mt-2">{v}</div>
+                </li>
+              ))}
+            </ul>
           </div>
+          <div>
+            <SectionHeader align="left" eyebrow="His Hands" title="What sits on the desk." />
+            <ul className="mt-6 space-y-4 text-white/75">
+              {[
+                ["Graphite", "Faber-Castell 9000 · Staedtler Mars Lumograph · Caran d'Ache Grafwood"],
+                ["Paper", "Fabriano Artistico · Strathmore 500 Series · Canson Bristol"],
+                ["Finish", "Archival fixative · Optional acid-free mounting · UV-safe framing"],
+                ["Delivery", "Foam-mounted, moisture-sealed, insured worldwide shipping"],
+              ].map(([k, v]) => (
+                <li key={k} className="border-b border-white/10 pb-4">
+                  <div className="text-xs tracking-[0.3em] uppercase text-gold-light">{k}</div>
+                  <div className="mt-2">{v}</div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="mt-20 rounded-3xl gold-border p-10 md:p-16">
+          <div className="grid gap-10 md:grid-cols-3">
+            {[
+              ["500+", "Portraits drawn by hand"],
+              ["30+", "Countries served"],
+              ["100%", "Handcrafted — never printed"],
+            ].map(([n, l]) => (
+              <div key={l} className="text-center">
+                <div className="font-display text-5xl text-gold-gradient md:text-6xl">{n}</div>
+                <div className="mt-3 text-xs tracking-[0.3em] uppercase text-muted-foreground">{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-16 flex flex-wrap gap-4">
+          <Link to="/about" className="btn-gold">Read the full story <ArrowRight size={16} /></Link>
+          <Link to="/portfolio" className="btn-ghost-gold">See the portfolio</Link>
         </div>
       </section>
 
