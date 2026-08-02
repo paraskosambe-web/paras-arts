@@ -261,17 +261,22 @@ function HomePage() {
         <div className="mt-20 rounded-3xl gold-border p-10 md:p-16">
           <div className="grid gap-10 md:grid-cols-3">
             {[
-              ["500+", "Portraits drawn by hand"],
-              ["30+", "Countries served"],
-              ["100%", "Handcrafted — never printed"],
-            ].map(([n, l]) => (
-              <div key={l} className="text-center">
-                <div className="font-display text-5xl text-gold-gradient md:text-6xl">{n}</div>
-                <div className="mt-3 text-xs tracking-[0.3em] uppercase text-muted-foreground">{l}</div>
+              { n: 500, suffix: "+", l: "Portraits drawn by hand" },
+              { n: 30, suffix: "+", l: "Countries served" },
+              { n: 100, suffix: "%", l: "Handcrafted — never printed" },
+            ].map((s) => (
+              <div key={s.l} className="text-center">
+                <Counter
+                  to={s.n}
+                  suffix={s.suffix}
+                  className="font-display text-5xl text-gold-gradient md:text-6xl"
+                />
+                <div className="mt-3 text-xs tracking-[0.3em] uppercase text-muted-foreground">{s.l}</div>
               </div>
             ))}
           </div>
         </div>
+
 
         <div className="mt-16 flex flex-wrap gap-4">
           <Link to="/about" className="btn-gold">Read the full story <ArrowRight size={16} /></Link>
