@@ -1,81 +1,159 @@
-import art1 from "@/assets/art-1.jpg";
-import art2 from "@/assets/art-2.jpg";
-import art3 from "@/assets/art-3.jpg";
-import art4 from "@/assets/art-4.jpg";
-import art5 from "@/assets/art-5.jpg";
-import art6 from "@/assets/art-6.jpg";
+import gThor from "@/assets/gallery-thor.jpg.asset.json";
+import gStrange from "@/assets/gallery-strange.jpg.asset.json";
+import gKrishna from "@/assets/gallery-krishna.jpg.asset.json";
+import gGanesha from "@/assets/gallery-ganesha.jpg.asset.json";
+import gGaneshaTurban from "@/assets/gallery-ganesha-turban.jpg.asset.json";
+import gChild from "@/assets/gallery-child.jpg.asset.json";
+import gBmw from "@/assets/gallery-bmw.jpg.asset.json";
+import gPorsche from "@/assets/gallery-porsche.jpg.asset.json";
+import gRonaldo from "@/assets/gallery-ronaldo.jpg.asset.json";
+
+export type Category = "Portrait" | "Cars" | "Animals" | "Devotional";
+export type Medium = "Graphite" | "Charcoal";
 
 export type Artwork = {
   id: string;
   title: string;
-  category: "Portrait" | "Couple" | "Family" | "Pet" | "Automotive";
-  medium: string;
+  category: Category;
+  medium: Medium;
+  mediumDetail: string;
   paperSize: string;
   image: string;
   description: string;
+  /** Higher = more popular; used by the "Popular" sort. */
+  popularity: number;
+  /** Newest first ordering weight. */
+  year: number;
+  /** Wide subjects (cars) must not be cropped — render them contained. */
+  fit?: "cover" | "contain";
 };
 
 export const artworks: Artwork[] = [
   {
-    id: "silhouette-of-grace",
-    title: "Silhouette of Grace",
+    id: "the-god-of-thunder",
+    title: "The God of Thunder",
     category: "Portrait",
-    medium: "Graphite on Archival Paper",
+    medium: "Graphite",
+    mediumDetail: "Graphite on Archival Paper",
     paperSize: "A3 · 297 × 420 mm",
-    image: art1,
+    image: gThor.url,
     description:
-      "A study in restraint and light. Every strand of hair is rendered with fine 2H layering, while the eyes anchor the composition with quiet intensity.",
+      "A cinematic character study built in fine 2H layers, with charcoal deepening the armour and storm-lit shadows.",
+    popularity: 96,
+    year: 2025,
   },
   {
-    id: "an-embrace-in-charcoal",
-    title: "An Embrace in Charcoal",
-    category: "Couple",
-    medium: "Charcoal & Graphite",
+    id: "shree-ganesha",
+    title: "Shree Ganesha",
+    category: "Devotional",
+    medium: "Graphite",
+    mediumDetail: "Graphite on 300gsm Archival Paper",
+    paperSize: "A3 · 297 × 420 mm",
+    image: gGanesha.url,
+    description:
+      "A devotional commission rendered with patient tonal work — ornament, cloth and gaze balanced in soft graphite.",
+    popularity: 92,
+    year: 2025,
+  },
+  {
+    id: "porsche-gt3",
+    title: "Porsche GT3",
+    category: "Cars",
+    medium: "Graphite",
+    mediumDetail: "Graphite & Ink",
     paperSize: "A2 · 420 × 594 mm",
-    image: art2,
+    image: gPorsche.url,
     description:
-      "Commissioned for an anniversary, this piece captures the softness of shared silence — a heirloom rendered by hand over 42 hours.",
+      "Chrome, carbon and reflection rendered in hyper-detail — a collector's piece for a favourite machine.",
+    popularity: 88,
+    year: 2025,
+    fit: "contain",
   },
   {
-    id: "midnight-machine",
-    title: "Midnight Machine",
-    category: "Automotive",
-    medium: "Graphite & Ink",
+    id: "bal-krishna",
+    title: "Bal Krishna",
+    category: "Devotional",
+    medium: "Charcoal",
+    mediumDetail: "Charcoal & Graphite",
+    paperSize: "A3 · 297 × 420 mm",
+    image: gKrishna.url,
+    description:
+      "Charcoal softness across skin and jewellery, finished with graphite highlights for a luminous, serene face.",
+    popularity: 85,
+    year: 2024,
+  },
+  {
+    id: "the-sorcerer",
+    title: "The Sorcerer",
+    category: "Portrait",
+    medium: "Charcoal",
+    mediumDetail: "Charcoal on Bristol Paper",
+    paperSize: "A3 · 297 × 420 mm",
+    image: gStrange.url,
+    description:
+      "High-contrast charcoal portraiture — every strand of beard and fold of cloth drawn by hand over many sittings.",
+    popularity: 81,
+    year: 2024,
+  },
+  {
+    id: "bmw-m4",
+    title: "BMW M4",
+    category: "Cars",
+    medium: "Graphite",
+    mediumDetail: "Graphite & Ink",
     paperSize: "A2 · 420 × 594 mm",
-    image: art3,
+    image: gBmw.url,
     description:
-      "A hyper-detailed rendering of chrome, carbon, and reflection. Ideal for collectors who wish to immortalise their finest machine.",
+      "An automotive study of hard edges and mirrored light, drawn from the owner's own photographs.",
+    popularity: 79,
+    year: 2024,
+    fit: "contain",
   },
   {
-    id: "faithful-companion",
-    title: "Faithful Companion",
-    category: "Pet",
-    medium: "Graphite on Bristol Paper",
+    id: "innocence",
+    title: "Innocence",
+    category: "Portrait",
+    medium: "Graphite",
+    mediumDetail: "Graphite on Archival Paper",
     paperSize: "A4 · 210 × 297 mm",
-    image: art4,
+    image: gChild.url,
     description:
-      "The soul of a beloved friend — captured in every subtle fur direction, whisker, and gentle glance.",
+      "A child portrait kept deliberately soft — the kind of frame that becomes a family heirloom.",
+    popularity: 74,
+    year: 2024,
   },
   {
-    id: "family-heirloom",
-    title: "Family Heirloom",
-    category: "Family",
-    medium: "Graphite Ensemble Study",
-    paperSize: "A2 · 420 × 594 mm",
-    image: art5,
-    description:
-      "A commissioned four-figure composition designed to be passed through generations. Framed in solid oak on request.",
-  },
-  {
-    id: "weathered-wisdom",
-    title: "Weathered Wisdom",
-    category: "Portrait",
-    medium: "Graphite Realism",
+    id: "ganpati-bappa",
+    title: "Ganpati Bappa",
+    category: "Devotional",
+    medium: "Graphite",
+    mediumDetail: "Graphite on Archival Paper",
     paperSize: "A3 · 297 × 420 mm",
-    image: art6,
+    image: gGaneshaTurban.url,
     description:
-      "A character study exploring the language of time — pored, layered, and finished with a museum-grade fixative.",
+      "A regal devotional study — turban texture, embroidery and expression built up in dozens of graphite passes.",
+    popularity: 71,
+    year: 2023,
+  },
+  {
+    id: "cristiano-ronaldo",
+    title: "Cristiano Ronaldo",
+    category: "Portrait",
+    medium: "Graphite",
+    mediumDetail: "Graphite Realism",
+    paperSize: "A3 · 297 × 420 mm",
+    image: gRonaldo.url,
+    description:
+      "A sporting portrait focused on likeness and intensity — skin tone graded from 2H through 6B.",
+    popularity: 68,
+    year: 2023,
   },
 ];
 
-export const categories = ["All", "Portrait", "Couple", "Family", "Pet", "Automotive"] as const;
+export const categories = ["All", "Portrait", "Cars", "Animals", "Devotional"] as const;
+export const mediums = ["All", "Graphite", "Charcoal"] as const;
+export const sorts = ["Newest", "Popular", "A–Z"] as const;
+
+export function findArtwork(id: string) {
+  return artworks.find((a) => a.id === id);
+}
