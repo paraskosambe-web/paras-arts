@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrackRouteImport } from './routes/track'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as PricingRouteImport } from './routes/pricing'
@@ -19,6 +20,7 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminLoginRouteImport } from './routes/admin-login'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as R500RouteImport } from './routes/500'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as PortfolioIdRouteImport } from './routes/portfolio.$id'
@@ -30,6 +32,11 @@ import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
 import { Route as AdminFaqsRouteImport } from './routes/admin.faqs'
 import { Route as AdminArtworksRouteImport } from './routes/admin.artworks'
 
+const TrackRoute = TrackRouteImport.update({
+  id: '/track',
+  path: '/track',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
   path: '/testimonials',
@@ -78,6 +85,11 @@ const AdminRoute = AdminRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R500Route = R500RouteImport.update({
+  id: '/500',
+  path: '/500',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -133,6 +145,7 @@ const AdminArtworksRoute = AdminArtworksRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/500': typeof R500Route
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin-login': typeof AdminLoginRoute
@@ -143,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
+  '/track': typeof TrackRoute
   '/admin/artworks': typeof AdminArtworksRoute
   '/admin/faqs': typeof AdminFaqsRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -155,6 +169,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/500': typeof R500Route
   '/about': typeof AboutRoute
   '/admin-login': typeof AdminLoginRoute
   '/contact': typeof ContactRoute
@@ -164,6 +179,7 @@ export interface FileRoutesByTo {
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
+  '/track': typeof TrackRoute
   '/admin/artworks': typeof AdminArtworksRoute
   '/admin/faqs': typeof AdminFaqsRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -177,6 +193,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/500': typeof R500Route
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/admin-login': typeof AdminLoginRoute
@@ -187,6 +204,7 @@ export interface FileRoutesById {
   '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
+  '/track': typeof TrackRoute
   '/admin/artworks': typeof AdminArtworksRoute
   '/admin/faqs': typeof AdminFaqsRoute
   '/admin/messages': typeof AdminMessagesRoute
@@ -201,6 +219,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/500'
     | '/about'
     | '/admin'
     | '/admin-login'
@@ -211,6 +230,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/services'
     | '/testimonials'
+    | '/track'
     | '/admin/artworks'
     | '/admin/faqs'
     | '/admin/messages'
@@ -223,6 +243,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/500'
     | '/about'
     | '/admin-login'
     | '/contact'
@@ -232,6 +253,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/services'
     | '/testimonials'
+    | '/track'
     | '/admin/artworks'
     | '/admin/faqs'
     | '/admin/messages'
@@ -244,6 +266,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/500'
     | '/about'
     | '/admin'
     | '/admin-login'
@@ -254,6 +277,7 @@ export interface FileRouteTypes {
     | '/pricing'
     | '/services'
     | '/testimonials'
+    | '/track'
     | '/admin/artworks'
     | '/admin/faqs'
     | '/admin/messages'
@@ -267,6 +291,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  R500Route: typeof R500Route
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
   AdminLoginRoute: typeof AdminLoginRoute
@@ -277,11 +302,19 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  TrackRoute: typeof TrackRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/track': {
+      id: '/track'
+      path: '/track'
+      fullPath: '/track'
+      preLoaderRoute: typeof TrackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/testimonials': {
       id: '/testimonials'
       path: '/testimonials'
@@ -350,6 +383,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/500': {
+      id: '/500'
+      path: '/500'
+      fullPath: '/500'
+      preLoaderRoute: typeof R500RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -461,6 +501,7 @@ const PortfolioRouteWithChildren = PortfolioRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  R500Route: R500Route,
   AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
   AdminLoginRoute: AdminLoginRoute,
@@ -471,6 +512,7 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   ServicesRoute: ServicesRoute,
   TestimonialsRoute: TestimonialsRoute,
+  TrackRoute: TrackRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
