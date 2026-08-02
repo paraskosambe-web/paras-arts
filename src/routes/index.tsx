@@ -13,6 +13,10 @@ import gPorsche from "@/assets/gallery-porsche.jpg.asset.json";
 import gRonaldo from "@/assets/gallery-ronaldo.jpg.asset.json";
 import artistImg from "@/assets/artist.jpg.asset.json";
 import { SectionHeader } from "@/components/SectionHeader";
+import { Reveal } from "@/components/Reveal";
+import { ArtworkImage } from "@/components/ArtworkImage";
+import { Counter } from "@/components/Counter";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -30,17 +34,18 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const featured = [
+const featured: { src: string; title: string; label: string; fit?: "cover" | "contain" }[] = [
   { src: gThor.url, title: "The God of Thunder", label: "Graphite Study" },
   { src: gGanesha.url, title: "Shree Ganesha", label: "Devotional Series" },
-  { src: gPorsche.url, title: "Porsche GT3", label: "Automotive" },
+  { src: gPorsche.url, title: "Porsche GT3", label: "Automotive", fit: "contain" },
   { src: gKrishna.url, title: "Bal Krishna", label: "Devotional Series" },
   { src: gStrange.url, title: "The Sorcerer", label: "Portrait" },
-  { src: gBmw.url, title: "BMW M4", label: "Automotive" },
+  { src: gBmw.url, title: "BMW M4", label: "Automotive", fit: "contain" },
   { src: gChild.url, title: "Innocence", label: "Portrait" },
   { src: gGaneshaTurban.url, title: "Ganpati Bappa", label: "Devotional Series" },
   { src: gRonaldo.url, title: "Cristiano Ronaldo", label: "Portrait" },
 ];
+
 
 const services = [
   { icon: Brush, title: "Custom Portrait", desc: "One subject, timeless likeness — from favourite photographs to legacy commissions.", price: "from ₹4,800" },
@@ -156,28 +161,27 @@ function HomePage() {
 
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((item, i) => (
-            <Link
-              key={item.title}
-              to="/portfolio"
-              className="group relative overflow-hidden rounded-2xl card-luxe"
-            >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img
+            <Reveal key={item.title} delay={i * 60}>
+              <Link
+                to="/portfolio"
+                className="group relative block overflow-hidden rounded-2xl card-luxe"
+              >
+                <ArtworkImage
                   src={item.src}
                   alt={`${item.title} — hand-drawn pencil sketch by Paras Arts`}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-[1.4s] ease-out group-hover:scale-110"
+                  fit={item.fit}
                 />
-              </div>
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6">
-                <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{item.label} · №{String(i + 1).padStart(2, "0")}</div>
-                <div className="mt-2 font-display text-xl">{item.title}</div>
-              </div>
-            </Link>
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6">
+                  <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{item.label} · №{String(i + 1).padStart(2, "0")}</div>
+                  <div className="mt-2 font-display text-xl">{item.title}</div>
+                </div>
+              </Link>
+            </Reveal>
           ))}
         </div>
       </section>
+
 
       {/* ABOUT — THE ARTIST */}
       <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
