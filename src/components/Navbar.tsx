@@ -10,8 +10,10 @@ const links = [
   { to: "/services", label: "Services" },
   { to: "/pricing", label: "Pricing" },
   { to: "/testimonials", label: "Testimonials" },
+  { to: "/track", label: "Track" },
   { to: "/faq", label: "FAQ" },
   { to: "/contact", label: "Contact" },
+
 ] as const;
 
 export function Navbar() {

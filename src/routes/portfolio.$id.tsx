@@ -43,9 +43,16 @@ function ArtworkDetails() {
       </Link>
 
       <div className="mt-10 grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
-        <div className="overflow-hidden rounded-3xl gold-border">
-          <img src={art.image} alt={art.title} className="w-full object-cover" />
+        <div className="overflow-hidden rounded-3xl gold-border bg-[#0e0e0e]">
+          <img
+            src={art.image}
+            alt={`${art.title} — hand-drawn pencil artwork by Paras Arts`}
+            className={`w-full ${art.fit === "contain" ? "object-contain p-3" : "object-cover"}`}
+            loading="eager"
+            decoding="async"
+          />
         </div>
+
         <div className="lg:pt-8">
           <div className="text-[11px] tracking-[0.4em] uppercase text-gold-light">{art.category}</div>
           <h1 className="mt-4 font-display text-4xl leading-tight md:text-6xl">{art.title}</h1>
@@ -53,7 +60,7 @@ function ArtworkDetails() {
 
           <dl className="mt-10 space-y-5 border-t border-white/10 pt-8">
             {[
-              ["Medium", art.medium],
+              ["Medium", art.mediumDetail],
               ["Paper size", art.paperSize],
               ["Type", "Original · One-of-One"],
               ["Signed", "Yes · Verso"],
@@ -85,9 +92,16 @@ function ArtworkDetails() {
               params={{ id: a.id }}
               className="group overflow-hidden rounded-2xl card-luxe"
             >
-              <div className="aspect-[4/5] overflow-hidden">
-                <img src={a.image} alt={a.title} className="h-full w-full object-cover transition-transform duration-[1.4s] group-hover:scale-110" loading="lazy" />
+              <div className="aspect-[4/5] overflow-hidden bg-[#0e0e0e]">
+                <img
+                  src={a.image}
+                  alt={`${a.title} — pencil sketch by Paras Arts`}
+                  className={`h-full w-full transition-transform duration-[1.4s] group-hover:scale-110 ${a.fit === "contain" ? "object-contain p-2" : "object-cover"}`}
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
+
               <div className="p-5">
                 <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">{a.category}</div>
                 <div className="mt-2 font-display text-lg">{a.title}</div>
