@@ -22,6 +22,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as PortfolioIdRouteImport } from './routes/portfolio.$id'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 import { Route as AdminTestimonialsRouteImport } from './routes/admin.testimonials'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
@@ -94,6 +95,11 @@ const PortfolioIdRoute = PortfolioIdRouteImport.update({
   path: '/$id',
   getParentRoute: () => PortfolioRoute,
 } as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminTestimonialsRoute = AdminTestimonialsRouteImport.update({
   id: '/testimonials',
   path: '/testimonials',
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/api/chat': typeof ApiChatRoute
   '/portfolio/$id': typeof PortfolioIdRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/api/chat': typeof ApiChatRoute
   '/portfolio/$id': typeof PortfolioIdRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/admin/orders': typeof AdminOrdersRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/testimonials': typeof AdminTestimonialsRoute
+  '/api/chat': typeof ApiChatRoute
   '/portfolio/$id': typeof PortfolioIdRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -208,6 +217,7 @@ export interface FileRouteTypes {
     | '/admin/orders'
     | '/admin/services'
     | '/admin/testimonials'
+    | '/api/chat'
     | '/portfolio/$id'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -228,6 +238,7 @@ export interface FileRouteTypes {
     | '/admin/orders'
     | '/admin/services'
     | '/admin/testimonials'
+    | '/api/chat'
     | '/portfolio/$id'
     | '/admin'
   id:
@@ -249,6 +260,7 @@ export interface FileRouteTypes {
     | '/admin/orders'
     | '/admin/services'
     | '/admin/testimonials'
+    | '/api/chat'
     | '/portfolio/$id'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -265,6 +277,7 @@ export interface RootRouteChildren {
   PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -360,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortfolioIdRouteImport
       parentRoute: typeof PortfolioRoute
     }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/testimonials': {
       id: '/admin/testimonials'
       path: '/testimonials'
@@ -451,17 +471,8 @@ const rootRouteChildren: RootRouteChildren = {
   PricingRoute: PricingRoute,
   ServicesRoute: ServicesRoute,
   TestimonialsRoute: TestimonialsRoute,
+  ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
