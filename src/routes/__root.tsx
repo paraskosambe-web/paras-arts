@@ -146,6 +146,7 @@ function RootComponent() {
       {!chromeless && <Footer />}
       {!chromeless && <ScrollToTop />}
       {!chromeless && <AiAssistant />}
-
+    </QueryClientProvider>
   );
+
 }
