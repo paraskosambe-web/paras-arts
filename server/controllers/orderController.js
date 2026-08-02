@@ -72,3 +72,20 @@ exports.remove = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.track = async (req, res, next) => {
+  try {
+    const email = String(req.query.email || "").trim().toLowerCase();
+    const id = String(req.query.id || "").trim();
+    if (!email || !/^[0-9a-fA-F]{24}$/.test(id)) {
+      return res.status(400).json({ message: "Valid email and order ID are required" });
+    }
+    const order = await Order.findOne({ _id: id, email: new RegExp(`^${email}$`, "i") }).select(
+      "_id fullName status sketchType paperSize createdAt updatedAt"
+    );
+    if (!order) return res.status(404).json({ message: "No commission found for those details" });
+    res.json(order);
+  } catch (err) {
+    next(err);
+  }
+};
