@@ -15,7 +15,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
           <span className="font-display text-lg tracking-[0.18em] text-gold-gradient">
             PARAS ARTS
           </span>
-          <span className="mt-1 text-[10px] tracking-[0.2em] text-muted-foreground">
+          <span className="mt-1 whitespace-nowrap text-[10px] tracking-[0.2em] text-muted-foreground">
             WHERE EVERY FRAME REMEMBERS
           </span>
         </div>
