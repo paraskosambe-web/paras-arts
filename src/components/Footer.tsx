@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, MessageCircle, ArrowUp } from "lucide-react";
+import { Instagram, Mail, MessageCircle, ArrowUp, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, mailtoUrl, whatsappUrl } from "@/lib/site";
 
@@ -23,30 +23,46 @@ export function Footer() {
   return (
     <footer className="relative mt-32 border-t border-white/5 bg-[#0e0e0e]">
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div>
-            <Logo />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-muted-foreground">
-              An atelier of hyper-realistic pencil art by {SITE.artist}. Commissioned portraits,
-              heirlooms and collector pieces — hand-drawn with obsessive detail.
-            </p>
-            <div className="mt-6 flex items-center gap-3">
+        <div className="grid gap-14 md:grid-cols-2 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <h4 className="text-xs tracking-[0.3em] uppercase text-gold-light">Studio</h4>
+            <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
               {socials.map((s) => (
-                <a
-                  key={s.label}
-                  href={s.href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={`${s.label} — ${SITE.name}`}
-                  className="grid h-11 w-11 place-items-center rounded-full border border-white/10 text-gold-light transition-colors hover:border-gold-light hover:bg-white/[0.04]"
-                >
-                  <s.icon size={16} />
-                </a>
+                <li key={s.label}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    aria-label={`${s.label} — ${s.value}`}
+                    className="group flex items-center gap-3 rounded-full border border-white/[0.07] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-light/50 hover:bg-white/[0.05] hover:text-gold-light"
+                  >
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 text-gold transition-colors group-hover:border-gold-light group-hover:text-gold-light">
+                      <s.icon size={14} />
+                    </span>
+                    <span className="min-w-0 truncate">{s.value}</span>
+                    <ArrowRight
+                      size={13}
+                      className="ml-auto shrink-0 opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:opacity-100"
+                    />
+                  </a>
+                </li>
               ))}
-            </div>
+              <li>
+                <Link
+                  to="/contact"
+                  className="group flex items-center gap-3 rounded-full border border-gold-light/25 px-4 py-3 text-gold-light transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-light hover:bg-white/[0.05]"
+                >
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-gold-light/30">
+                    <ArrowRight size={14} />
+                  </span>
+                  Contact the studio
+                </Link>
+              </li>
+              <li className="pt-2 text-xs">{SITE.location}</li>
+            </ul>
           </div>
 
-          <div>
+          <div className="lg:col-span-3 lg:col-start-6">
             <h4 className="text-xs tracking-[0.3em] uppercase text-gold-light">Explore</h4>
             <ul className="mt-6 space-y-3 text-sm text-muted-foreground">
               {explore.map(([to, label]) => (
@@ -59,33 +75,14 @@ export function Footer() {
             </ul>
           </div>
 
-          <div>
-            <h4 className="text-xs tracking-[0.3em] uppercase text-gold-light">Studio</h4>
-            <ul className="mt-6 space-y-4 text-sm text-muted-foreground">
-              {socials.map((s) => (
-                <li key={s.label}>
-                  <a
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="flex items-center gap-3 break-all transition-colors hover:text-gold-light"
-                  >
-                    <s.icon size={14} className="shrink-0 text-gold" /> {s.value}
-                  </a>
-                </li>
-              ))}
-              <li className="pt-1 text-xs">{SITE.location}</li>
-            </ul>
-          </div>
-
-          <div>
+          <div className="lg:col-span-4">
             <h4 className="text-xs tracking-[0.3em] uppercase text-gold-light">Newsletter</h4>
-            <p className="mt-6 text-sm text-muted-foreground">
+            <p className="mt-6 text-sm leading-relaxed text-muted-foreground">
               Private previews of new commissions, straight to your inbox.
             </p>
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="mt-4 flex overflow-hidden rounded-full border border-white/10 bg-white/[0.02]"
+              className="mt-5 flex w-full max-w-sm items-stretch overflow-hidden rounded-full border border-white/10 bg-white/[0.03] focus-within:border-gold-light/60"
             >
               <label className="sr-only" htmlFor="newsletter-email">
                 Email address
@@ -96,13 +93,18 @@ export function Footer() {
                 required
                 maxLength={255}
                 placeholder="your@email.com"
-                className="flex-1 bg-transparent px-5 py-3 text-sm outline-none placeholder:text-muted-foreground"
+                className="min-w-0 flex-1 bg-transparent px-5 py-3 text-sm text-foreground outline-none placeholder:text-white/55"
               />
-              <button className="bg-gold-gradient px-5 text-sm font-medium text-[#121212]">
+              <button className="shrink-0 whitespace-nowrap rounded-full bg-gold-gradient px-6 text-sm font-medium text-[#121212] transition-transform duration-300 hover:brightness-110">
                 Join
               </button>
             </form>
-            <a href={whatsappUrl()} target="_blank" rel="noreferrer noopener" className="btn-ghost-gold mt-5 text-sm">
+            <a
+              href={whatsappUrl()}
+              target="_blank"
+              rel="noreferrer noopener"
+              className="btn-ghost-gold mt-5 text-sm"
+            >
               <MessageCircle size={14} /> Chat on WhatsApp
             </a>
           </div>
@@ -110,19 +112,31 @@ export function Footer() {
 
         <div className="hairline my-12" />
 
-        <div className="flex flex-col items-start justify-between gap-6 text-xs text-muted-foreground md:flex-row md:items-center">
-          <p>
-            © {new Date().getFullYear()} {SITE.name}. All rights reserved. · {SITE.tagline}
-          </p>
-          <div className="flex items-center gap-6">
-            <Link to="/admin-login" className="hover:text-gold-light">
+        <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
+          <div className="max-w-md">
+            <Logo />
+            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+              Hyper-realistic pencil art by {SITE.artist} — commissioned portraits and heirlooms,
+              hand-drawn with obsessive detail.
+            </p>
+            <p className="mt-4 text-xs text-muted-foreground/80">
+              © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+            </p>
+          </div>
+
+          <div className="flex items-center gap-5">
+            <Link
+              to="/admin-login"
+              className="text-[11px] tracking-wide text-muted-foreground/60 transition-colors hover:text-gold-light"
+            >
               Admin
             </Link>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 hover:border-gold-light hover:text-gold-light"
+              className="group inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs text-muted-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-light hover:text-gold-light"
             >
-              Back to top <ArrowUp size={12} />
+              Back to top{" "}
+              <ArrowUp size={12} className="transition-transform duration-300 group-hover:-translate-y-0.5" />
             </button>
           </div>
         </div>
