@@ -38,12 +38,12 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto grid h-20 max-w-7xl grid-cols-[1fr_auto_1fr] items-center px-6 lg:px-10">
-        <Link to="/" className="justify-self-start">
+      <div className="mx-auto grid h-20 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-7 px-6 lg:px-10">
+        <Link to="/" className="justify-self-end">
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-7 xl:flex 2xl:gap-10">
+        <nav className="hidden items-center gap-7 xl:flex">
           {links.map((l) => {
             const active = pathname === l.to || (l.to !== "/" && pathname.startsWith(l.to));
             return (
@@ -66,7 +66,7 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center justify-end gap-3">
+        <div className="flex items-center gap-3 justify-self-start">
           <div className="hidden md:block">
             <Link to="/order" className="btn-gold text-sm whitespace-nowrap">
               Order Sketch
