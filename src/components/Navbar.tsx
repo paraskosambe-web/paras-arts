@@ -43,14 +43,14 @@ export function Navbar() {
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-6 xl:flex">
+        <nav className="hidden items-center gap-7 2xl:gap-10 xl:flex">
           {links.map((l) => {
             const active = pathname === l.to || (l.to !== "/" && pathname.startsWith(l.to));
             return (
               <Link
                 key={l.to}
                 to={l.to}
-                className={`group relative text-[13px] font-medium tracking-[0.18em] uppercase transition-colors ${
+                className={`group relative whitespace-nowrap text-[13px] font-medium tracking-[0.16em] uppercase transition-colors ${
                   active ? "text-gold-light" : "text-white/75 hover:text-gold-light"
                 }`}
               >
@@ -66,12 +66,13 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 xl:ml-10 2xl:ml-14">
           <div className="hidden md:block">
             <Link to="/order" className="btn-gold text-sm whitespace-nowrap">
               Order Sketch
             </Link>
           </div>
+
           <button
             onClick={() => setOpen((v) => !v)}
             className="grid h-11 w-11 place-items-center rounded-full border border-white/10 text-gold-light xl:hidden"
