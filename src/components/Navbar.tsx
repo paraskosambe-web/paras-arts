@@ -38,7 +38,7 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto grid h-20 max-w-7xl grid-cols-[1fr_auto_1fr] items-center gap-7 px-6 lg:px-10">
+      <div className="mx-auto grid h-20 max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-7 px-6 lg:px-10">
         <Link to="/" className="justify-self-end">
           <Logo />
         </Link>
