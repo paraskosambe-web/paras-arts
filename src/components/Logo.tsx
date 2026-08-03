@@ -12,7 +12,7 @@ export function Logo({ compact = false }: { compact?: boolean }) {
       />
       {!compact && (
         <div className="flex flex-col leading-none">
-          <span className="font-display text-lg tracking-[0.18em] text-gold-gradient">
+          <span className="font-display text-lg leading-none tracking-[0.18em] text-gold-gradient">
             PARAS ARTS
           </span>
           <span className="mt-1 text-[10px] tracking-[0.2em] text-muted-foreground">
