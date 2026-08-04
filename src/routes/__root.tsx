@@ -140,7 +140,7 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       {!chromeless && <LoadingScreen />}
       {!chromeless && <Navbar />}
-      <main key={pathname} className={chromeless ? "" : "pt-20 animate-fade-in"}>
+      <main key={pathname} className={chromeless ? "" : "pt-16 animate-fade-in"}>
         <Outlet />
       </main>
       {!chromeless && <Footer />}

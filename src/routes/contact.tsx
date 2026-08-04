@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { api } from "@/lib/api";
+import { SITE, mailtoUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -39,27 +40,40 @@ function ContactPage() {
     }
   }
   return (
-    <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+    <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
       <SectionHeader eyebrow="Talk to the Studio" title="We reply personally." description="For commissions, press, wholesale or collaboration enquiries, please write below." />
 
-      <div className="mt-16 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
-        <div className="space-y-6">
+      <div className="mt-10 grid gap-8 lg:mt-16 lg:grid-cols-[1fr_1.2fr] lg:gap-10">
+        <div className="space-y-4 sm:space-y-6">
           {[
-            { i: Mail, k: "Email", v: "studio@parasarts.com" },
-            { i: Phone, k: "Phone", v: "+91 98765 43210" },
-            { i: Instagram, k: "Instagram", v: "@parasarts" },
-            { i: MapPin, k: "Studio", v: "Jaipur, Rajasthan · India" },
-          ].map((c) => (
-            <div key={c.k} className="flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-gold-gradient text-[#121212]">
-                <c.i size={16} />
+            { i: Mail, k: "Email", v: SITE.email, href: mailtoUrl() },
+            { i: Phone, k: "Phone", v: SITE.phoneDisplay, href: `tel:+${SITE.whatsapp}` },
+            { i: Instagram, k: "Instagram", v: SITE.instagramHandle, href: SITE.instagram },
+            { i: MapPin, k: "Studio", v: "Mumbai, Maharashtra · India", href: undefined },
+          ].map((c) => {
+            const Inner = (
+              <>
+                <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-gold-gradient text-[#121212]">
+                  <c.i size={16} />
+                </div>
+                <div className="min-w-0">
+                  <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">{c.k}</div>
+                  <div className="mt-1 break-words text-sm text-white/85 sm:text-base">{c.v}</div>
+                </div>
+              </>
+            );
+            const cls =
+              "flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-colors hover:border-gold-light/40 sm:p-6";
+            return c.href ? (
+              <a key={c.k} href={c.href} target="_blank" rel="noreferrer" className={cls}>
+                {Inner}
+              </a>
+            ) : (
+              <div key={c.k} className={cls}>
+                {Inner}
               </div>
-              <div>
-                <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">{c.k}</div>
-                <div className="mt-1 text-white/85">{c.v}</div>
-              </div>
-            </div>
-          ))}
+            );
+          })}
 
           <div className="overflow-hidden rounded-2xl gold-border">
             <div className="relative aspect-[16/10]">
@@ -68,7 +82,7 @@ function ContactPage() {
                 <div>
                   <MapPin size={28} className="mx-auto text-gold" />
                   <p className="mt-3 text-sm tracking-[0.3em] uppercase text-gold-light">Studio Location</p>
-                  <p className="mt-2 text-muted-foreground">Google Maps placeholder</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Mumbai, Maharashtra, India</p>
                 </div>
               </div>
               <div className="absolute inset-0 border border-white/5 opacity-50 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:40px_40px]" />
@@ -76,7 +90,7 @@ function ContactPage() {
           </div>
         </div>
 
-        <div className="rounded-3xl gold-border p-8 md:p-10">
+        <div className="rounded-3xl gold-border p-5 sm:p-8 md:p-10">
           {sent ? (
             <div className="py-16 text-center">
               <h3 className="font-display text-3xl">Message received.</h3>
