@@ -10,7 +10,24 @@ export const SITE = {
     "https://www.instagram.com/paras.arts.3313?igsh=MXI4bXRnNXhlbG9tdw==",
   instagramHandle: "@paras.arts.3313",
   location: "India · Commissions shipped worldwide",
+  upiId: "paraskosambe@oksbi",
+  advanceAmount: 200,
 } as const;
+
+/** UPI deep link for the advance payment (opens Google Pay / PhonePe / any UPI app). */
+export function upiPayUrl(
+  amount: number = SITE.advanceAmount,
+  note = "Paras Arts Sketch Order Advance",
+) {
+  const params = new URLSearchParams({
+    pa: SITE.upiId,
+    pn: SITE.name,
+    am: String(amount),
+    cu: "INR",
+    tn: note,
+  });
+  return `upi://pay?${params.toString()}`;
+}
 
 export function whatsappUrl(message = "Hello Paras Arts, I'd like to enquire about a commission.") {
   return `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(message.slice(0, 500))}`;
