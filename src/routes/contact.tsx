@@ -82,7 +82,7 @@ function ContactPage() {
                 <div>
                   <MapPin size={28} className="mx-auto text-gold" />
                   <p className="mt-3 text-sm tracking-[0.3em] uppercase text-gold-light">Studio Location</p>
-                  <p className="mt-2 text-muted-foreground">Google Maps placeholder</p>
+                  <p className="mt-2 text-sm text-muted-foreground">Mumbai, Maharashtra, India</p>
                 </div>
               </div>
               <div className="absolute inset-0 border border-white/5 opacity-50 [background-image:linear-gradient(rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.04)_1px,transparent_1px)] [background-size:40px_40px]" />
@@ -90,7 +90,7 @@ function ContactPage() {
           </div>
         </div>
 
-        <div className="rounded-3xl gold-border p-8 md:p-10">
+        <div className="rounded-3xl gold-border p-5 sm:p-8 md:p-10">
           {sent ? (
             <div className="py-16 text-center">
               <h3 className="font-display text-3xl">Message received.</h3>
