@@ -63,13 +63,69 @@ function OrderPage() {
 
   if (submitted) {
     return (
-      <div className="mx-auto max-w-2xl px-6 py-32 text-center">
+      <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6 sm:py-32">
         <div className="mx-auto grid h-20 w-20 place-items-center rounded-full bg-gold-gradient text-[#121212]">
           <Check size={32} />
         </div>
-        <h1 className="mt-8 font-display text-4xl">Your enquiry is with the studio.</h1>
+        <h1 className="mt-8 font-display text-3xl sm:text-4xl">
+          Order Details Submitted Successfully!
+        </h1>
         <p className="mt-4 text-muted-foreground">
-          We reply personally to every request within 24 hours. Meanwhile, please keep your reference photograph ready — we'll ask for it in the follow-up.
+          To confirm your sketch order, please pay ₹200 as an advance fee.
+        </p>
+
+        <div className="mt-10 rounded-3xl gold-border p-6 text-left sm:p-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">
+                Advance Amount
+              </div>
+              <div className="mt-1 font-display text-3xl text-gold-gradient">₹200</div>
+            </div>
+            <div className="text-right">
+              <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">UPI ID</div>
+              <div className="mt-1 text-sm text-white/85">{SITE.upiId}</div>
+            </div>
+          </div>
+
+          <a
+            href={upiPayUrl()}
+            onClick={() => setPayOpened(true)}
+            className="btn-gold mt-8 w-full justify-center"
+          >
+            Pay ₹200 Now
+          </a>
+
+          <p className="mt-4 text-xs text-muted-foreground">
+            Opens Google Pay, PhonePe, Paytm or any UPI app on your device. Note: Paras Arts Sketch
+            Order Advance.
+          </p>
+
+          {payOpened && !paidNoted && (
+            <div className="mt-6 rounded-2xl border border-gold-light/30 bg-white/[0.03] p-5">
+              <p className="text-sm text-white/85">
+                Please complete the ₹200 advance payment in your UPI app.
+              </p>
+              <button
+                type="button"
+                onClick={() => setPaidNoted(true)}
+                className="btn-ghost-gold mt-4 w-full justify-center sm:w-auto"
+              >
+                I've Paid
+              </button>
+            </div>
+          )}
+
+          {paidNoted && (
+            <div className="mt-6 rounded-2xl border border-gold-light/30 bg-white/[0.03] p-5 text-sm text-white/85">
+              Thank you — the studio will verify your ₹200 advance and confirm your commission by
+              email or WhatsApp within 24 hours.
+            </div>
+          )}
+        </div>
+
+        <p className="mt-8 text-xs text-muted-foreground">
+          Trouble paying? Message us on WhatsApp at {SITE.phoneDisplay} and we'll help.
         </p>
       </div>
     );
