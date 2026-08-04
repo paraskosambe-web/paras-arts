@@ -38,8 +38,8 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 px-4 sm:px-6 xl:gap-6 2xl:gap-8 lg:px-10">
-        <Link to="/" className="justify-self-end">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-10 xl:grid xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:gap-6 2xl:gap-8">
+        <Link to="/" className="min-w-0 xl:justify-self-end">
           <Logo />
         </Link>
 
@@ -66,7 +66,7 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex items-center gap-3 justify-self-start">
+        <div className="flex shrink-0 items-center gap-3 xl:justify-self-start">
           <div className="hidden md:block">
             <Link to="/order" className="btn-gold text-sm whitespace-nowrap">
               Order Sketch
