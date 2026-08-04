@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Check, Upload } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { api } from "@/lib/api";
+import { SITE, upiPayUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/order")({
   head: () => ({
@@ -41,6 +42,8 @@ const inputCls =
 function OrderPage() {
   const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [payOpened, setPayOpened] = useState(false);
+  const [paidNoted, setPaidNoted] = useState(false);
   const [error, setError] = useState("");
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
