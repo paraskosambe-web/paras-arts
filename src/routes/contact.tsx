@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Instagram, Mail, MapPin, Phone } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { api } from "@/lib/api";
+import { SITE, mailtoUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
