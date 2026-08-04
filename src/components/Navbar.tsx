@@ -38,19 +38,19 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto grid h-20 max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-7 px-6 lg:px-10">
+      <div className="mx-auto grid h-16 max-w-7xl grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-4 px-4 sm:px-6 xl:gap-6 2xl:gap-8 lg:px-10">
         <Link to="/" className="justify-self-end">
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-7 xl:flex">
+        <nav className="hidden items-center gap-5 xl:flex 2xl:gap-7">
           {links.map((l) => {
             const active = pathname === l.to || (l.to !== "/" && pathname.startsWith(l.to));
             return (
               <Link
                 key={l.to}
                 to={l.to}
-                className={`group relative whitespace-nowrap text-[13px] font-medium tracking-[0.16em] uppercase transition-colors ${
+                className={`group relative whitespace-nowrap text-[12px] font-medium tracking-[0.14em] uppercase transition-colors ${
                   active ? "text-gold-light" : "text-white/75 hover:text-gold-light"
                 }`}
               >
@@ -75,7 +75,7 @@ export function Navbar() {
 
           <button
             onClick={() => setOpen((v) => !v)}
-            className="grid h-11 w-11 place-items-center rounded-full border border-white/10 text-gold-light xl:hidden"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/10 text-gold-light xl:hidden"
             aria-label="Toggle menu"
           >
             {open ? <X size={18} /> : <Menu size={18} />}
