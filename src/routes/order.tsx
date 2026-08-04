@@ -76,15 +76,15 @@ function OrderPage() {
   }
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-24 lg:px-10">
+    <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
       <SectionHeader
         eyebrow="Begin Your Commission"
         title="Order a sketch"
         description="Share your details. Every enquiry is reviewed personally by the studio."
       />
 
-      <form onSubmit={onSubmit} className="mt-16 rounded-3xl gold-border p-8 md:p-12">
-        <div className="grid gap-6 md:grid-cols-2">
+      <form onSubmit={onSubmit} className="mt-10 rounded-3xl gold-border p-5 sm:p-8 lg:mt-16 md:p-12">
+        <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
           <Field label="Full name"><input required name="fullName" className={inputCls} placeholder="Your name" /></Field>
           <Field label="Email"><input required name="email" type="email" className={inputCls} placeholder="you@example.com" /></Field>
           <Field label="Phone"><input name="phone" className={inputCls} placeholder="+91 …" /></Field>
@@ -106,12 +106,12 @@ function OrderPage() {
           <Field label="Budget (INR)"><input name="budget" type="number" className={inputCls} placeholder="e.g. 8000" /></Field>
           <Field label="Preferred delivery date"><input name="preferredDate" type="date" className={inputCls} /></Field>
           <Field label="Reference image" span={2}>
-            <div className="flex items-center gap-4 rounded-xl border border-dashed border-white/15 bg-white/[0.02] px-5 py-6">
-              <div className="grid h-10 w-10 place-items-center rounded-full bg-gold-gradient text-[#121212]">
+            <div className="flex flex-col gap-4 rounded-xl border border-dashed border-white/15 bg-white/[0.02] px-4 py-5 sm:flex-row sm:items-center sm:px-5 sm:py-6">
+              <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gold-gradient text-[#121212]">
                 <Upload size={16} />
               </div>
-              <div className="flex-1">
-                <input name="referenceImage" type="file" accept="image/*" className="block text-sm text-white/70 file:mr-4 file:rounded-full file:border-0 file:bg-gold-gradient file:px-4 file:py-2 file:text-[#121212] file:text-xs file:tracking-[0.2em] file:uppercase" />
+              <div className="min-w-0 flex-1">
+                <input name="referenceImage" type="file" accept="image/*" className="block w-full max-w-full text-xs text-white/70 file:mr-3 file:rounded-full file:border-0 file:bg-gold-gradient file:px-3 file:py-2 file:text-[#121212] file:text-[10px] file:tracking-[0.2em] file:uppercase sm:text-sm sm:file:px-4 sm:file:text-xs" />
                 <p className="mt-2 text-xs text-muted-foreground">High-resolution, well-lit photograph works best.</p>
               </div>
             </div>
@@ -123,9 +123,9 @@ function OrderPage() {
 
         {error && <p className="mt-6 text-xs text-destructive">{error}</p>}
 
-        <div className="mt-10 flex items-center justify-between gap-4 border-t border-white/10 pt-8">
+        <div className="mt-10 flex flex-col items-start gap-4 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs text-muted-foreground">By submitting, you agree to be contacted by the studio.</p>
-          <button disabled={busy} type="submit" className="btn-gold">{busy ? "Submitting…" : "Submit enquiry"}</button>
+          <button disabled={busy} type="submit" className="btn-gold w-full justify-center sm:w-auto">{busy ? "Submitting…" : "Submit enquiry"}</button>
         </div>
       </form>
     </div>

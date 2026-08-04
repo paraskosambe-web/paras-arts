@@ -87,45 +87,53 @@ function HomePage() {
       {/* HERO */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 -z-10">
-          <img src={heroImg} alt="" className="h-full w-full object-cover" />
+          <img
+            src={heroImg}
+            alt=""
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            className="h-full w-full object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-[#121212]/70 via-[#121212]/60 to-[#121212]" />
           <div className="absolute inset-0 bg-[radial-gradient(700px_400px_at_20%_30%,rgba(201,138,43,0.25),transparent_60%)]" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-6 pt-24 pb-32 lg:px-10 lg:pt-40 lg:pb-48">
+        <div className="mx-auto max-w-7xl px-5 pt-16 pb-24 sm:px-6 sm:pt-24 sm:pb-32 lg:px-10 lg:pt-40 lg:pb-48">
           <div className="max-w-3xl animate-fade-up">
-            <div className="mb-6 inline-flex items-center gap-3 rounded-full border border-gold-light/30 bg-white/[0.03] px-4 py-2 text-[11px] tracking-[0.35em] uppercase text-gold-light backdrop-blur">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-light/30 bg-white/[0.03] px-3 py-1.5 text-[9px] tracking-[0.3em] uppercase text-gold-light backdrop-blur sm:mb-6 sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.35em]">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
               A Luxury Pencil-Art Atelier
             </div>
-            <h1 className="font-display text-5xl leading-[1.02] sm:text-6xl md:text-7xl lg:text-[6.5rem]">
+            <h1 className="font-display text-[2.35rem] leading-[1.06] sm:text-6xl md:text-7xl lg:text-[6.5rem] lg:leading-[1.02]">
               The art of{" "}
               <span className="text-gold-gradient italic">stillness</span>,
               <br className="hidden md:block" /> drawn by hand.
             </h1>
-            <p className="mt-8 max-w-xl text-lg leading-relaxed text-white/75">
+            <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 sm:mt-8 sm:text-lg">
               Paras Arts crafts museum-grade hyper-realistic pencil portraits — commissioned pieces for
               those who prefer their memories rendered with a lifetime of care.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-4">
-              <Link to="/order" className="btn-gold">
+            <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
+              <Link to="/order" className="btn-gold justify-center">
                 Commission a Sketch <ArrowRight size={16} />
               </Link>
-              <Link to="/portfolio" className="btn-ghost-gold">
+              <Link to="/portfolio" className="btn-ghost-gold justify-center">
                 View the Portfolio
               </Link>
             </div>
 
-            <div className="mt-16 grid max-w-lg grid-cols-3 gap-6 border-t border-white/10 pt-8">
+            <div className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-white/10 pt-6 sm:mt-16 sm:gap-6 sm:pt-8">
               {[["500+", "Commissions"], ["30+", "Countries"], ["7 yrs", "Studio"]].map(([n, l]) => (
                 <div key={l}>
-                  <div className="font-display text-3xl text-gold-gradient">{n}</div>
-                  <div className="mt-1 text-xs tracking-[0.25em] uppercase text-muted-foreground">{l}</div>
+                  <div className="font-display text-2xl text-gold-gradient sm:text-3xl">{n}</div>
+                  <div className="mt-1 text-[9px] tracking-[0.2em] uppercase text-muted-foreground sm:text-xs sm:tracking-[0.25em]">{l}</div>
                 </div>
               ))}
             </div>
           </div>
         </div>
+
 
         <a href="#featured" className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gold-light/70 animate-bounce">
           <ChevronDown />
