@@ -1,7 +1,56 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Mail, MessageCircle, ArrowUp, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Check, Instagram, Mail, MessageCircle, ArrowUp, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, mailtoUrl, whatsappUrl } from "@/lib/site";
+
+/** Newsletter sign-up. Confirms locally — no backend or database is involved. */
+function NewsletterForm() {
+  const [email, setEmail] = useState("");
+  const [joined, setJoined] = useState(false);
+
+  if (joined) {
+    return (
+      <div className="mt-5 flex w-full max-w-sm items-center gap-3 rounded-full border border-gold-light/40 bg-white/[0.04] px-5 py-3 text-sm text-gold-light">
+        <Check size={16} className="shrink-0" />
+        <span className="min-w-0 truncate">You're on the list — thank you.</span>
+      </div>
+    );
+  }
+
+  return (
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        if (!email.trim()) return;
+        setJoined(true);
+        setEmail("");
+      }}
+      className="mt-5 flex w-full max-w-sm items-stretch overflow-hidden rounded-full border border-white/10 bg-white/[0.03] focus-within:border-gold-light/60"
+    >
+      <label className="sr-only" htmlFor="newsletter-email">
+        Email address
+      </label>
+      <input
+        id="newsletter-email"
+        name="email"
+        type="email"
+        required
+        maxLength={255}
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="your@email.com"
+        className="min-w-0 flex-1 bg-transparent px-5 py-3 text-sm text-foreground outline-none placeholder:text-white/55"
+      />
+      <button
+        type="submit"
+        className="shrink-0 whitespace-nowrap rounded-full bg-gold-gradient px-6 text-sm font-medium text-[#121212] transition-all duration-300 hover:brightness-110"
+      >
+        Join
+      </button>
+    </form>
+  );
+}
 
 const explore = [
   ["/portfolio", "Portfolio"],
