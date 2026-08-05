@@ -48,10 +48,10 @@ const featured: { src: string; title: string; label: string; fit?: "cover" | "co
 
 
 const services = [
-  { icon: Brush, title: "Custom Portrait", desc: "One subject, timeless likeness — from favourite photographs to legacy commissions.", price: "from ₹4,800" },
-  { icon: Heart, title: "Couple Portrait", desc: "Anniversary and wedding heirlooms captured with romantic softness.", price: "from ₹7,500" },
-  { icon: Palette, title: "Family Portrait", desc: "Multi-figure ensemble studies designed to be passed down.", price: "from ₹12,000" },
-  { icon: Sparkles, title: "Pet Portrait", desc: "Every whisker, every gaze — a keepsake of your companion.", price: "from ₹5,200" },
+  { icon: Brush, title: "Custom Portrait", desc: "One subject, timeless likeness — from favourite photographs to legacy commissions.", price: "A4 from ₹1,000+" },
+  { icon: Heart, title: "Couple Portrait", desc: "Anniversary and wedding heirlooms captured with romantic softness.", price: "A4 from ₹3,000+" },
+  { icon: Palette, title: "Family Portrait", desc: "Multi-figure ensemble studies designed to be passed down.", price: "A4 from ₹5,000+" },
+  { icon: Sparkles, title: "Pet Portrait", desc: "Every whisker, every gaze — a keepsake of your companion.", price: "A4 from ₹2,000+" },
 ];
 
 const why = [
