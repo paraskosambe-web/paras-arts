@@ -60,6 +60,12 @@ const inputCls =
   "w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3.5 text-sm text-white outline-none placeholder:text-muted-foreground focus:border-gold-light/50 transition-colors";
 
 function OrderPage() {
+  const { service, size } = Route.useSearch();
+  const presetService =
+    SKETCH_TYPES.find((t) => t.toLowerCase() === (service ?? "").toLowerCase()) ?? SKETCH_TYPES[0];
+  const presetSize =
+    PAPER_SIZES.find((p) => p.startsWith((size ?? "").toUpperCase())) ?? PAPER_SIZES[0];
+
   const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
   const [payOpened, setPayOpened] = useState(false);
