@@ -5,7 +5,27 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { api } from "@/lib/api";
 import { SITE, upiPayUrl } from "@/lib/site";
 
+const SKETCH_TYPES = [
+  "Custom Portrait",
+  "Couple Portrait",
+  "Family Portrait",
+  "Pet Portrait",
+  "Car / Motorsports Sketch",
+  "Other",
+] as const;
+
+const PAPER_SIZES = [
+  "A4 · 210×297 mm",
+  "A3 · 297×420 mm",
+  "A2 · 420×594 mm",
+  "Custom",
+] as const;
+
 export const Route = createFileRoute("/order")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    service: typeof search.service === "string" ? search.service : undefined,
+    size: typeof search.size === "string" ? search.size : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Order a Sketch — Paras Arts" },
