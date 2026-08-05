@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TrackRouteImport } from './routes/track'
 import { Route as TestimonialsRouteImport } from './routes/testimonials'
 import { Route as ServicesRouteImport } from './routes/services'
-import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as OrderRouteImport } from './routes/order'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -45,11 +44,6 @@ const TestimonialsRoute = TestimonialsRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PortfolioRoute = PortfolioRouteImport.update({
@@ -153,7 +147,6 @@ export interface FileRoutesByFullPath {
   '/faq': typeof FaqRoute
   '/order': typeof OrderRoute
   '/portfolio': typeof PortfolioRouteWithChildren
-  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
   '/track': typeof TrackRoute
@@ -176,7 +169,6 @@ export interface FileRoutesByTo {
   '/faq': typeof FaqRoute
   '/order': typeof OrderRoute
   '/portfolio': typeof PortfolioRouteWithChildren
-  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
   '/track': typeof TrackRoute
@@ -201,7 +193,6 @@ export interface FileRoutesById {
   '/faq': typeof FaqRoute
   '/order': typeof OrderRoute
   '/portfolio': typeof PortfolioRouteWithChildren
-  '/pricing': typeof PricingRoute
   '/services': typeof ServicesRoute
   '/testimonials': typeof TestimonialsRoute
   '/track': typeof TrackRoute
@@ -227,7 +218,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/order'
     | '/portfolio'
-    | '/pricing'
     | '/services'
     | '/testimonials'
     | '/track'
@@ -250,7 +240,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/order'
     | '/portfolio'
-    | '/pricing'
     | '/services'
     | '/testimonials'
     | '/track'
@@ -274,7 +263,6 @@ export interface FileRouteTypes {
     | '/faq'
     | '/order'
     | '/portfolio'
-    | '/pricing'
     | '/services'
     | '/testimonials'
     | '/track'
@@ -299,7 +287,6 @@ export interface RootRouteChildren {
   FaqRoute: typeof FaqRoute
   OrderRoute: typeof OrderRoute
   PortfolioRoute: typeof PortfolioRouteWithChildren
-  PricingRoute: typeof PricingRoute
   ServicesRoute: typeof ServicesRoute
   TestimonialsRoute: typeof TestimonialsRoute
   TrackRoute: typeof TrackRoute
@@ -327,13 +314,6 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/portfolio': {
@@ -509,7 +489,6 @@ const rootRouteChildren: RootRouteChildren = {
   FaqRoute: FaqRoute,
   OrderRoute: OrderRoute,
   PortfolioRoute: PortfolioRouteWithChildren,
-  PricingRoute: PricingRoute,
   ServicesRoute: ServicesRoute,
   TestimonialsRoute: TestimonialsRoute,
   TrackRoute: TrackRoute,
