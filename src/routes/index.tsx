@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Award, Brush, ChevronDown, Clock, Gem, Heart, Palette, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Award, Brush, ChevronDown, Clock, Gem, Heart, Palette, Quote, ShieldCheck, Sparkles, Star, X } from "lucide-react";
 import { useState } from "react";
 import heroImg from "@/assets/hero.jpg";
 import gThor from "@/assets/gallery-thor.jpg.asset.json";
