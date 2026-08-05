@@ -82,6 +82,9 @@ const faqs = [
 ];
 
 function HomePage() {
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const open = lightbox !== null ? featured[lightbox] : null;
+
   return (
     <div>
       {/* HERO */}
