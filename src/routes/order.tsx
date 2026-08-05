@@ -5,7 +5,27 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { api } from "@/lib/api";
 import { SITE, upiPayUrl } from "@/lib/site";
 
+const SKETCH_TYPES = [
+  "Custom Portrait",
+  "Couple Portrait",
+  "Family Portrait",
+  "Pet Portrait",
+  "Car / Motorsports Sketch",
+  "Other",
+] as const;
+
+const PAPER_SIZES = [
+  "A4 · 210×297 mm",
+  "A3 · 297×420 mm",
+  "A2 · 420×594 mm",
+  "Custom",
+] as const;
+
 export const Route = createFileRoute("/order")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    service: typeof search.service === "string" ? search.service : undefined,
+    size: typeof search.size === "string" ? search.size : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "Order a Sketch — Paras Arts" },
@@ -40,6 +60,12 @@ const inputCls =
   "w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3.5 text-sm text-white outline-none placeholder:text-muted-foreground focus:border-gold-light/50 transition-colors";
 
 function OrderPage() {
+  const { service, size } = Route.useSearch();
+  const presetService =
+    SKETCH_TYPES.find((t) => t.toLowerCase() === (service ?? "").toLowerCase()) ?? SKETCH_TYPES[0];
+  const presetSize =
+    PAPER_SIZES.find((p) => p.startsWith((size ?? "").toUpperCase())) ?? PAPER_SIZES[0];
+
   const [submitted, setSubmitted] = useState(false);
   const [busy, setBusy] = useState(false);
   const [payOpened, setPayOpened] = useState(false);
@@ -151,15 +177,15 @@ function OrderPage() {
           <Field label="Address" span={2}><input name="address" className={inputCls} placeholder="Delivery address" /></Field>
           <Field label="Country"><input name="country" className={inputCls} placeholder="India" /></Field>
           <Field label="Sketch type">
-            <select name="sketchType" className={inputCls}>
-              {["Custom Portrait", "Couple Portrait", "Family Portrait", "Pet Portrait", "Car / Motorcycle", "Other"].map((o) => (
+            <select name="sketchType" defaultValue={presetService} className={inputCls}>
+              {SKETCH_TYPES.map((o) => (
                 <option key={o}>{o}</option>
               ))}
             </select>
           </Field>
           <Field label="Paper size">
-            <select name="paperSize" className={inputCls}>
-              {["A4 · 210×297 mm", "A3 · 297×420 mm", "A2 · 420×594 mm", "Custom"].map((o) => <option key={o}>{o}</option>)}
+            <select name="paperSize" defaultValue={presetSize} className={inputCls}>
+              {PAPER_SIZES.map((o) => <option key={o}>{o}</option>)}
             </select>
           </Field>
           <Field label="Budget (INR)"><input name="budget" type="number" className={inputCls} placeholder="e.g. 8000" /></Field>

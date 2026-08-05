@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Instagram, Mail, MapPin, Phone } from "lucide-react";
+import { Instagram, Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
 import { api } from "@/lib/api";
-import { SITE, mailtoUrl } from "@/lib/site";
+import { SITE, mailtoUrl, whatsappUrl } from "@/lib/site";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -46,10 +46,11 @@ function ContactPage() {
       <div className="mt-10 grid gap-8 lg:mt-16 lg:grid-cols-[1fr_1.2fr] lg:gap-10">
         <div className="space-y-4 sm:space-y-6">
           {[
-            { i: Mail, k: "Email", v: SITE.email, href: mailtoUrl() },
-            { i: Phone, k: "Phone", v: SITE.phoneDisplay, href: `tel:+${SITE.whatsapp}` },
-            { i: Instagram, k: "Instagram", v: SITE.instagramHandle, href: SITE.instagram },
-            { i: MapPin, k: "Studio", v: "Mumbai, Maharashtra · India", href: undefined },
+            { i: Mail, k: "Email", v: SITE.email, href: mailtoUrl(), external: false },
+            { i: MessageCircle, k: "WhatsApp", v: SITE.phoneDisplay, href: whatsappUrl(), external: true },
+            { i: Phone, k: "Phone", v: SITE.phoneDisplay, href: `tel:+${SITE.whatsapp}`, external: false },
+            { i: Instagram, k: "Instagram", v: SITE.instagramHandle, href: SITE.instagram, external: true },
+            { i: MapPin, k: "Studio", v: "Mumbai, Maharashtra · India", href: undefined, external: false },
           ].map((c) => {
             const Inner = (
               <>
@@ -65,7 +66,13 @@ function ContactPage() {
             const cls =
               "flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-colors hover:border-gold-light/40 sm:p-6";
             return c.href ? (
-              <a key={c.k} href={c.href} target="_blank" rel="noreferrer" className={cls}>
+              <a
+                key={c.k}
+                href={c.href}
+                aria-label={`${c.k} — ${c.v}`}
+                {...(c.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
+                className={cls}
+              >
                 {Inner}
               </a>
             ) : (

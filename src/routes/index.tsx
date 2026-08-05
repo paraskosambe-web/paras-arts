@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, ArrowUpRight, Award, Brush, ChevronDown, Clock, Gem, Heart, Palette, Quote, ShieldCheck, Sparkles, Star } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Award, Brush, ChevronDown, Clock, Gem, Heart, Palette, Quote, ShieldCheck, Sparkles, Star, X } from "lucide-react";
 import { useState } from "react";
 import heroImg from "@/assets/hero.jpg";
 import gThor from "@/assets/gallery-thor.jpg.asset.json";
@@ -48,10 +48,10 @@ const featured: { src: string; title: string; label: string; fit?: "cover" | "co
 
 
 const services = [
-  { icon: Brush, title: "Custom Portrait", desc: "One subject, timeless likeness — from favourite photographs to legacy commissions.", price: "from ₹4,800" },
-  { icon: Heart, title: "Couple Portrait", desc: "Anniversary and wedding heirlooms captured with romantic softness.", price: "from ₹7,500" },
-  { icon: Palette, title: "Family Portrait", desc: "Multi-figure ensemble studies designed to be passed down.", price: "from ₹12,000" },
-  { icon: Sparkles, title: "Pet Portrait", desc: "Every whisker, every gaze — a keepsake of your companion.", price: "from ₹5,200" },
+  { icon: Brush, title: "Custom Portrait", desc: "One subject, timeless likeness — from favourite photographs to legacy commissions.", price: "A4 from ₹1,000+" },
+  { icon: Heart, title: "Couple Portrait", desc: "Anniversary and wedding heirlooms captured with romantic softness.", price: "A4 from ₹3,000+" },
+  { icon: Palette, title: "Family Portrait", desc: "Multi-figure ensemble studies designed to be passed down.", price: "A4 from ₹5,000+" },
+  { icon: Sparkles, title: "Pet Portrait", desc: "Every whisker, every gaze — a keepsake of your companion.", price: "A4 from ₹2,000+" },
 ];
 
 const why = [
@@ -82,6 +82,9 @@ const faqs = [
 ];
 
 function HomePage() {
+  const [lightbox, setLightbox] = useState<number | null>(null);
+  const open = lightbox !== null ? featured[lightbox] : null;
+
   return (
     <div>
       {/* HERO */}
@@ -170,9 +173,11 @@ function HomePage() {
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((item, i) => (
             <Reveal key={item.title} delay={i * 60}>
-              <Link
-                to="/portfolio"
-                className="group relative block overflow-hidden rounded-2xl card-luxe"
+              <button
+                type="button"
+                onClick={() => setLightbox(i)}
+                aria-label={`View ${item.title} full size`}
+                className="group relative block w-full overflow-hidden rounded-2xl text-left card-luxe"
               >
                 <ArtworkImage
                   src={item.src}
@@ -184,11 +189,42 @@ function HomePage() {
                   <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{item.label} · №{String(i + 1).padStart(2, "0")}</div>
                   <div className="mt-2 font-display text-xl">{item.title}</div>
                 </div>
-              </Link>
+              </button>
             </Reveal>
           ))}
         </div>
       </section>
+
+      {/* GALLERY LIGHTBOX */}
+      {open && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={open.title}
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm sm:p-8"
+        >
+          <button
+            type="button"
+            onClick={() => setLightbox(null)}
+            aria-label="Close"
+            className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full border border-white/15 text-white/80 transition-colors hover:border-gold-light hover:text-gold-light sm:right-8 sm:top-8"
+          >
+            <X size={18} />
+          </button>
+          <figure className="max-h-full w-full max-w-4xl" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={open.src}
+              alt={`${open.title} — hand-drawn pencil sketch by Paras Arts`}
+              className="mx-auto max-h-[78vh] w-auto max-w-full rounded-2xl object-contain"
+            />
+            <figcaption className="mt-5 text-center">
+              <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{open.label}</div>
+              <div className="mt-1.5 font-display text-2xl">{open.title}</div>
+            </figcaption>
+          </figure>
+        </div>
+      )}
 
 
       {/* ABOUT — THE ARTIST */}
