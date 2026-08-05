@@ -6,7 +6,6 @@ import { SITE, mailtoUrl, whatsappUrl } from "@/lib/site";
 const explore = [
   ["/portfolio", "Portfolio"],
   ["/services", "Services"],
-  ["/pricing", "Pricing"],
   ["/order", "Order a Sketch"],
   ["/track", "Track Order"],
   ["/faq", "FAQ"],
