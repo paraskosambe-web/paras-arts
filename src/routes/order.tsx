@@ -171,15 +171,15 @@ function OrderPage() {
           <Field label="Address" span={2}><input name="address" className={inputCls} placeholder="Delivery address" /></Field>
           <Field label="Country"><input name="country" className={inputCls} placeholder="India" /></Field>
           <Field label="Sketch type">
-            <select name="sketchType" className={inputCls}>
-              {["Custom Portrait", "Couple Portrait", "Family Portrait", "Pet Portrait", "Car / Motorcycle", "Other"].map((o) => (
+            <select name="sketchType" defaultValue={presetService} className={inputCls}>
+              {SKETCH_TYPES.map((o) => (
                 <option key={o}>{o}</option>
               ))}
             </select>
           </Field>
           <Field label="Paper size">
-            <select name="paperSize" className={inputCls}>
-              {["A4 · 210×297 mm", "A3 · 297×420 mm", "A2 · 420×594 mm", "Custom"].map((o) => <option key={o}>{o}</option>)}
+            <select name="paperSize" defaultValue={presetSize} className={inputCls}>
+              {PAPER_SIZES.map((o) => <option key={o}>{o}</option>)}
             </select>
           </Field>
           <Field label="Budget (INR)"><input name="budget" type="number" className={inputCls} placeholder="e.g. 8000" /></Field>
