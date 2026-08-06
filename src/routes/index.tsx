@@ -102,7 +102,7 @@ function HomePage() {
           <div className="absolute inset-0 bg-[radial-gradient(700px_400px_at_20%_30%,rgba(201,138,43,0.25),transparent_60%)]" />
         </div>
 
-        <div className="mx-auto max-w-7xl px-5 pt-16 pb-24 sm:px-6 sm:pt-24 sm:pb-32 lg:px-10 lg:pt-40 lg:pb-48">
+        <div className="mx-auto max-w-7xl px-5 pt-6 pb-24 sm:px-6 sm:pt-10 sm:pb-32 lg:px-10 lg:pt-20 lg:pb-40">
           <div className="max-w-3xl animate-fade-up">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-light/30 bg-white/[0.03] px-3 py-1.5 text-[9px] tracking-[0.3em] uppercase text-gold-light backdrop-blur sm:mb-6 sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.35em]">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />

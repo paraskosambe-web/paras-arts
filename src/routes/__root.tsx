@@ -17,6 +17,7 @@ import { Footer } from "../components/Footer";
 import { LoadingScreen } from "../components/LoadingScreen";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { AiAssistant } from "../components/AiAssistant";
+import { LanguageProvider } from "../lib/i18n";
 
 function NotFoundComponent() {
   return (
@@ -138,6 +139,7 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <LanguageProvider>
       {!chromeless && <LoadingScreen />}
       {!chromeless && <Navbar />}
       <main key={pathname} className={chromeless ? "" : "pt-16 animate-fade-in"}>
@@ -146,6 +148,7 @@ function RootComponent() {
       {!chromeless && <Footer />}
       {!chromeless && <ScrollToTop />}
       {!chromeless && <AiAssistant />}
+      </LanguageProvider>
     </QueryClientProvider>
   );
 
