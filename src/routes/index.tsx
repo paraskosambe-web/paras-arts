@@ -16,6 +16,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
 import { ArtworkImage } from "@/components/ArtworkImage";
 import { Counter } from "@/components/Counter";
+import { useLang } from "@/lib/i18n";
 
 
 export const Route = createFileRoute("/")({
@@ -82,6 +83,7 @@ const faqs = [
 ];
 
 function HomePage() {
+  const { t } = useLang();
   const [lightbox, setLightbox] = useState<number | null>(null);
   const open = lightbox !== null ? featured[lightbox] : null;
 
