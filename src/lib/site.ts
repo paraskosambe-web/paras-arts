@@ -6,8 +6,7 @@ export const SITE = {
   email: "paraskosambe@gmail.com",
   phoneDisplay: "+91 91379 35311",
   whatsapp: "919137935311",
-  instagram:
-    "https://www.instagram.com/paras.arts.3313?igsh=MXI4bXRnNXhlbG9tdw==",
+  instagram: "https://www.instagram.com/paras.arts.3313/",
   instagramHandle: "@paras.arts.3313",
   location: "India · Commissions shipped worldwide",
   upiId: "paraskosambe@oksbi",

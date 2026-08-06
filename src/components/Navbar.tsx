@@ -2,24 +2,25 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Logo } from "./Logo";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useLang } from "@/lib/i18n";
 
 const links = [
-  { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/portfolio", label: "Portfolio" },
-  { to: "/services", label: "Services" },
-  
-  { to: "/testimonials", label: "Testimonials" },
-  { to: "/track", label: "Track" },
-  { to: "/faq", label: "FAQ" },
-  { to: "/contact", label: "Contact" },
-
+  { to: "/", key: "nav.home" },
+  { to: "/about", key: "nav.about" },
+  { to: "/portfolio", key: "nav.portfolio" },
+  { to: "/services", key: "nav.services" },
+  { to: "/testimonials", key: "nav.testimonials" },
+  { to: "/track", key: "nav.track" },
+  { to: "/faq", key: "nav.faq" },
+  { to: "/contact", key: "nav.contact" },
 ] as const;
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const { t } = useLang();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -38,12 +39,12 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-4 sm:px-6 lg:px-10 xl:grid xl:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] xl:gap-6 2xl:gap-8">
-        <Link to="/" className="min-w-0 xl:justify-self-end">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-10">
+        <Link to="/" className="min-w-0 shrink-0">
           <Logo />
         </Link>
 
-        <nav className="hidden items-center gap-5 xl:flex 2xl:gap-7">
+        <nav className="mx-auto hidden items-center gap-5 xl:flex xl:pl-10 2xl:gap-7 2xl:pl-16">
           {links.map((l) => {
             const active = pathname === l.to || (l.to !== "/" && pathname.startsWith(l.to));
             return (
@@ -54,9 +55,9 @@ export function Navbar() {
                   active ? "text-gold-light" : "text-white/75 hover:text-gold-light"
                 }`}
               >
-                {l.label}
+                {t(l.key)}
                 <span
-                  className={`absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-gold-gradient transition-transform duration-500 group-hover:scale-x-100 ${
+                  className={`absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 transition-transform duration-500 group-hover:scale-x-100 ${
                     active ? "scale-x-100" : ""
                   }`}
                   style={{ background: "linear-gradient(90deg, #e8c27a, #c98a2b)" }}
@@ -66,10 +67,12 @@ export function Navbar() {
           })}
         </nav>
 
-        <div className="flex shrink-0 items-center gap-3 xl:justify-self-start">
+        <div className="ml-auto flex shrink-0 items-center gap-3 xl:ml-0">
+          <LanguageSwitcher />
+
           <div className="hidden md:block">
-            <Link to="/order" className="btn-gold text-sm whitespace-nowrap">
-              Order Sketch
+            <Link to="/order" search={{}} className="btn-gold text-sm whitespace-nowrap">
+              {t("nav.order")}
             </Link>
           </div>
 
@@ -92,11 +95,11 @@ export function Navbar() {
                 to={l.to}
                 className="border-b border-white/5 py-4 text-sm tracking-[0.18em] uppercase text-white/80 hover:text-gold-light"
               >
-                {l.label}
+                {t(l.key)}
               </Link>
             ))}
-            <Link to="/order" className="btn-gold mt-6 w-full">
-              Order Sketch
+            <Link to="/order" search={{}} className="btn-gold mt-6 w-full">
+              {t("nav.order")}
             </Link>
           </nav>
         </div>
