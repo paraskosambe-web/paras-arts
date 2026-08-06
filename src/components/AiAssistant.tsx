@@ -3,6 +3,7 @@ import { MessageCircle, X, Send, Loader2 } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import logoMark from "@/assets/logo-mark.png.asset.json";
 import { SITE, whatsappUrl } from "@/lib/site";
+import { useLang } from "@/lib/i18n";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -35,6 +36,7 @@ function loadHistory(): ChatMessage[] {
 
 /** Floating Paras Arts studio assistant — one conversation, stored in this browser. */
 export function AiAssistant() {
+  const { t } = useLang();
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([GREETING]);
   const [input, setInput] = useState("");
