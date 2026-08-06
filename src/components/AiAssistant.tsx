@@ -124,12 +124,12 @@ export function AiAssistant() {
         aria-label={open ? "Close the Paras Arts assistant" : "Open the Paras Arts assistant"}
         aria-expanded={open}
         className="group fixed bottom-6 right-5 z-[90] grid h-14 w-14 place-items-center rounded-full text-[#121212] shadow-[0_10px_30px_-8px_rgba(201,138,43,0.65)] ring-1 ring-white/20 transition-all duration-500 hover:scale-[1.07] hover:shadow-[0_14px_40px_-8px_rgba(232,194,122,0.8)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold-light sm:right-6"
-        style={{
-          background: "linear-gradient(135deg, #f2d59a, #c98a2b)",
-          animation: open ? undefined : "float-soft 4.5s ease-in-out infinite",
-        }}
+        style={{ background: "linear-gradient(135deg, #f2d59a, #c98a2b)" }}
       >
-        <span className="transition-transform duration-500 group-hover:rotate-[8deg]">
+        <span
+          className="transition-transform duration-500 group-hover:rotate-[8deg]"
+          style={open ? undefined : { animation: "float-soft 4.5s ease-in-out infinite" }}
+        >
           {open ? <X size={22} /> : <MessageCircle size={22} />}
         </span>
         {!open && (
