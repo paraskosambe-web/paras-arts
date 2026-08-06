@@ -106,33 +106,33 @@ function HomePage() {
           <div className="max-w-3xl animate-fade-up">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-gold-light/30 bg-white/[0.03] px-3 py-1.5 text-[9px] tracking-[0.3em] uppercase text-gold-light backdrop-blur sm:mb-6 sm:gap-3 sm:px-4 sm:py-2 sm:text-[11px] sm:tracking-[0.35em]">
               <span className="h-1.5 w-1.5 rounded-full bg-gold animate-pulse" />
-              A Luxury Pencil-Art Atelier
+              {t("hero.badge")}
             </div>
             <h1 className="font-display text-[2.35rem] leading-[1.06] sm:text-6xl md:text-7xl lg:text-[6.5rem] lg:leading-[1.02]">
-              The art of{" "}
-              <span className="text-gold-gradient italic">stillness</span>,
-              <br className="hidden md:block" /> drawn by hand.
+              {t("hero.title1")}{" "}
+              <span className="text-gold-gradient italic">{t("hero.titleItalic")}</span>
+              {t("hero.title2")}
             </h1>
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-white/75 sm:mt-8 sm:text-lg">
-              Paras Arts crafts museum-grade hyper-realistic pencil portraits — commissioned pieces for
-              those who prefer their memories rendered with a lifetime of care.
+              {t("hero.sub")}
             </p>
             <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:items-center sm:gap-4">
               <Link to="/order" className="btn-gold justify-center">
-                Commission a Sketch <ArrowRight size={16} />
+                {t("hero.cta1")} <ArrowRight size={16} />
               </Link>
               <Link to="/portfolio" className="btn-ghost-gold justify-center">
-                View the Portfolio
+                {t("hero.cta2")}
               </Link>
             </div>
 
             <div className="mt-10 grid max-w-lg grid-cols-3 gap-4 border-t border-white/10 pt-6 sm:mt-16 sm:gap-6 sm:pt-8">
-              {[["500+", "Commissions"], ["30+", "Countries"], ["7 yrs", "Studio"]].map(([n, l]) => (
+              {[["500+", t("hero.stat1")], ["30+", t("hero.stat2")], ["7 yrs", t("hero.stat3")]].map(([n, l]) => (
                 <div key={l}>
                   <div className="font-display text-2xl text-gold-gradient sm:text-3xl">{n}</div>
                   <div className="mt-1 text-[9px] tracking-[0.2em] uppercase text-muted-foreground sm:text-xs sm:tracking-[0.25em]">{l}</div>
                 </div>
               ))}
+
             </div>
           </div>
         </div>
