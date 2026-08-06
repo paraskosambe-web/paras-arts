@@ -62,9 +62,9 @@ const explore = [
 ] as const;
 
 const socials = [
-  { icon: Instagram, label: "Instagram", value: SITE.instagramHandle, href: SITE.instagram },
-  { icon: MessageCircle, label: "WhatsApp", value: SITE.phoneDisplay, href: whatsappUrl() },
-  { icon: Mail, label: "Email", value: SITE.email, href: mailtoUrl() },
+  { icon: Instagram, label: "Instagram", value: SITE.instagramHandle, href: SITE.instagram, external: true },
+  { icon: MessageCircle, label: "WhatsApp", value: SITE.phoneDisplay, href: whatsappUrl(), external: true },
+  { icon: Mail, label: "Email", value: SITE.email, href: mailtoUrl(), external: false },
 ];
 
 export function Footer() {
@@ -79,11 +79,11 @@ export function Footer() {
                 <li key={s.label}>
                   <a
                     href={s.href}
-                    target="_blank"
-                    rel="noreferrer noopener"
+                    {...(s.external ? { target: "_blank", rel: "noreferrer noopener" } : {})}
                     aria-label={`${s.label} — ${s.value}`}
                     className="group flex items-center gap-3 rounded-full border border-white/[0.07] bg-white/[0.02] px-4 py-3 transition-all duration-300 hover:-translate-y-0.5 hover:border-gold-light/50 hover:bg-white/[0.05] hover:text-gold-light"
                   >
+
                     <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 text-gold transition-colors group-hover:border-gold-light group-hover:text-gold-light">
                       <s.icon size={14} />
                     </span>
