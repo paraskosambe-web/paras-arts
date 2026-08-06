@@ -22,9 +22,9 @@ const PAPER_SIZES = [
 ] as const;
 
 export const Route = createFileRoute("/order")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    service: typeof search.service === "string" ? search.service : undefined,
-    size: typeof search.size === "string" ? search.size : undefined,
+  validateSearch: (search: Record<string, unknown>): { service?: string; size?: string } => ({
+    ...(typeof search.service === "string" ? { service: search.service } : {}),
+    ...(typeof search.size === "string" ? { size: search.size } : {}),
   }),
   head: () => ({
     meta: [
