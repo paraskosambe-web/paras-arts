@@ -80,7 +80,7 @@ function AboutPage() {
             ].map(([k, v]) => (
               <li key={k} className="border-b border-white/10 pb-4">
                 <div className="text-xs tracking-[0.3em] uppercase text-gold-light">{tr(k)}</div>
-                <div className="mt-2">{tr(v)}</div>
+                <div className="mt-2">{v}</div>
               </li>
             ))}
           </ul>
