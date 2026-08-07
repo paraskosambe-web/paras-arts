@@ -17,26 +17,26 @@ import { Footer } from "../components/Footer";
 import { LoadingScreen } from "../components/LoadingScreen";
 import { ScrollToTop } from "../components/ScrollToTop";
 import { AiAssistant } from "../components/AiAssistant";
-import { LanguageProvider } from "../lib/i18n";
+import { LanguageProvider, useLang } from "../lib/i18n";
 
 function NotFoundComponent() {
+  const { tr } = useLang();
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="max-w-lg text-center">
         <div className="font-display text-[7rem] leading-none text-gold-gradient md:text-[10rem]">404</div>
         <h1 className="mt-2 font-display text-3xl text-foreground md:text-4xl">
-          This page has drifted away
+          {tr("This page has drifted away")}
         </h1>
         <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-          The page you're looking for doesn't exist — perhaps it was moved, renamed, or never
-          sketched. The gallery, however, is always open.
+          {tr("The page you're looking for doesn't exist — perhaps it was moved, renamed, or never sketched. The gallery, however, is always open.")}
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-3">
           <Link to="/" className="btn-gold">
-            Return to the studio
+            {tr("Return to the studio")}
           </Link>
           <Link to="/portfolio" className="btn-ghost-gold">
-            Browse the portfolio
+            {tr("Browse the portfolio")}
           </Link>
         </div>
       </div>

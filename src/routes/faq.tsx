@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/faq")({
   head: () => ({
@@ -43,16 +44,17 @@ const groups = [
 ];
 
 function FAQItem({ q, a }: { q: string; a: string }) {
+  const { tr } = useLang();
   const [open, setOpen] = useState(false);
   return (
     <div className={`border-b border-white/10 transition-colors ${open ? "bg-white/[0.02]" : ""}`}>
       <button onClick={() => setOpen((v) => !v)} className="flex w-full items-center justify-between gap-6 px-6 py-6 text-left">
-        <span className="font-display text-lg md:text-xl">{q}</span>
+        <span className="font-display text-lg md:text-xl">{tr(q)}</span>
         <ChevronDown className={`shrink-0 text-gold-light transition-transform ${open ? "rotate-180" : ""}`} size={18} />
       </button>
       <div className={`grid overflow-hidden px-6 transition-all duration-500 ${open ? "grid-rows-[1fr] pb-6 opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
         <div className="overflow-hidden">
-          <p className="text-sm leading-relaxed text-muted-foreground">{a}</p>
+          <p className="text-sm leading-relaxed text-muted-foreground">{tr(a)}</p>
         </div>
       </div>
     </div>
@@ -60,13 +62,14 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 function FAQPage() {
+  const { tr } = useLang();
   return (
     <div className="mx-auto max-w-4xl px-6 py-24 lg:px-10">
-      <SectionHeader eyebrow="Answered" title="Frequently asked questions" description="Everything you'd like to know before commissioning your first piece." />
+      <SectionHeader eyebrow={tr("Answered")} title={tr("Frequently asked questions")} description={tr("Everything you'd like to know before commissioning your first piece.")} />
       <div className="mt-16 space-y-10">
         {groups.map((g) => (
           <div key={g.title}>
-            <h3 className="mb-4 text-[11px] tracking-[0.4em] uppercase text-gold-light">{g.title}</h3>
+            <h3 className="mb-4 text-[11px] tracking-[0.4em] uppercase text-gold-light">{tr(g.title)}</h3>
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.01]">
               {g.items.map((i) => <FAQItem key={i.q} q={i.q} a={i.a} />)}
             </div>
@@ -74,8 +77,8 @@ function FAQPage() {
         ))}
       </div>
       <div className="mt-16 text-center">
-        <p className="text-muted-foreground">Still have a question?</p>
-        <Link to="/contact" className="btn-gold mt-4">Contact the studio</Link>
+        <p className="text-muted-foreground">{tr("Still have a question?")}</p>
+        <Link to="/contact" className="btn-gold mt-4">{tr("Contact the studio")}</Link>
       </div>
     </div>
   );

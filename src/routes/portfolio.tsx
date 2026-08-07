@@ -6,6 +6,7 @@ import { SectionHeader } from "@/components/SectionHeader";
 import { ArtworkImage } from "@/components/ArtworkImage";
 import { ArtworkSkeleton } from "@/components/Skeleton";
 import { Reveal } from "@/components/Reveal";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -33,6 +34,7 @@ const chip =
   "rounded-full border px-5 py-2.5 text-xs tracking-[0.2em] uppercase transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light";
 
 function PortfolioPage() {
+  const { tr } = useLang();
   const [q, setQ] = useState("");
   const [cat, setCat] = useState<(typeof categories)[number]>("All");
   const [med, setMed] = useState<(typeof mediums)[number]>("All");
@@ -87,9 +89,9 @@ function PortfolioPage() {
   return (
     <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
       <SectionHeader
-        eyebrow="The Portfolio"
-        title="A private gallery of commissions"
-        description="Search, filter and step inside — each piece is a story handed to us in a photograph and returned in graphite."
+        eyebrow={tr("The Portfolio")}
+        title={tr("A private gallery of commissions")}
+        description={tr("Search, filter and step inside — each piece is a story handed to us in a photograph and returned in graphite.")}
       />
 
       {/* CONTROLS */}
@@ -97,7 +99,7 @@ function PortfolioPage() {
         <div className="relative">
           <Search size={16} className="absolute left-5 top-1/2 -translate-y-1/2 text-gold-light" />
           <label className="sr-only" htmlFor="portfolio-search">
-            Search artworks
+            {tr("Search artworks")}
           </label>
           <input
             id="portfolio-search"
@@ -106,14 +108,14 @@ function PortfolioPage() {
               setQ(e.target.value);
               setPage(1);
             }}
-            placeholder="Search artworks, subjects or mediums…"
+            placeholder={tr("Search artworks, subjects or mediums…")}
             className="w-full rounded-full border border-white/10 bg-white/[0.03] py-4 pl-12 pr-5 text-sm outline-none placeholder:text-muted-foreground focus:border-gold-light/50"
           />
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <span className="mr-1 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-            Category
+            {tr("Category")}
           </span>
           {categories.map((c) => (
             <button
@@ -129,14 +131,14 @@ function PortfolioPage() {
                   : "border-white/10 text-white/70 hover:border-gold-light/40 hover:text-gold-light"
               }`}
             >
-              {c}
+              {tr(c)}
             </button>
           ))}
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
           <span className="mr-1 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-            Medium
+            {tr("Medium")}
           </span>
           {mediums.map((m) => (
             <button
@@ -152,12 +154,12 @@ function PortfolioPage() {
                   : "border-white/10 text-white/70 hover:border-gold-light/40 hover:text-gold-light"
               }`}
             >
-              {m}
+              {tr(m)}
             </button>
           ))}
 
           <span className="ml-auto mr-1 text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-            Sort
+            {tr("Sort")}
           </span>
           {sorts.map((s) => (
             <button
@@ -173,7 +175,7 @@ function PortfolioPage() {
                   : "border-white/10 text-white/60 hover:border-gold-light/40 hover:text-gold-light"
               }`}
             >
-              {s}
+              {tr(s)}
             </button>
           ))}
         </div>
@@ -217,13 +219,13 @@ function PortfolioPage() {
                         params={{ id: a.id }}
                         className="text-xs tracking-[0.3em] uppercase text-gold-light hover:text-gold"
                       >
-                        View details →
+                        {tr("View details →")}
                       </Link>
                       <Link
                         to="/order"
                         className="text-xs tracking-[0.3em] uppercase text-white/60 hover:text-gold-light"
                       >
-                        Order
+                        {tr("Order")}
                       </Link>
                     </div>
                   </div>
@@ -234,7 +236,7 @@ function PortfolioPage() {
 
       {!loading && filtered.length === 0 && (
         <div className="mt-24 text-center text-muted-foreground">
-          No artworks match those filters.
+          {tr("No artworks match those filters.")}
         </div>
       )}
 
@@ -244,7 +246,7 @@ function PortfolioPage() {
           <button
             disabled={page === 1}
             onClick={() => setPage((p) => Math.max(1, p - 1))}
-            aria-label="Previous page"
+            aria-label={tr("Previous page")}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronLeft size={16} />
@@ -266,7 +268,7 @@ function PortfolioPage() {
           <button
             disabled={page === totalPages}
             onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-            aria-label="Next page"
+            aria-label={tr("Next page")}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronRight size={16} />
@@ -286,7 +288,7 @@ function PortfolioPage() {
           <button
             className="absolute right-6 top-6 grid h-12 w-12 place-items-center rounded-full border border-white/20 text-white hover:border-gold-light hover:text-gold-light"
             onClick={() => setLightbox(null)}
-            aria-label="Close preview"
+            aria-label={tr("Close preview")}
           >
             <X size={18} />
           </button>
@@ -297,7 +299,7 @@ function PortfolioPage() {
               setZoomed(false);
               setLightbox((i) => (i === null ? i : (i - 1 + paged.length) % paged.length));
             }}
-            aria-label="Previous artwork"
+            aria-label={tr("Previous artwork")}
           >
             <ChevronLeft size={18} />
           </button>
@@ -308,7 +310,7 @@ function PortfolioPage() {
               setZoomed(false);
               setLightbox((i) => (i === null ? i : (i + 1) % paged.length));
             }}
-            aria-label="Next artwork"
+            aria-label={tr("Next artwork")}
           >
             <ChevronRight size={18} />
           </button>
@@ -335,13 +337,13 @@ function PortfolioPage() {
                 <button
                   onClick={() => setZoomed((z) => !z)}
                   className="btn-ghost-gold text-sm"
-                  aria-label={zoomed ? "Zoom out" : "Zoom in"}
+                  aria-label={zoomed ? tr("Zoom out") : tr("Zoom in")}
                 >
                   {zoomed ? <ZoomOut size={14} /> : <ZoomIn size={14} />}
-                  {zoomed ? "Zoom out" : "Zoom in"}
+                  {zoomed ? tr("Zoom out") : tr("Zoom in")}
                 </button>
                 <Link to="/portfolio/$id" params={{ id: active.id }} className="btn-gold text-sm">
-                  View details <ArrowRight size={14} />
+                  {tr("View details")} <ArrowRight size={14} />
                 </Link>
               </div>
             </div>

@@ -1,11 +1,20 @@
-import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import { PHRASES } from "./i18n-dicts";
 
 export type Lang = "en" | "hi" | "mr";
 
-export const LANGS: { code: Lang; label: string }[] = [
-  { code: "en", label: "English" },
-  { code: "hi", label: "हिंदी" },
-  { code: "mr", label: "मराठी" },
+export const LANGS: { code: Lang; label: string; short: string }[] = [
+  { code: "en", label: "English", short: "EN" },
+  { code: "hi", label: "हिंदी", short: "हि" },
+  { code: "mr", label: "मराठी", short: "मरा" },
 ];
 
 const STORAGE_KEY = "paras_arts_lang";
@@ -81,7 +90,7 @@ const mr: Dict = {
   "nav.services": "सेवा",
   "nav.testimonials": "अभिप्राय",
   "nav.track": "ट्रॅक",
-  "nav.faq": "प्रश्न",
+  "nav.faq": "प्रश्नोत्तरे",
   "nav.contact": "संपर्क",
   "nav.order": "स्केच ऑर्डर करा",
   "nav.language": "भाषा",
@@ -107,16 +116,36 @@ const mr: Dict = {
 
 const DICTS: Record<Lang, Dict> = { en, hi, mr };
 
-type Ctx = { lang: Lang; setLang: (l: Lang) => void; t: (key: string) => string };
+type Ctx = {
+  lang: Lang;
+  setLang: (l: Lang) => void;
+  /** Key-based lookup (legacy keys such as "nav.home"). */
+  t: (key: string) => string;
+  /** English-source lookup: tr("Order Now") → translated string, falls back to English. */
+  tr: (english: string) => string;
+};
 
-const LanguageContext = createContext<Ctx>({ lang: "en", setLang: () => {}, t: (k) => en[k] ?? k });
+/** Collapse newlines/indentation so JSX multi-line strings match dictionary keys. */
+function normalize(s: string) {
+  return s.replace(/\s+/g, " ").trim();
+}
+
+const LanguageContext = createContext<Ctx>({
+  lang: "en",
+  setLang: () => {},
+  t: (k) => en[k] ?? k,
+  tr: (s) => s,
+});
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
     const saved = window.localStorage.getItem(STORAGE_KEY) as Lang | null;
-    if (saved && saved in DICTS) setLangState(saved);
+    if (saved && saved in DICTS) {
+      setLangState(saved);
+      document.documentElement.lang = saved;
+    }
   }, []);
 
   const setLang = useCallback((l: Lang) => {
@@ -131,9 +160,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback((key: string) => DICTS[lang][key] ?? en[key] ?? key, [lang]);
 
-  return (
-    <LanguageContext.Provider value={{ lang, setLang, t }}>{children}</LanguageContext.Provider>
+  const tr = useCallback(
+    (english: string) => {
+      if (lang === "en") return english;
+      const entry = PHRASES[english] ?? PHRASES[normalize(english)];
+      return entry?.[lang] ?? english;
+    },
+    [lang],
   );
+
+  const value = useMemo(() => ({ lang, setLang, t, tr }), [lang, setLang, t, tr]);
+
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }
 
 export function useLang() {

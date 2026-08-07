@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { artworks } from "@/data/artworks";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/portfolio/$id")({
   loader: ({ params }) => {
@@ -17,29 +18,36 @@ export const Route = createFileRoute("/portfolio/$id")({
     ],
   }),
   component: ArtworkDetails,
-  notFoundComponent: () => (
-    <div className="mx-auto max-w-3xl px-6 py-32 text-center">
-      <h1 className="font-display text-4xl text-gold-gradient">Artwork not found</h1>
-      <p className="mt-4 text-muted-foreground">This piece may have moved or been retired from the public gallery.</p>
-      <Link to="/portfolio" className="btn-gold mt-8">Back to portfolio</Link>
-    </div>
-  ),
-  errorComponent: ({ reset }) => (
-    <div className="mx-auto max-w-3xl px-6 py-32 text-center">
-      <h1 className="font-display text-4xl">Something went wrong</h1>
-      <button onClick={reset} className="btn-gold mt-8">Try again</button>
-    </div>
-  ),
+  notFoundComponent: () => {
+    const { tr } = useLang();
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-32 text-center">
+        <h1 className="font-display text-4xl text-gold-gradient">{tr("Artwork not found")}</h1>
+        <p className="mt-4 text-muted-foreground">{tr("This piece may have moved or been retired from the public gallery.")}</p>
+        <Link to="/portfolio" className="btn-gold mt-8">{tr("Back to portfolio")}</Link>
+      </div>
+    );
+  },
+  errorComponent: ({ reset }) => {
+    const { tr } = useLang();
+    return (
+      <div className="mx-auto max-w-3xl px-6 py-32 text-center">
+        <h1 className="font-display text-4xl">{tr("Something went wrong")}</h1>
+        <button onClick={reset} className="btn-gold mt-8">{tr("Try again")}</button>
+      </div>
+    );
+  },
 });
 
 function ArtworkDetails() {
+  const { tr } = useLang();
   const { art } = Route.useLoaderData();
   const related = artworks.filter((a) => a.id !== art.id).slice(0, 3);
 
   return (
     <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
       <Link to="/portfolio" className="inline-flex items-center gap-2 text-xs tracking-[0.3em] uppercase text-gold-light hover:text-gold">
-        <ArrowLeft size={14} /> Portfolio
+        <ArrowLeft size={14} /> {tr("Portfolio")}
       </Link>
 
       <div className="mt-10 grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
@@ -62,27 +70,27 @@ function ArtworkDetails() {
             {[
               ["Medium", art.mediumDetail],
               ["Paper size", art.paperSize],
-              ["Type", "Original · One-of-One"],
-              ["Signed", "Yes · Verso"],
+              ["Type", tr("Original · One-of-One")],
+              ["Signed", tr("Yes · Verso")],
             ].map(([k, v]) => (
               <div key={k} className="flex items-baseline justify-between gap-8">
-                <dt className="text-xs tracking-[0.3em] uppercase text-muted-foreground">{k}</dt>
+                <dt className="text-xs tracking-[0.3em] uppercase text-muted-foreground">{tr(k)}</dt>
                 <dd className="text-right">{v}</dd>
               </div>
             ))}
           </dl>
 
           <div className="mt-10 flex flex-wrap gap-3">
-            <Link to="/order" className="btn-gold">Order Similar Sketch <ArrowRight size={16} /></Link>
-            <Link to="/contact" className="btn-ghost-gold">Ask a question</Link>
+            <Link to="/order" className="btn-gold">{tr("Order Similar Sketch")} <ArrowRight size={16} /></Link>
+            <Link to="/contact" className="btn-ghost-gold">{tr("Ask a question")}</Link>
           </div>
         </div>
       </div>
 
       <section className="mt-32">
         <div className="flex items-end justify-between">
-          <h2 className="font-display text-3xl md:text-4xl">Related works</h2>
-          <Link to="/portfolio" className="text-xs tracking-[0.3em] uppercase text-gold-light hover:text-gold">View all →</Link>
+          <h2 className="font-display text-3xl md:text-4xl">{tr("Related works")}</h2>
+          <Link to="/portfolio" className="text-xs tracking-[0.3em] uppercase text-gold-light hover:text-gold">{tr("View all →")}</Link>
         </div>
         <div className="mt-10 grid gap-6 sm:grid-cols-3">
           {related.map((a) => (

@@ -8,6 +8,7 @@ import art4 from "@/assets/art-4.jpg";
 import art5 from "@/assets/art-5.jpg";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/services")({
   head: () => ({
@@ -84,20 +85,21 @@ const services = [
 const inr = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function ServicesPage() {
+  const { tr } = useLang();
   const [size, setSize] = useState<SizeKey>("A4");
   const add = PAGE_SIZES.find((s) => s.key === size)!.add;
 
   return (
     <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
       <SectionHeader
-        eyebrow="Services & Pricing"
-        title="Every piece, handmade to last."
-        description="Every service below is a private commission — never a print, never digital. Choose your page size and the starting price updates instantly."
+        eyebrow={tr("Services & Pricing")}
+        title={tr("Every piece, handmade to last.")}
+        description={tr("Every service below is a private commission — never a print, never digital. Choose your page size and the starting price updates instantly.")}
       />
 
       {/* PAGE SIZE SELECTOR */}
       <div className="mt-10 flex flex-col items-center gap-4 lg:mt-14">
-        <span className="text-[10px] tracking-[0.35em] uppercase text-gold-light">Select page size</span>
+        <span className="text-[10px] tracking-[0.35em] uppercase text-gold-light">{tr("Select page size")}</span>
         <div
           role="radiogroup"
           aria-label="Page size"
@@ -131,7 +133,7 @@ function ServicesPage() {
           })}
         </div>
         <p className="text-xs text-muted-foreground">
-          {size === "A4" ? "Base size" : `A4 base price + ${inr(add)} for ${size}`}
+          {size === "A4" ? tr("Base size") : `${tr("A4 base price +")} ${inr(add)} ${tr("for")} ${size}`}
         </p>
       </div>
 
@@ -156,22 +158,22 @@ function ServicesPage() {
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gold-gradient text-[#121212]">
                     <s.icon size={18} />
                   </span>
-                  <h3 className="font-display text-2xl leading-tight sm:text-[26px]">{s.title}</h3>
+                  <h3 className="font-display text-2xl leading-tight sm:text-[26px]">{tr(s.title)}</h3>
                 </div>
 
-                <p className="mt-4 text-sm leading-relaxed text-white/75">{s.desc}</p>
+                <p className="mt-4 text-sm leading-relaxed text-white/75">{tr(s.desc)}</p>
 
                 <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/5 pt-5">
                   <div>
                     <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">
-                      {size} · Starts
+                      {size} · {tr("Starts")}
                     </div>
                     <div className="mt-1 font-display text-2xl text-gold-gradient">
                       {inr(s.base + add)}+
                     </div>
                   </div>
                   <div>
-                    <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">Delivery</div>
+                    <div className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground">{tr("Delivery")}</div>
                     <div className="mt-1.5 flex items-center gap-2 text-sm text-white/80">
                       <Clock size={14} className="text-gold" /> {s.delivery}
                     </div>
@@ -183,7 +185,7 @@ function ServicesPage() {
                   search={{ service: s.title, size }}
                   className="btn-gold mt-7 w-full justify-center"
                 >
-                  Order Now <ArrowRight size={16} />
+                  {tr("Order Now")} <ArrowRight size={16} />
                 </Link>
               </div>
             </div>
@@ -192,20 +194,20 @@ function ServicesPage() {
       </div>
 
       <div className="mt-12 rounded-3xl border border-white/10 bg-white/[0.02] p-6 text-center sm:p-10">
-        <p className="text-[11px] tracking-[0.3em] uppercase text-gold-light">Note</p>
+        <p className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{tr("Note")}</p>
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-          Prices may increase depending on the image and its complexity.
+          {tr("Prices may increase depending on the image and its complexity.")}
         </p>
       </div>
 
       <div className="mt-10 rounded-3xl gold-border p-8 text-center sm:p-14">
-        <h3 className="font-display text-2xl sm:text-3xl md:text-4xl">Not sure which service fits?</h3>
+        <h3 className="font-display text-2xl sm:text-3xl md:text-4xl">{tr("Not sure which service fits?")}</h3>
         <p className="mx-auto mt-4 max-w-xl text-sm text-muted-foreground sm:text-base">
-          Share your idea — we'll recommend the size, medium and timeline that best honours it.
+          {tr("Share your idea — we'll recommend the size, medium and timeline that best honours it.")}
         </p>
         <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link to="/contact" className="btn-ghost-gold justify-center">Talk to us</Link>
-          <Link to="/order" className="btn-gold justify-center">Order a sketch</Link>
+          <Link to="/contact" className="btn-ghost-gold justify-center">{tr("Talk to us")}</Link>
+          <Link to="/order" className="btn-gold justify-center">{tr("Order a sketch")}</Link>
         </div>
       </div>
     </div>
