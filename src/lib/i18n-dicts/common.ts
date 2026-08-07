@@ -68,4 +68,26 @@ export const commonPhrases: PhraseDict = {
     mr: "किंमत, डिलिव्हरी, साहित्याबद्दल विचारा…",
   },
   "Thinking…": { hi: "सोच रहे हैं…", mr: "विचार करत आहे…" },
+
+  // Footer extras
+  "Email address": { hi: "ईमेल पता", mr: "ईमेल पत्ता" },
+  "You're on the list — thank you.": {
+    hi: "आप सूची में शामिल हो गए हैं — धन्यवाद।",
+    mr: "तुम्ही यादीत सामील झाले आहात — धन्यवाद.",
+  },
+  "Private previews of new commissions, straight to your inbox.": {
+    hi: "नई कलाकृतियों की निजी झलक, सीधे आपके इनबॉक्स में।",
+    mr: "नवीन कलाकृतींची खासगी झलक, थेट तुमच्या इनबॉक्समध्ये.",
+  },
+  "Chat on WhatsApp": { hi: "व्हाट्सएप पर चैट करें", mr: "व्हॉट्सअ‍ॅपवर चॅट करा" },
+  "Track Order": { hi: "ऑर्डर ट्रैक करें", mr: "ऑर्डर ट्रॅक करा" },
+  "Back to top": { hi: "ऊपर जाएँ", mr: "वर जा" },
+  "Hyper-realistic pencil art by Paras Kosambe — commissioned portraits and heirlooms, hand-drawn with obsessive detail.": {
+    hi: "पारस कोसंबे द्वारा हाइपर-रियलिस्टिक पेंसिल कला — कमीशन किए गए पोर्ट्रेट और विरासत, बारीकी से हाथ से बनाए गए।",
+    mr: "पारस कोसंबे यांची हायपर-रिअ‍ॅलिस्टिक पेन्सिल कला — कमिशन केलेली पोर्ट्रेट्स आणि वारसा, अत्यंत बारकाईने हातांनी रेखाटलेली.",
+  },
+  "India · Commissions shipped worldwide": {
+    hi: "भारत · कमीशन दुनिया भर में भेजे जाते हैं",
+    mr: "भारत · कमिशन जगभर पाठवली जातात",
+  },
 };
