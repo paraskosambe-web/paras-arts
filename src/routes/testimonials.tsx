@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Star, Quote } from "lucide-react";
 import { SectionHeader } from "@/components/SectionHeader";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/testimonials")({
   head: () => ({
@@ -24,19 +25,20 @@ const reviews = [
 ];
 
 function TestimonialsPage() {
+  const { tr } = useLang();
   return (
     <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
       <SectionHeader
-        eyebrow="Praise"
-        title="Kind words from collectors"
-        description="Reviews from clients across three continents — each commission reflected back in their own words."
+        eyebrow={tr("Praise")}
+        title={tr("Kind words from collectors")}
+        description={tr("Reviews from clients across three continents — each commission reflected back in their own words.")}
       />
 
       <div className="mt-16 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {reviews.map((r) => (
           <div key={r.n} className="card-luxe p-8">
             <Quote size={28} className="text-gold" />
-            <p className="mt-6 leading-relaxed text-white/85">"{r.text}"</p>
+            <p className="mt-6 leading-relaxed text-white/85">"{tr(r.text)}"</p>
             <div className="mt-8 flex items-center gap-1 text-gold">
               {Array.from({ length: 5 }).map((_, i) => (
                 <Star key={i} size={12} fill="currentColor" />
@@ -44,7 +46,7 @@ function TestimonialsPage() {
             </div>
             <div className="mt-4 border-t border-white/10 pt-4">
               <div className="text-sm tracking-[0.25em] uppercase text-gold-light">{r.n}</div>
-              <div className="mt-1 text-xs text-muted-foreground">{r.role}</div>
+              <div className="mt-1 text-xs text-muted-foreground">{tr(r.role)}</div>
             </div>
           </div>
         ))}
