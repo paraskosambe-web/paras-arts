@@ -4,6 +4,7 @@ import { Search, PackageSearch, CheckCircle2, Clock, Loader2, XCircle, Hourglass
 import { SectionHeader } from "@/components/SectionHeader";
 import { api } from "@/lib/api";
 import { whatsappUrl } from "@/lib/site";
+import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/track")({
   head: () => ({
@@ -47,6 +48,7 @@ const inputCls =
   "w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3.5 text-sm outline-none placeholder:text-muted-foreground focus:border-gold-light/50";
 
 function TrackPage() {
+  const { tr } = useLang();
   const [email, setEmail] = useState("");
   const [orderId, setOrderId] = useState("");
   const [order, setOrder] = useState<Order | null>(null);
@@ -58,7 +60,7 @@ function TrackPage() {
     const cleanEmail = email.trim().slice(0, 255);
     const cleanId = orderId.trim().slice(0, 64);
     if (!/^\S+@\S+\.\S+$/.test(cleanEmail) || cleanId.length < 6) {
-      setError("Please enter the email you ordered with and your full order ID.");
+      setError(tr("Please enter the email you ordered with and your full order ID."));
       return;
     }
     setBusy(true);
@@ -73,7 +75,7 @@ function TrackPage() {
       const e2 = err as { response?: { data?: { message?: string } }; message?: string };
       setError(
         e2.response?.data?.message ??
-          "We couldn't find that commission. Check the details or message the studio.",
+          tr("We couldn't find that commission. Check the details or message the studio."),
       );
     } finally {
       setBusy(false);
@@ -86,9 +88,9 @@ function TrackPage() {
   return (
     <div className="mx-auto max-w-5xl px-6 py-24 lg:px-10">
       <SectionHeader
-        eyebrow="Order Tracking"
-        title="Where is my commission?"
-        description="Enter the email you ordered with and the order ID from your confirmation to see the live status."
+        eyebrow={tr("Order Tracking")}
+        title={tr("Where is my commission?")}
+        description={tr("Enter the email you ordered with and the order ID from your confirmation to see the live status.")}
       />
 
       <form
@@ -97,7 +99,7 @@ function TrackPage() {
       >
         <div>
           <label htmlFor="track-email" className="text-[10px] tracking-[0.3em] uppercase text-gold-light">
-            Email
+            {tr("Email")}
           </label>
           <input
             id="track-email"
@@ -105,28 +107,28 @@ function TrackPage() {
             value={email}
             maxLength={255}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@email.com"
+            placeholder={tr("you@email.com")}
             className={`mt-2 ${inputCls}`}
             required
           />
         </div>
         <div>
           <label htmlFor="track-id" className="text-[10px] tracking-[0.3em] uppercase text-gold-light">
-            Order ID
+            {tr("Order ID")}
           </label>
           <input
             id="track-id"
             value={orderId}
             maxLength={64}
             onChange={(e) => setOrderId(e.target.value)}
-            placeholder="e.g. 66f1c2a9b4d1e8f0a2c3d4e5"
+            placeholder={tr("e.g. 66f1c2a9b4d1e8f0a2c3d4e5")}
             className={`mt-2 ${inputCls}`}
             required
           />
         </div>
         <button type="submit" disabled={busy} className="btn-gold h-[52px] justify-center">
           {busy ? <Loader2 size={16} className="animate-spin" /> : <Search size={16} />}
-          Track
+          {tr("Track")}
         </button>
       </form>
 
@@ -134,7 +136,7 @@ function TrackPage() {
         <div className="mt-6 rounded-2xl border border-destructive/40 bg-destructive/10 px-6 py-4 text-sm text-white/80">
           {error}{" "}
           <a href={whatsappUrl("Hi, I'd like to check my order status.")} target="_blank" rel="noreferrer noopener" className="text-gold-light underline">
-            Message the studio
+            {tr("Message the studio")}
           </a>
         </div>
       )}
@@ -143,8 +145,8 @@ function TrackPage() {
         <div className="mt-10 rounded-3xl gold-border p-8 md:p-10">
           <div className="flex flex-wrap items-start justify-between gap-6">
             <div>
-              <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">Commission</div>
-              <h2 className="mt-2 font-display text-3xl">{order.sketchType ?? "Custom Sketch"}</h2>
+              <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">{tr("Commission")}</div>
+              <h2 className="mt-2 font-display text-3xl">{order.sketchType ?? tr("Custom Sketch")}</h2>
               <p className="mt-2 text-sm text-muted-foreground">
                 {order.fullName} · {order.paperSize ?? "—"} · ID {order._id}
               </p>
@@ -156,11 +158,11 @@ function TrackPage() {
                   : "bg-gold-gradient text-[#121212]"
               }`}
             >
-              {order.status}
+              {tr(order.status)}
             </div>
           </div>
 
-          <p className="mt-6 text-sm text-white/75">{META[order.status]?.note}</p>
+          <p className="mt-6 text-sm text-white/75">{tr(META[order.status]?.note ?? "")}</p>
 
           {!cancelled && (
             <ol className="mt-10 grid gap-4 sm:grid-cols-4">
@@ -176,7 +178,7 @@ function TrackPage() {
                   >
                     <Icon size={16} className={done ? "text-gold-light" : "text-white/30"} />
                     <div className={`mt-3 text-xs tracking-[0.2em] uppercase ${done ? "text-gold-light" : "text-white/40"}`}>
-                      {s}
+                      {tr(s)}
                     </div>
                   </li>
                 );
@@ -186,10 +188,10 @@ function TrackPage() {
 
           <div className="mt-10 flex flex-wrap gap-3 border-t border-white/10 pt-8">
             <a href={whatsappUrl(`Hi, an update on my order ${order._id}?`)} target="_blank" rel="noreferrer noopener" className="btn-gold text-sm">
-              Ask for an update
+              {tr("Ask for an update")}
             </a>
             <Link to="/portfolio" className="btn-ghost-gold text-sm">
-              Browse the portfolio
+              {tr("Browse the portfolio")}
             </Link>
           </div>
         </div>
@@ -199,8 +201,7 @@ function TrackPage() {
         <div className="mt-16 flex flex-col items-center gap-4 rounded-3xl border border-white/10 bg-white/[0.02] p-14 text-center">
           <PackageSearch size={28} className="text-gold-light" />
           <p className="max-w-md text-sm text-muted-foreground">
-            Your order ID is in the confirmation message from the studio. Lost it? Message us on
-            WhatsApp and we'll look it up for you.
+            {tr("Your order ID is in the confirmation message from the studio. Lost it? Message us on WhatsApp and we'll look it up for you.")}
           </p>
         </div>
       )}
