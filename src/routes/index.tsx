@@ -82,8 +82,24 @@ const faqs = [
   { q: "Can I request revisions?", a: "Two rounds of refinement are included at the proof stage before finishing. Structural changes are best resolved at the reference-approval step." },
 ];
 
+const marqueeItems = ["Hyper-Realistic Portraits", "Since 2019", "Handcrafted Commissions", "Shipped Worldwide", "Archival Graphite", "Signed Originals"];
+
+const journey: [string, string][] = [
+  ["2019", "First commissioned portrait — a family gift that turned a hobby into a calling."],
+  ["2021", "Full-time practice begins; hyper-realism becomes the signature style."],
+  ["2023", "Commissions cross borders, shipping framed originals internationally."],
+  ["Today", "Paras Arts — a one-artist studio built on patience, precision and trust."],
+];
+
+const desk: [string, string][] = [
+  ["Graphite", "Faber-Castell 9000 · Staedtler Mars Lumograph · Caran d'Ache Grafwood"],
+  ["Paper", "Fabriano Artistico · Strathmore 500 Series · Canson Bristol"],
+  ["Finish", "Archival fixative · Optional acid-free mounting · UV-safe framing"],
+  ["Delivery", "Foam-mounted, moisture-sealed, insured worldwide shipping"],
+];
+
 function HomePage() {
-  const { t } = useLang();
+  const { t, tr } = useLang();
   const [lightbox, setLightbox] = useState<number | null>(null);
   const open = lightbox !== null ? featured[lightbox] : null;
 
@@ -149,9 +165,9 @@ function HomePage() {
       <div className="border-y border-white/5 bg-[#0f0f0f] py-6 overflow-hidden">
         <div className="flex gap-16 whitespace-nowrap animate-marquee">
           {[...Array(2)].flatMap((_, i) =>
-            ["Hyper-Realistic Portraits", "Since 2019", "Handcrafted Commissions", "Shipped Worldwide", "Archival Graphite", "Signed Originals"].map((t, j) => (
+            marqueeItems.map((mt, j) => (
               <span key={`${i}-${j}`} className="flex items-center gap-16 text-sm tracking-[0.35em] uppercase text-white/40">
-                {t} <span className="text-gold">✦</span>
+                {tr(mt)} <span className="text-gold">✦</span>
               </span>
             )),
           )}
@@ -163,12 +179,12 @@ function HomePage() {
         <div className="flex flex-wrap items-end justify-between gap-6">
           <SectionHeader
             align="left"
-            eyebrow="Selected Works"
-            title="A private gallery"
-            description="A curated glimpse into recent commissions. Every piece is one-of-one, drawn entirely by hand on archival paper."
+            eyebrow={tr("Selected Works")}
+            title={tr("A private gallery")}
+            description={tr("A curated glimpse into recent commissions. Every piece is one-of-one, drawn entirely by hand on archival paper.")}
           />
           <Link to="/portfolio" className="btn-ghost-gold">
-            Enter the Portfolio <ArrowUpRight size={16} />
+            {tr("Enter the Portfolio")} <ArrowUpRight size={16} />
           </Link>
         </div>
 
@@ -188,7 +204,7 @@ function HomePage() {
                 />
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 p-6">
-                  <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{item.label} · №{String(i + 1).padStart(2, "0")}</div>
+                  <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{tr(item.label)} · №{String(i + 1).padStart(2, "0")}</div>
                   <div className="mt-2 font-display text-xl">{item.title}</div>
                 </div>
               </button>
@@ -221,7 +237,7 @@ function HomePage() {
               className="mx-auto max-h-[78vh] w-auto max-w-full rounded-2xl object-contain"
             />
             <figcaption className="mt-5 text-center">
-              <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{open.label}</div>
+              <div className="text-[11px] tracking-[0.3em] uppercase text-gold-light">{tr(open.label)}</div>
               <div className="mt-1.5 font-display text-2xl">{open.title}</div>
             </figcaption>
           </figure>
@@ -232,14 +248,12 @@ function HomePage() {
       {/* ABOUT — THE ARTIST */}
       <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
         <div className="max-w-3xl">
-          <div className="text-[11px] tracking-[0.4em] uppercase text-gold-light">The Artist</div>
+          <div className="text-[11px] tracking-[0.4em] uppercase text-gold-light">{tr("The Artist")}</div>
           <h2 className="mt-4 font-display text-4xl leading-[1.05] md:text-6xl">
             Paras <span className="text-gold-gradient italic">Kosambe.</span>
           </h2>
           <p className="mt-6 text-lg leading-relaxed text-white/75">
-            Paras Kosambe is a self-taught pencil artist and the founder of Paras Arts. What began in 2019 as a
-            sketchbook habit became a practice devoted to one idea: that a handmade portrait can hold a memory
-            better than any photograph.
+            {tr("Paras Kosambe is a self-taught pencil artist and the founder of Paras Arts. What began in 2019 as a sketchbook habit became a practice devoted to one idea: that a handmade portrait can hold a memory better than any photograph.")}
           </p>
         </div>
 
@@ -253,17 +267,12 @@ function HomePage() {
             />
           </div>
           <div className="flex flex-col justify-center lg:col-span-3">
-            <SectionHeader align="left" eyebrow="In his words" title="I draw slowly, on purpose." />
+            <SectionHeader align="left" eyebrow={tr("In his words")} title={tr("I draw slowly, on purpose.")} />
             <p className="mt-6 leading-relaxed text-white/75">
-              "Every commission starts with sitting quietly with a photograph until I understand the person in it —
-              the way light falls on a cheekbone, the tension in a smile, the story hiding in the eyes. Only then
-              does the first line go down. From there it is thousands of small decisions, layered in graphite over
-              many days."
+              {tr("\"Every commission starts with sitting quietly with a photograph until I understand the person in it — the way light falls on a cheekbone, the tension in a smile, the story hiding in the eyes. Only then does the first line go down. From there it is thousands of small decisions, layered in graphite over many days.\"")}
             </p>
             <p className="mt-4 leading-relaxed text-white/75">
-              "I still work alone, and I keep the studio small on purpose. I take a limited number of pieces each
-              month so nothing is rushed and nothing is repeated. Every frame that leaves my desk carries a name I
-              remember."
+              {tr("\"I still work alone, and I keep the studio small on purpose. I take a limited number of pieces each month so nothing is rushed and nothing is repeated. Every frame that leaves my desk carries a name I remember.\"")}
             </p>
             <div className="mt-8 font-display text-2xl text-gold-gradient">— Paras Kosambe</div>
           </div>
@@ -271,32 +280,22 @@ function HomePage() {
 
         <div className="mt-20 grid gap-16 md:grid-cols-2">
           <div>
-            <SectionHeader align="left" eyebrow="The Journey" title="From sketchbook to studio." />
+            <SectionHeader align="left" eyebrow={tr("The Journey")} title={tr("From sketchbook to studio.")} />
             <ul className="mt-6 space-y-4 text-white/75">
-              {[
-                ["2019", "First commissioned portrait — a family gift that turned a hobby into a calling."],
-                ["2021", "Full-time practice begins; hyper-realism becomes the signature style."],
-                ["2023", "Commissions cross borders, shipping framed originals internationally."],
-                ["Today", "Paras Arts — a one-artist studio built on patience, precision and trust."],
-              ].map(([k, v]) => (
+              {journey.map(([k, v]) => (
                 <li key={k} className="border-b border-white/10 pb-4">
-                  <div className="text-xs tracking-[0.3em] uppercase text-gold-light">{k}</div>
-                  <div className="mt-2">{v}</div>
+                  <div className="text-xs tracking-[0.3em] uppercase text-gold-light">{tr(k)}</div>
+                  <div className="mt-2">{tr(v)}</div>
                 </li>
               ))}
             </ul>
           </div>
           <div>
-            <SectionHeader align="left" eyebrow="His Hands" title="What sits on the desk." />
+            <SectionHeader align="left" eyebrow={tr("His Hands")} title={tr("What sits on the desk.")} />
             <ul className="mt-6 space-y-4 text-white/75">
-              {[
-                ["Graphite", "Faber-Castell 9000 · Staedtler Mars Lumograph · Caran d'Ache Grafwood"],
-                ["Paper", "Fabriano Artistico · Strathmore 500 Series · Canson Bristol"],
-                ["Finish", "Archival fixative · Optional acid-free mounting · UV-safe framing"],
-                ["Delivery", "Foam-mounted, moisture-sealed, insured worldwide shipping"],
-              ].map(([k, v]) => (
+              {desk.map(([k, v]) => (
                 <li key={k} className="border-b border-white/10 pb-4">
-                  <div className="text-xs tracking-[0.3em] uppercase text-gold-light">{k}</div>
+                  <div className="text-xs tracking-[0.3em] uppercase text-gold-light">{tr(k)}</div>
                   <div className="mt-2">{v}</div>
                 </li>
               ))}
@@ -317,7 +316,7 @@ function HomePage() {
                   suffix={s.suffix}
                   className="font-display text-5xl text-gold-gradient md:text-6xl"
                 />
-                <div className="mt-3 text-xs tracking-[0.3em] uppercase text-muted-foreground">{s.l}</div>
+                <div className="mt-3 text-xs tracking-[0.3em] uppercase text-muted-foreground">{tr(s.l)}</div>
               </div>
             ))}
           </div>
@@ -325,17 +324,17 @@ function HomePage() {
 
 
         <div className="mt-16 flex flex-wrap gap-4">
-          <Link to="/about" className="btn-gold">Read the full story <ArrowRight size={16} /></Link>
-          <Link to="/portfolio" className="btn-ghost-gold">See the portfolio</Link>
+          <Link to="/about" className="btn-gold">{tr("Read the full story")} <ArrowRight size={16} /></Link>
+          <Link to="/portfolio" className="btn-ghost-gold">{tr("See the portfolio")}</Link>
         </div>
       </section>
 
       {/* SERVICES */}
       <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
         <SectionHeader
-          eyebrow="What We Draw"
-          title="Signature commissions"
-          description="Four disciplines, one uncompromising standard."
+          eyebrow={tr("What We Draw")}
+          title={tr("Signature commissions")}
+          description={tr("Four disciplines, one uncompromising standard.")}
         />
         <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s) => (
@@ -343,12 +342,12 @@ function HomePage() {
               <div className="grid h-14 w-14 place-items-center rounded-2xl bg-gold-gradient text-[#121212]">
                 <s.icon size={22} />
               </div>
-              <h3 className="mt-6 font-display text-2xl">{s.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.desc}</p>
+              <h3 className="mt-6 font-display text-2xl">{tr(s.title)}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tr(s.desc)}</p>
               <div className="mt-6 flex items-center justify-between border-t border-white/5 pt-5">
                 <span className="text-sm text-gold-light">{s.price}</span>
                 <Link to="/services" className="text-xs tracking-[0.3em] uppercase text-white/60 hover:text-gold-light">
-                  Explore →
+                  {tr("Explore →")}
                 </Link>
               </div>
             </div>
@@ -358,13 +357,13 @@ function HomePage() {
 
       {/* WHY */}
       <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-        <SectionHeader eyebrow="Why Paras Arts" title="Craft, not content." />
+        <SectionHeader eyebrow={tr("Why Paras Arts")} title={tr("Craft, not content.")} />
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {why.map((w) => (
             <div key={w.title} className="rounded-2xl border border-white/5 bg-white/[0.02] p-8 transition-colors hover:border-gold-light/30">
               <w.icon className="text-gold" size={28} />
-              <h4 className="mt-5 font-display text-xl">{w.title}</h4>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{w.desc}</p>
+              <h4 className="mt-5 font-display text-xl">{tr(w.title)}</h4>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tr(w.desc)}</p>
             </div>
           ))}
         </div>
@@ -372,13 +371,13 @@ function HomePage() {
 
       {/* HOW ORDERING WORKS */}
       <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-        <SectionHeader eyebrow="The Process" title="How ordering works" />
+        <SectionHeader eyebrow={tr("The Process")} title={tr("How ordering works")} />
         <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((s, i) => (
             <div key={s.n} className="relative card-luxe p-8">
               <div className="font-display text-6xl text-gold-gradient opacity-90">{s.n}</div>
-              <h4 className="mt-4 font-display text-2xl">{s.t}</h4>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.d}</p>
+              <h4 className="mt-4 font-display text-2xl">{tr(s.t)}</h4>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{tr(s.d)}</p>
               {i < steps.length - 1 && (
                 <div className="absolute top-1/2 right-0 hidden h-px w-6 translate-x-full bg-gold-light/40 lg:block" />
               )}
@@ -389,20 +388,20 @@ function HomePage() {
 
       {/* TESTIMONIALS */}
       <section className="mx-auto max-w-7xl px-6 py-28 lg:px-10">
-        <SectionHeader eyebrow="Praise" title="Words from clients" />
+        <SectionHeader eyebrow={tr("Praise")} title={tr("Words from clients")} />
         <TestimonialSlider items={testimonials} />
       </section>
 
       {/* FAQ */}
       <section className="mx-auto max-w-3xl px-6 py-28 lg:px-10">
-        <SectionHeader eyebrow="Answered" title="Frequently asked" />
+        <SectionHeader eyebrow={tr("Answered")} title={tr("Frequently asked")} />
         <div className="mt-12 divide-y divide-white/10 rounded-3xl border border-white/10 bg-white/[0.02]">
           {faqs.map((f) => (
             <FAQItem key={f.q} q={f.q} a={f.a} />
           ))}
         </div>
         <div className="mt-10 text-center">
-          <Link to="/faq" className="btn-ghost-gold">See all questions</Link>
+          <Link to="/faq" className="btn-ghost-gold">{tr("See all questions")}</Link>
         </div>
       </section>
 
@@ -412,15 +411,15 @@ function HomePage() {
           <div className="absolute inset-0 -z-10 bg-[radial-gradient(600px_300px_at_80%_20%,rgba(201,138,43,0.25),transparent_60%)]" />
           <div className="max-w-3xl">
             <h2 className="font-display text-4xl leading-tight sm:text-5xl md:text-6xl">
-              Turn a photograph into a{" "}
-              <span className="text-gold-gradient italic">forever piece.</span>
+              {tr("Turn a photograph into a")}{" "}
+              <span className="text-gold-gradient italic">{tr("forever piece.")}</span>
             </h2>
             <p className="mt-6 max-w-xl text-white/75">
-              Commissions are limited to preserve craftsmanship. Share your reference — we'll take it from there.
+              {tr("Commissions are limited to preserve craftsmanship. Share your reference — we'll take it from there.")}
             </p>
             <div className="mt-10 flex flex-wrap gap-4">
-              <Link to="/order" className="btn-gold">Order a Sketch <ArrowRight size={16} /></Link>
-              <Link to="/contact" className="btn-ghost-gold">Talk to the studio</Link>
+              <Link to="/order" className="btn-gold">{tr("Order a Sketch")} <ArrowRight size={16} /></Link>
+              <Link to="/contact" className="btn-ghost-gold">{tr("Talk to the studio")}</Link>
             </div>
           </div>
         </div>
@@ -430,6 +429,7 @@ function HomePage() {
 }
 
 function FAQItem({ q, a }: { q: string; a: string }) {
+  const { tr } = useLang();
   const [open, setOpen] = useState(false);
   return (
     <button
@@ -437,12 +437,12 @@ function FAQItem({ q, a }: { q: string; a: string }) {
       className="flex w-full flex-col items-start px-6 py-6 text-left"
     >
       <div className="flex w-full items-center justify-between gap-6">
-        <span className="font-display text-lg md:text-xl">{q}</span>
+        <span className="font-display text-lg md:text-xl">{tr(q)}</span>
         <ChevronDown className={`shrink-0 text-gold-light transition-transform ${open ? "rotate-180" : ""}`} size={18} />
       </div>
       <div className={`grid overflow-hidden transition-all duration-500 ${open ? "mt-4 grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"}`}>
         <div className="overflow-hidden">
-          <p className="text-sm leading-relaxed text-muted-foreground">{a}</p>
+          <p className="text-sm leading-relaxed text-muted-foreground">{tr(a)}</p>
         </div>
       </div>
     </button>
@@ -450,6 +450,7 @@ function FAQItem({ q, a }: { q: string; a: string }) {
 }
 
 function TestimonialSlider({ items }: { items: typeof testimonials }) {
+  const { tr } = useLang();
   const [i, setI] = useState(0);
   const t = items[i];
   return (
@@ -457,13 +458,13 @@ function TestimonialSlider({ items }: { items: typeof testimonials }) {
       <div className="mx-auto max-w-3xl text-center">
         <Quote className="mx-auto text-gold" size={40} />
         <blockquote className="mt-8 font-display text-2xl leading-relaxed sm:text-3xl">
-          "{t.text}"
+          "{tr(t.text)}"
         </blockquote>
         <div className="mt-8 flex items-center justify-center gap-1 text-gold">
           {Array.from({ length: t.stars }).map((_, k) => <Star key={k} size={14} fill="currentColor" />)}
         </div>
         <div className="mt-4 text-sm tracking-[0.3em] uppercase text-gold-light">{t.name}</div>
-        <div className="text-xs text-muted-foreground">{t.role}</div>
+        <div className="text-xs text-muted-foreground">{tr(t.role)}</div>
       </div>
       <div className="mt-10 flex items-center justify-center gap-3">
         {items.map((_, k) => (
