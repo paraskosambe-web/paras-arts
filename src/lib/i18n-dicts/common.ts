@@ -90,4 +90,12 @@ export const commonPhrases: PhraseDict = {
     hi: "भारत · कमीशन दुनिया भर में भेजे जाते हैं",
     mr: "भारत · कमिशन जगभर पाठवली जातात",
   },
+  // 404
+  "This page has drifted away": { hi: "यह पृष्ठ कहीं खो गया है", mr: "हे पान कुठेतरी हरवले आहे" },
+  "The page you're looking for doesn't exist — perhaps it was moved, renamed, or never sketched. The gallery, however, is always open.": {
+    hi: "आप जो पृष्ठ खोज रहे हैं वह मौजूद नहीं है — संभव है इसे हटाया गया, बदला गया, या कभी बनाया ही नहीं गया। गैलरी, फिर भी, हमेशा खुली है।",
+    mr: "तुम्ही शोधत असलेले पान अस्तित्वात नाही — शक्यतो ते हलवले, बदलले किंवा कधीच तयार झाले नाही. गॅलरी, तरीही, कायम खुली आहे.",
+  },
+  "Return to the studio": { hi: "स्टूडियो पर लौटें", mr: "स्टुडिओकडे परत जा" },
+  "Browse the portfolio": { hi: "पोर्टफ़ोलियो देखें", mr: "पोर्टफोलिओ पहा" },
 };

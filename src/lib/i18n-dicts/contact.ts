@@ -2,6 +2,8 @@ import type { PhraseDict } from "./index";
 
 /** Contact page phrases (English source -> hi / mr). */
 export const contactPhrases: PhraseDict = {
+  "Talk to the Studio": { hi: "स्टूडियो से बात करें", mr: "स्टुडिओशी बोला" },
+  "Send message": { hi: "संदेश भेजें", mr: "संदेश पाठवा" },
   "We reply personally.": { hi: "हम व्यक्तिगत रूप से जवाब देते हैं।", mr: "आम्ही वैयक्तिकरित्या उत्तर देतो." },
   "For commissions, press, wholesale or collaboration enquiries, please write below.": {
     hi: "कमीशन, प्रेस, थोक या सहयोग संबंधी पूछताछ के लिए, कृपया नीचे लिखें।",
