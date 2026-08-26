@@ -21,17 +21,26 @@ import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-    meta: [
-      { title: "Paras Arts — Luxury Hyper-Realistic Pencil Portraits" },
-      {
-        name: "description",
-        content:
-          "Commission a museum-grade pencil portrait. Custom, couple, family, pet and automotive art — handcrafted by Paras Arts.",
-      },
-      { property: "og:title", content: "Paras Arts — Luxury Hyper-Realistic Pencil Portraits" },
-      { property: "og:description", content: "Handcrafted pencil portraits for collectors and connoisseurs." },
-    ],
-  }),
+  meta: [
+    {
+      title: "Paras Arts | Custom Pencil Sketches & Digital Art",
+    },
+    {
+      name: "description",
+      content:
+        "Paras Arts creates custom pencil sketches, portraits, family portraits, pet sketches and digital artwork. Explore the portfolio or order a personalized sketch.",
+    },
+    {
+      property: "og:title",
+      content: "Paras Arts | Custom Pencil Sketches & Digital Art",
+    },
+    {
+      property: "og:description",
+      content:
+        "Custom pencil sketches, portraits and digital artwork handcrafted by Paras Arts.",
+    },
+  ],
+}),
   component: HomePage,
 });
 
