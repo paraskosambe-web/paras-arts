@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://paras-arts.vercel.app/sitemap.xml
