@@ -7,6 +7,7 @@ import {
   Star,
   Wrench,
   HelpCircle,
+  Newspaper,
   LogOut,
 } from "lucide-react";
 import { Logo } from "./Logo";
@@ -18,6 +19,7 @@ const items: Item[] = [
   { to: "/admin/artworks", label: "Artworks", icon: ImageIcon },
   { to: "/admin/orders", label: "Orders", icon: ShoppingBag },
   { to: "/admin/messages", label: "Messages", icon: Mail },
+  { to: "/admin/newsletter", label: "Newsletter", icon: Newspaper },
   { to: "/admin/testimonials", label: "Testimonials", icon: Star },
   { to: "/admin/services", label: "Services", icon: Wrench },
   { to: "/admin/faqs", label: "FAQs", icon: HelpCircle },
@@ -46,6 +48,7 @@ export function AdminSidebar() {
             <Link
               key={it.to}
               to={it.to as unknown as "/admin"}
+              preload="intent"
               className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all ${
                 active
                   ? "bg-gold-gradient text-[#121212]"

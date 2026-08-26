@@ -3,54 +3,99 @@ import { useState } from "react";
 import { Check, Instagram, Mail, MessageCircle, ArrowUp, ArrowRight } from "lucide-react";
 import { Logo } from "./Logo";
 import { SITE, mailtoUrl, whatsappUrl } from "@/lib/site";
+import { api } from "@/lib/api";
 import { useLang } from "@/lib/i18n";
 
 /** Newsletter sign-up. Confirms locally — no backend or database is involved. */
 function NewsletterForm() {
   const { tr } = useLang();
+
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!email.trim() || busy) return;
+
+    setBusy(true);
+    setError("");
+
+    try {
+      await api.post("/newsletter", {
+        email: email.trim(),
+      });
+
+      setJoined(true);
+      setEmail("");
+    } catch (err: any) {
+      if (err?.response?.status === 409) {
+        setError("This email is already subscribed.");
+      } else {
+        setError(
+          err?.response?.data?.message ||
+            "Something went wrong. Please try again."
+        );
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
 
   if (joined) {
     return (
       <div className="mt-5 flex w-full max-w-sm items-center gap-3 rounded-full border border-gold-light/40 bg-white/[0.04] px-5 py-3 text-sm text-gold-light">
         <Check size={16} className="shrink-0" />
-        <span className="min-w-0 truncate">{tr("You're on the list — thank you.")}</span>
+
+        <span className="min-w-0 truncate">
+          {tr("You're on the list — thank you.")}
+        </span>
       </div>
     );
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        if (!email.trim()) return;
-        setJoined(true);
-        setEmail("");
-      }}
-      className="mt-5 flex w-full max-w-sm items-stretch overflow-hidden rounded-full border border-white/10 bg-white/[0.03] focus-within:border-gold-light/60"
-    >
-      <label className="sr-only" htmlFor="newsletter-email">
-        {tr("Email address")}
-      </label>
-      <input
-        id="newsletter-email"
-        name="email"
-        type="email"
-        required
-        maxLength={255}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="your@email.com"
-        className="min-w-0 flex-1 bg-transparent px-5 py-3 text-sm text-foreground outline-none placeholder:text-white/55"
-      />
-      <button
-        type="submit"
-        className="shrink-0 whitespace-nowrap rounded-full bg-gold-gradient px-6 text-sm font-medium text-[#121212] transition-all duration-300 hover:brightness-110"
+    <div className="w-full max-w-sm">
+      <form
+        onSubmit={handleSubmit}
+        className="mt-5 flex w-full items-stretch overflow-hidden rounded-full border border-white/10 bg-white/[0.03] focus-within:border-gold-light/60"
       >
-        {tr("Join")}
-      </button>
-    </form>
+        <label
+          className="sr-only"
+          htmlFor="newsletter-email"
+        >
+          {tr("Email address")}
+        </label>
+
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          required
+          maxLength={255}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="your@email.com"
+          className="min-w-0 flex-1 bg-transparent px-5 py-3 text-sm text-foreground outline-none placeholder:text-white/55"
+        />
+
+        <button
+          type="submit"
+          disabled={busy}
+          className="shrink-0 whitespace-nowrap rounded-full bg-gold-gradient px-6 text-sm font-medium text-[#121212] transition-all duration-300 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
+        >
+          {busy ? "Joining…" : tr("Join")}
+        </button>
+      </form>
+
+      {error && (
+        <p className="mt-2 px-4 text-xs text-destructive">
+          {error}
+        </p>
+      )}
+    </div>
   );
 }
 

@@ -2,16 +2,16 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ArrowUpRight, Award, Brush, ChevronDown, Clock, Gem, Heart, Palette, Quote, ShieldCheck, Sparkles, Star, X } from "lucide-react";
 import { useState } from "react";
 import heroImg from "@/assets/hero.jpg";
-import gThor from "@/assets/gallery-thor.jpg.asset.json";
-import gStrange from "@/assets/gallery-strange.jpg.asset.json";
-import gKrishna from "@/assets/gallery-krishna.jpg.asset.json";
-import gGanesha from "@/assets/gallery-ganesha.jpg.asset.json";
-import gGaneshaTurban from "@/assets/gallery-ganesha-turban.jpg.asset.json";
-import gChild from "@/assets/gallery-child.jpg.asset.json";
-import gBmw from "@/assets/gallery-bmw.jpg.asset.json";
-import gPorsche from "@/assets/gallery-porsche.jpg.asset.json";
-import gRonaldo from "@/assets/gallery-ronaldo.jpg.asset.json";
-import artistImg from "@/assets/artist.jpg.asset.json";
+import gThor from "@/assets/thor.jpeg";
+import gStrange from "@/assets/strange.jpeg";
+import gKrishna from "@/assets/krishna.jpeg";
+import gGanesha from "@/assets/ganesha.jpeg";
+import gGaneshaTurban from "@/assets/ganpati1.jpeg";
+import gChild from "@/assets/krishna1.jpeg";
+import gBmw from "@/assets/bmw.jpeg";
+import gPorsche from "@/assets/porsche.jpeg";
+import gRonaldo from "@/assets/ronaldo.jpeg";
+import artistImg from "@/assets/paras-kosambe.jpeg";
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
 import { ArtworkImage } from "@/components/ArtworkImage";
@@ -36,15 +36,15 @@ export const Route = createFileRoute("/")({
 });
 
 const featured: { src: string; title: string; label: string; fit?: "cover" | "contain" }[] = [
-  { src: gThor.url, title: "The God of Thunder", label: "Graphite Study" },
-  { src: gGanesha.url, title: "Shree Ganesha", label: "Devotional Series" },
-  { src: gPorsche.url, title: "Porsche GT3", label: "Automotive", fit: "contain" },
-  { src: gKrishna.url, title: "Bal Krishna", label: "Devotional Series" },
-  { src: gStrange.url, title: "The Sorcerer", label: "Portrait" },
-  { src: gBmw.url, title: "BMW M4", label: "Automotive", fit: "contain" },
-  { src: gChild.url, title: "Innocence", label: "Portrait" },
-  { src: gGaneshaTurban.url, title: "Ganpati Bappa", label: "Devotional Series" },
-  { src: gRonaldo.url, title: "Cristiano Ronaldo", label: "Portrait" },
+  { src: gThor, title: "The God of Thunder", label: "Graphite Study" },
+  { src: gGanesha, title: "Shree Ganesha", label: "Devotional Series" },
+  { src: gPorsche, title: "Porsche GT3", label: "Automotive", fit: "contain" },
+  { src: gKrishna, title: "Bal Krishna", label: "Devotional Series" },
+  { src: gStrange, title: "Dr. Strange", label: "Portrait" },
+  { src: gBmw, title: "BMW M4", label: "Automotive", fit: "contain" },
+  { src: gChild, title: "Krishna with Kamadhenu", label: "Portrait" },
+  { src: gGaneshaTurban, title: "Ganpati Bappa", label: "Devotional Series" },
+  { src: gRonaldo, title: "Cristiano Ronaldo", label: "Portrait" },
 ];
 
 
@@ -260,7 +260,7 @@ function HomePage() {
         <div className="mt-16 grid items-stretch gap-10 lg:grid-cols-5">
           <div className="overflow-hidden rounded-3xl gold-border lg:col-span-2">
             <img
-              src={artistImg.url}
+              src={artistImg}
               alt="Paras Kosambe, founder and artist at Paras Arts"
               className="h-full w-full object-cover"
               loading="lazy"

@@ -1,12 +1,12 @@
-import gThor from "@/assets/gallery-thor.jpg.asset.json";
-import gStrange from "@/assets/gallery-strange.jpg.asset.json";
-import gKrishna from "@/assets/gallery-krishna.jpg.asset.json";
-import gGanesha from "@/assets/gallery-ganesha.jpg.asset.json";
-import gGaneshaTurban from "@/assets/gallery-ganesha-turban.jpg.asset.json";
-import gChild from "@/assets/gallery-child.jpg.asset.json";
-import gBmw from "@/assets/gallery-bmw.jpg.asset.json";
-import gPorsche from "@/assets/gallery-porsche.jpg.asset.json";
-import gRonaldo from "@/assets/gallery-ronaldo.jpg.asset.json";
+import gThor from "@/assets/thor.jpeg";
+import gStrange from "@/assets/strange.jpeg";
+import gKrishna from "@/assets/krishna.jpeg";
+import gGanesha from "@/assets/ganesha.jpeg";
+import gGaneshaTurban from "@/assets/ganpati1.jpeg";
+import gChild from "@/assets/krishna1.jpeg";
+import gBmw from "@/assets/bmw.jpeg";
+import gPorsche from "@/assets/porsche.jpeg";
+import gRonaldo from "@/assets/ronaldo.jpeg";
 
 export type Category = "Portrait" | "Cars" | "Animals" | "Devotional";
 export type Medium = "Graphite" | "Charcoal";
@@ -36,7 +36,7 @@ export const artworks: Artwork[] = [
     medium: "Graphite",
     mediumDetail: "Graphite on Archival Paper",
     paperSize: "A3 · 297 × 420 mm",
-    image: gThor.url,
+    image: gThor,
     description:
       "A cinematic character study built in fine 2H layers, with charcoal deepening the armour and storm-lit shadows.",
     popularity: 96,
@@ -49,7 +49,7 @@ export const artworks: Artwork[] = [
     medium: "Graphite",
     mediumDetail: "Graphite on 300gsm Archival Paper",
     paperSize: "A3 · 297 × 420 mm",
-    image: gGanesha.url,
+    image: gGanesha,
     description:
       "A devotional commission rendered with patient tonal work — ornament, cloth and gaze balanced in soft graphite.",
     popularity: 92,
@@ -62,7 +62,7 @@ export const artworks: Artwork[] = [
     medium: "Graphite",
     mediumDetail: "Graphite & Ink",
     paperSize: "A2 · 420 × 594 mm",
-    image: gPorsche.url,
+    image: gPorsche,
     description:
       "Chrome, carbon and reflection rendered in hyper-detail — a collector's piece for a favourite machine.",
     popularity: 88,
@@ -76,20 +76,20 @@ export const artworks: Artwork[] = [
     medium: "Charcoal",
     mediumDetail: "Charcoal & Graphite",
     paperSize: "A3 · 297 × 420 mm",
-    image: gKrishna.url,
+    image: gKrishna,
     description:
       "Charcoal softness across skin and jewellery, finished with graphite highlights for a luminous, serene face.",
     popularity: 85,
     year: 2024,
   },
   {
-    id: "the-sorcerer",
-    title: "The Sorcerer",
+    id: "Multiverse-Master",
+    title: "Dr. Strange",
     category: "Portrait",
     medium: "Charcoal",
     mediumDetail: "Charcoal on Bristol Paper",
     paperSize: "A3 · 297 × 420 mm",
-    image: gStrange.url,
+    image: gStrange,
     description:
       "High-contrast charcoal portraiture — every strand of beard and fold of cloth drawn by hand over many sittings.",
     popularity: 81,
@@ -102,7 +102,7 @@ export const artworks: Artwork[] = [
     medium: "Graphite",
     mediumDetail: "Graphite & Ink",
     paperSize: "A2 · 420 × 594 mm",
-    image: gBmw.url,
+    image: gBmw,
     description:
       "An automotive study of hard edges and mirrored light, drawn from the owner's own photographs.",
     popularity: 79,
@@ -110,15 +110,15 @@ export const artworks: Artwork[] = [
     fit: "contain",
   },
   {
-    id: "innocence",
-    title: "Innocence",
+    id: "krishna with kamdhenu",
+    title: "Krishna1",
     category: "Portrait",
     medium: "Graphite",
     mediumDetail: "Graphite on Archival Paper",
     paperSize: "A4 · 210 × 297 mm",
-    image: gChild.url,
+    image: gChild,
     description:
-      "A child portrait kept deliberately soft — the kind of frame that becomes a family heirloom.",
+      "Charcoal and graphite softness across skin and jewellery, finished with charcoal highlights.",
     popularity: 74,
     year: 2024,
   },
@@ -129,7 +129,7 @@ export const artworks: Artwork[] = [
     medium: "Graphite",
     mediumDetail: "Graphite on Archival Paper",
     paperSize: "A3 · 297 × 420 mm",
-    image: gGaneshaTurban.url,
+    image: gGaneshaTurban,
     description:
       "A regal devotional study — turban texture, embroidery and expression built up in dozens of graphite passes.",
     popularity: 71,
@@ -142,7 +142,7 @@ export const artworks: Artwork[] = [
     medium: "Graphite",
     mediumDetail: "Graphite Realism",
     paperSize: "A3 · 297 × 420 mm",
-    image: gRonaldo.url,
+    image: gRonaldo,
     description:
       "A sporting portrait focused on likeness and intensity — skin tone graded from 2H through 6B.",
     popularity: 68,

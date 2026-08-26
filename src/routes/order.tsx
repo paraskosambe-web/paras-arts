@@ -177,17 +177,31 @@ function OrderPage() {
           <Field label={tr("Address")} span={2}><input name="address" className={inputCls} placeholder={tr("Delivery address")} /></Field>
           <Field label={tr("Country")}><input name="country" className={inputCls} placeholder="India" /></Field>
           <Field label={tr("Sketch type")}>
-            <select name="sketchType" defaultValue={presetService} className={inputCls}>
-              {SKETCH_TYPES.map((o) => (
-                <option key={o}>{tr(o)}</option>
-              ))}
-            </select>
-          </Field>
+  <select
+    name="sketchType"
+    defaultValue={presetService}
+    className={inputCls}
+  >
+    {SKETCH_TYPES.map((o) => (
+      <option key={o} value={o} className="bg-[#121212] text-white">
+        {tr(o)}
+      </option>
+    ))}
+  </select>
+</Field>
           <Field label={tr("Paper size")}>
-            <select name="paperSize" defaultValue={presetSize} className={inputCls}>
-              {PAPER_SIZES.map((o) => <option key={o}>{o}</option>)}
-            </select>
-          </Field>
+            <select
+            name="paperSize"
+            defaultValue={presetSize}
+            className={inputCls}
+            >
+            {PAPER_SIZES.map((o) => (
+              <option key={o} value={o} className="bg-[#121212] text-white">
+              {o}
+              </option>
+              ))}
+          </select>
+</Field>
           <Field label={tr("Budget (INR)")}><input name="budget" type="number" className={inputCls} placeholder="e.g. 8000" /></Field>
           <Field label={tr("Preferred delivery date")}><input name="preferredDate" type="date" className={inputCls} /></Field>
           <Field label={tr("Reference image")} span={2}>

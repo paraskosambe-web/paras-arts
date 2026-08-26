@@ -14,7 +14,8 @@ const messageRoutes = require("./routes/messageRoutes");
 const testimonialRoutes = require("./routes/testimonialRoutes");
 const serviceRoutes = require("./routes/serviceRoutes");
 const faqRoutes = require("./routes/faqRoutes");
-
+const newsletterRoutes = require("./routes/newsletterRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 const app = express();
 
 app.use(
@@ -39,6 +40,8 @@ app.use("/api/messages", messageRoutes);
 app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/faqs", faqRoutes);
+app.use("/api/newsletter", newsletterRoutes);
+app.use("/api/chat", chatRoutes);
 
 app.use((req, res) => res.status(404).json({ message: "Route not found" }));
 app.use(errorHandler);
@@ -46,8 +49,11 @@ app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
 connectDB()
+
   .then(() => {
+
     app.listen(PORT, () => console.log(`API listening on http://localhost:${PORT}`));
+
   })
   .catch((err) => {
     console.error("Failed to start:", err);

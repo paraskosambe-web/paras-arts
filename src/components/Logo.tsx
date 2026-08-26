@@ -1,10 +1,10 @@
-import logoMark from "@/assets/logo-mark.png.asset.json";
+import logoMark from "@/assets/logo.png";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
     <div className="flex items-center gap-2">
       <img
-        src={logoMark.url}
+        src={logoMark}
         alt="Paras Arts"
         width={34}
         height={34}

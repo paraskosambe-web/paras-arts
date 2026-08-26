@@ -7,16 +7,26 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
   const { lang, setLang, t } = useLang();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement | null>(null);
-  const current = LANGS.find((l) => l.code === lang) ?? LANGS[0];
+  
 
   useEffect(() => {
     if (!open) return;
+
     const onDown = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+      if (ref.current && !ref.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
     };
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setOpen(false);
+      }
+    };
+
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
+
     return () => {
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("keydown", onKey);
@@ -26,37 +36,31 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
   return (
     <div ref={ref} className={`relative ${className}`}>
       <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        aria-label={`${t("nav.language")} — ${current.label}`}
-        aria-haspopup="menu"
-        aria-expanded={open}
-        className={`group relative grid h-10 w-10 place-items-center overflow-hidden rounded-full border transition-[transform,border-color,box-shadow] duration-500 ease-out will-change-transform hover:-translate-y-0.5 hover:border-gold-light/60 hover:shadow-[0_10px_28px_-12px_rgba(201,138,43,0.75)] active:scale-95 ${
-          open
-            ? "border-gold-light/60 text-gold-light shadow-[0_10px_28px_-14px_rgba(201,138,43,0.8)]"
-            : "border-white/10 text-white/75"
-        }`}
-      >
-        {/* soft gold wash on hover / open */}
+  type="button"
+  onClick={() => setOpen((v) => !v)}
+  aria-label={t("nav.language")}
+  aria-haspopup="menu"
+  aria-expanded={open}
+  className={`group relative flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border transition-[transform,border-color,box-shadow] duration-500 ease-out will-change-transform hover:-translate-y-0.5 hover:border-gold-light/60 hover:shadow-[0_10px_28px_-12px_rgba(201,138,43,0.75)] active:scale-95 ${
+    open
+      ? "border-gold-light/60 text-gold-light shadow-[0_10px_28px_-14px_rgba(201,138,43,0.8)]"
+      : "border-white/10 text-white/75"
+  }`}
+>
         <span
-          aria-hidden
+          aria-hidden="true"
           className={`pointer-events-none absolute inset-0 rounded-full bg-[radial-gradient(circle_at_30%_25%,rgba(232,194,122,0.22),transparent_70%)] transition-opacity duration-500 ${
             open ? "opacity-100" : "opacity-0 group-hover:opacity-100"
           }`}
         />
+
         <Globe
-          size={17}
-          className={`relative transition-transform duration-700 ease-out group-hover:rotate-[22deg] group-hover:scale-110 group-hover:text-gold-light ${
-            open ? "rotate-[22deg] scale-110" : ""
-          }`}
-        />
-        {/* current language chip */}
-        <span
-          aria-hidden
-          className="pointer-events-none absolute -bottom-0.5 right-0 rounded-full bg-[#121212] px-[3px] text-[7px] font-semibold leading-[10px] tracking-wide text-gold-light/90"
-        >
-          {current.short}
-        </span>
+  size={22}
+  strokeWidth={1.7}
+  className={`relative shrink-0 text-gold-light transition-transform duration-700 ease-out group-hover:rotate-[22deg] group-hover:scale-110 ${
+    open ? "rotate-[22deg] scale-110" : ""
+  }`}
+/>
       </button>
 
       <div
@@ -68,9 +72,10 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
             : "pointer-events-none -translate-y-2 scale-95 opacity-0"
         }`}
       >
-        <div className="px-3 pb-1.5 pt-1 text-[9px] tracking-[0.32em] uppercase text-white/35">
+        <div className="px-3 pb-1.5 pt-1 text-[9px] uppercase tracking-[0.32em] text-white/35">
           {t("nav.language")}
         </div>
+
         {LANGS.map((l, i) => (
           <button
             key={l.code}
@@ -81,9 +86,13 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
               setLang(l.code);
               setOpen(false);
             }}
-            style={{ transitionDelay: open ? `${60 + i * 45}ms` : "0ms" }}
+            style={{
+              transitionDelay: open ? `${60 + i * 45}ms` : "0ms",
+            }}
             className={`flex w-full items-center justify-between rounded-xl px-3 py-2 text-sm transition-all duration-300 ease-out ${
-              open ? "translate-x-0 opacity-100" : "translate-x-1 opacity-0"
+              open
+                ? "translate-x-0 opacity-100"
+                : "translate-x-1 opacity-0"
             } ${
               lang === l.code
                 ? "bg-gradient-to-r from-gold/20 to-transparent text-gold-light"
@@ -98,7 +107,10 @@ export function LanguageSwitcher({ className = "" }: { className?: string }) {
               />
               {l.label}
             </span>
-            {lang === l.code && <Check size={14} className="animate-scale-in" />}
+
+            {lang === l.code && (
+              <Check size={14} className="animate-scale-in" />
+            )}
           </button>
         ))}
       </div>

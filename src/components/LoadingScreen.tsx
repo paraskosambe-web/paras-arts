@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logoMark from "@/assets/logo-mark.png.asset.json";
+import logoMark from "@/assets/logo.png";
 
 /** Brand loading veil shown briefly on first paint. */
 export function LoadingScreen() {
@@ -19,7 +19,7 @@ export function LoadingScreen() {
       style={{ visibility: done ? "hidden" : "visible" }}
     >
       <div className="flex flex-col items-center gap-6">
-        <img src={logoMark.url} alt="" className="h-16 w-16 animate-pulse object-contain" />
+        <img src={logoMark} alt="" className="h-16 w-16 animate-pulse object-contain" />
         <div className="h-px w-40 overflow-hidden bg-white/10">
           <div
             className="h-full w-1/2 animate-shimmer"

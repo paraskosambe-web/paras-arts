@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import artistImg from "@/assets/artist.jpg.asset.json";
+import artistImg from "@/assets/paras-kosambe.jpeg";
 import { SectionHeader } from "@/components/SectionHeader";
 import { useLang } from "@/lib/i18n";
 
@@ -35,7 +35,7 @@ function AboutPage() {
       <div className="mt-16 grid items-stretch gap-10 lg:grid-cols-5">
         <div className="overflow-hidden rounded-3xl gold-border lg:col-span-2">
           <img
-            src={artistImg.url}
+            src={artistImg}
             alt="Paras Kosambe, founder and artist at Paras Arts"
             className="h-full w-full object-cover"
           />
