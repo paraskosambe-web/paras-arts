@@ -52,7 +52,7 @@ connectDB()
 
   .then(() => {
 
-    app.listen(PORT, () => console.log(`API listening on http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`API listening on port ${PORT}`));
 
   })
   .catch((err) => {

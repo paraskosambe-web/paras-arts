@@ -21,26 +21,46 @@ import { useLang } from "@/lib/i18n";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-  meta: [
-    {
-      title: "Paras Arts | Custom Pencil Sketches & Digital Art",
-    },
-    {
-      name: "description",
-      content:
-        "Paras Arts creates custom pencil sketches, portraits, family portraits, pet sketches and digital artwork. Explore the portfolio or order a personalized sketch.",
-    },
-    {
-      property: "og:title",
-      content: "Paras Arts | Custom Pencil Sketches & Digital Art",
-    },
-    {
-      property: "og:description",
-      content:
-        "Custom pencil sketches, portraits and digital artwork handcrafted by Paras Arts.",
-    },
-  ],
-}),
+    meta: [
+      {
+        title: "Paras Arts | Custom Pencil Sketches & Digital Art",
+      },
+      {
+        name: "description",
+        content:
+          "Paras Arts creates custom pencil sketches, portraits, family portraits, pet sketches and digital artwork. Explore the portfolio or order a personalized sketch.",
+      },
+      {
+        property: "og:title",
+        content: "Paras Arts | Custom Pencil Sketches & Digital Art",
+      },
+      {
+        property: "og:description",
+        content:
+          "Custom pencil sketches, portraits and digital artwork handcrafted by Paras Arts.",
+      },
+    ],
+
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Paras Arts",
+          url: "https://paras-arts.vercel.app/",
+          description:
+            "Custom pencil sketches, portraits and digital artwork handcrafted by Paras Arts.",
+          creator: {
+            "@type": "Person",
+            name: "Paras Kosambe",
+            jobTitle: "Artist",
+          },
+        }),
+      },
+    ],
+  }),
+
   component: HomePage,
 });
 
