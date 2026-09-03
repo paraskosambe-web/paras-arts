@@ -1,7 +1,12 @@
+
 import { createFileRoute, Outlet, useNavigate } from "@tanstack/react-router";
+
 import { useEffect, useState } from "react";
+
 import { AdminSidebar } from "@/components/AdminSidebar";
+
 import { isAuthed } from "@/lib/auth";
+
 import { useHydrated } from "@/lib/useHydrated";
 
 export const Route = createFileRoute("/admin")({
@@ -11,6 +16,7 @@ export const Route = createFileRoute("/admin")({
       { name: "robots", content: "noindex" },
     ],
   }),
+
   component: AdminLayout,
 });
 
@@ -21,6 +27,7 @@ function AdminLayout() {
 
   useEffect(() => {
     if (!hydrated) return;
+
     if (!isAuthed()) {
       navigate({ to: "/admin-login" });
     } else {
@@ -31,7 +38,9 @@ function AdminLayout() {
   if (!hydrated || !ok) {
     return (
       <div className="grid min-h-[60vh] place-items-center text-muted-foreground">
-        <div className="text-xs tracking-[0.3em] uppercase text-gold-light">Loading console…</div>
+        <div className="text-xs tracking-[0.3em] uppercase text-gold-light">
+          Loading console…
+        </div>
       </div>
     );
   }
@@ -39,8 +48,9 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-[#0a0a0a]">
       <AdminSidebar />
+
       <div className="lg:pl-64">
-        <div className="mx-auto max-w-7xl px-6 py-10 lg:px-10">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 sm:py-10 lg:px-10">
           <Outlet />
         </div>
       </div>
