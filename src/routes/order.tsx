@@ -1,4 +1,3 @@
-
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Upload } from "lucide-react";
@@ -23,6 +22,14 @@ const PAPER_SIZES = [
   "A2 · 420×594 mm",
   "Custom",
 ] as const;
+
+function getTodayString() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
 
 export const Route = createFileRoute("/order")({
   validateSearch: (search: Record<string, unknown>): {
@@ -238,7 +245,9 @@ function OrderPage() {
           {payOpened && !paidNoted && (
             <div className="mt-6 rounded-2xl border border-gold-light/30 bg-white/[0.03] p-5">
               <p className="text-sm text-white/85">
-                {tr("Please complete the ₹200 advance payment in your UPI app.")}
+                {tr(
+                  "Please complete the ₹200 advance payment in your UPI app."
+                )}
               </p>
 
               <button
@@ -385,6 +394,7 @@ function OrderPage() {
             <input
               name="preferredDate"
               type="date"
+              min={getTodayString()}
               className={inputCls}
             />
           </Field>
@@ -445,4 +455,3 @@ function OrderPage() {
     </div>
   );
 }
-
