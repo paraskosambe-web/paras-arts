@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import logoMark from "@/assets/logo.png";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
