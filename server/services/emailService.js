@@ -1,11 +1,7 @@
-const nodemailer = require("nodemailer");
+const { BrevoClient } = require("@getbrevo/brevo");
 
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
+const brevo = new BrevoClient({
+  apiKey: process.env.BREVO_API_KEY,
 });
 
 function getStatusEmail(order, status) {
@@ -85,6 +81,7 @@ function getStatusEmail(order, status) {
         </p>
 
         <div style="background:#f7f7f7; padding:20px; border-radius:8px; margin:25px 0;">
+
           <p style="margin:5px 0;">
             <strong>Order ID:</strong> ${orderId}
           </p>
@@ -108,6 +105,7 @@ function getStatusEmail(order, status) {
           <p style="margin:5px 0;">
             <strong>Payment:</strong> ${order.paymentStatus || "Pending"}
           </p>
+
         </div>
 
         <p>
@@ -157,14 +155,37 @@ async function sendOrderStatusEmail(order, status) {
     return;
   }
 
-  await transporter.sendMail({
-    from: `"Paras Arts" <${process.env.EMAIL_USER}>`,
-    to: order.email,
+  if (!process.env.BREVO_API_KEY) {
+    console.error("BREVO_API_KEY is not configured.");
+    return;
+  }
+
+  if (!process.env.BREVO_SENDER_EMAIL) {
+    console.error("BREVO_SENDER_EMAIL is not configured.");
+    return;
+  }
+
+  const result = await brevo.transactionalEmails.sendTransacEmail({
+    sender: {
+      name: "Paras Arts",
+      email: process.env.BREVO_SENDER_EMAIL,
+    },
+
+    to: [
+      {
+        email: order.email,
+        name: order.fullName || "Customer",
+      },
+    ],
+
     subject: email.subject,
-    html: email.html,
+
+    htmlContent: email.html,
   });
 
-  console.log(`Order status email sent to ${order.email} for ${order.orderId}`);
+  console.log(
+    `Order status email sent to ${order.email} for ${order.orderId}. Message ID: ${result.messageId}`
+  );
 }
 
 module.exports = {
