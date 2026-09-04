@@ -1,3 +1,4 @@
+
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Check, Upload } from "lucide-react";
@@ -99,9 +100,11 @@ function OrderPage() {
     ) ?? PAPER_SIZES[0];
 
   const [submitted, setSubmitted] = useState(false);
+  const [orderId, setOrderId] = useState("");
   const [busy, setBusy] = useState(false);
   const [payOpened, setPayOpened] = useState(false);
   const [paidNoted, setPaidNoted] = useState(false);
+  const [paymentBusy, setPaymentBusy] = useState(false);
   const [showScanner, setShowScanner] = useState(false);
   const [error, setError] = useState("");
 
@@ -115,10 +118,13 @@ function OrderPage() {
     const fd = new FormData(form);
 
     try {
-      await api.post("/orders", fd, {
-        headers: { "Content-Type": "multipart/form-data" },
+      const response = await api.post("/orders", fd, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
+      setOrderId(response.data.orderId);
       setSubmitted(true);
     } catch (err: any) {
       setError(
@@ -131,6 +137,45 @@ function OrderPage() {
     }
   }
 
+  async function handlePaid() {
+    if (!orderId || paymentBusy) return;
+
+    setPaymentBusy(true);
+    setError("");
+
+    try {
+      await api.patch(`/orders/${orderId}/payment`, {
+        orderId,
+      });
+
+      setPaidNoted(true);
+    } catch (err: any) {
+      setError(
+        err?.response?.data?.message ??
+          err.message ??
+          tr("Unable to update payment status. Please try again.")
+      );
+    } finally {
+      setPaymentBusy(false);
+    }
+  }
+
+  function handlePayNow(e: React.MouseEvent<HTMLAnchorElement>) {
+    e.preventDefault();
+
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+    if (isDesktop) {
+      setShowScanner(true);
+      setPayOpened(true);
+      return;
+    }
+
+    setPayOpened(true);
+
+    window.location.href = upiPayUrl();
+  }
+
   if (submitted) {
     return (
       <div className="mx-auto max-w-2xl px-4 py-20 text-center sm:px-6 sm:py-32">
@@ -141,6 +186,22 @@ function OrderPage() {
         <h1 className="mt-8 font-display text-3xl sm:text-4xl">
           {tr("Order Details Submitted Successfully!")}
         </h1>
+
+        <div className="mt-6 rounded-2xl border border-gold-light/30 bg-white/[0.03] p-5">
+          <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">
+            {tr("Your Order ID")}
+          </div>
+
+          <div className="mt-2 break-all font-mono text-xl font-semibold tracking-wider text-gold-gradient sm:text-2xl">
+            {orderId}
+          </div>
+
+          <p className="mt-3 text-xs text-muted-foreground">
+            {tr(
+              "Save this Order ID. You will need it to track your sketch order."
+            )}
+          </p>
+        </div>
 
         <p className="mt-4 text-muted-foreground">
           {tr(
@@ -171,29 +232,17 @@ function OrderPage() {
             </div>
           </div>
 
-          {/* PAY NOW BUTTON */}
           <a
             href={upiPayUrl()}
-            onClick={(e) => {
-              // Laptop/Desktop: show QR scanner
-              // Mobile: keep the existing GPay/UPI behavior
-              if (window.innerWidth >= 768) {
-                e.preventDefault();
-                setShowScanner(true);
-                setPayOpened(true);
-              }
-            }}
+            onClick={handlePayNow}
             className="btn-gold mt-8 w-full justify-center"
           >
             {tr("Pay ₹200 Now")}
           </a>
 
-          {/* LAPTOP QR SCANNER POPUP */}
           {showScanner && (
             <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4">
               <div className="relative w-full max-w-md rounded-3xl bg-[#121212] p-6 text-center gold-border">
-
-                {/* CLOSE BUTTON */}
                 <button
                   type="button"
                   onClick={() => setShowScanner(false)}
@@ -211,7 +260,6 @@ function OrderPage() {
                   {tr("Scan the QR code using any UPI app")}
                 </p>
 
-                {/* QR IMAGE */}
                 <div className="mt-6 flex justify-center rounded-2xl bg-white p-4">
                   <img
                     src={gpayScanner}
@@ -224,7 +272,6 @@ function OrderPage() {
                   {tr("After payment, click I've Paid below.")}
                 </p>
 
-                {/* CLOSE SCANNER */}
                 <button
                   type="button"
                   onClick={() => setShowScanner(false)}
@@ -252,10 +299,11 @@ function OrderPage() {
 
               <button
                 type="button"
-                onClick={() => setPaidNoted(true)}
-                className="btn-ghost-gold mt-4 w-full justify-center sm:w-auto"
+                onClick={handlePaid}
+                disabled={paymentBusy}
+                className="btn-ghost-gold mt-4 w-full justify-center sm:w-auto disabled:cursor-not-allowed disabled:opacity-60"
               >
-                {tr("I've Paid")}
+                {paymentBusy ? tr("Updating…") : tr("I've Paid")}
               </button>
             </div>
           )}
@@ -268,6 +316,12 @@ function OrderPage() {
             </div>
           )}
         </div>
+
+        {error && (
+          <p className="mt-6 text-xs text-destructive">
+            {error}
+          </p>
+        )}
 
         <p className="mt-8 text-xs text-muted-foreground">
           {tr("Trouble paying? Message us on WhatsApp at")}{" "}
@@ -293,7 +347,6 @@ function OrderPage() {
         className="mt-10 rounded-3xl gold-border p-5 sm:p-8 lg:mt-16 md:p-12"
       >
         <div className="grid gap-5 sm:gap-6 md:grid-cols-2">
-
           <Field label={tr("Full name")}>
             <input
               required
