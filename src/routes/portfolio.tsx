@@ -512,7 +512,9 @@ function PortfolioPage() {
                 Math.max(1, p - 1)
               )
             }
-            aria-label={tr("Previous page")}
+            aria-label={tr(
+              "Previous page"
+            )}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronLeft size={16} />
@@ -555,7 +557,9 @@ function PortfolioPage() {
                 )
               )
             }
-            aria-label={tr("Next page")}
+            aria-label={tr(
+              "Next page"
+            )}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronRight size={16} />
@@ -575,10 +579,10 @@ function PortfolioPage() {
             setZoomed(false);
           }}
         >
-          {/* PREVIOUS */}
+          {/* PREVIOUS BUTTON */}
           <button
             type="button"
-            className="absolute left-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/70 text-white/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:left-7 sm:h-11 sm:w-11"
+            className="absolute left-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/80 text-white/80 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:left-7 sm:h-11 sm:w-11"
             onClick={(e) => {
               e.stopPropagation();
               setZoomed(false);
@@ -600,10 +604,10 @@ function PortfolioPage() {
             />
           </button>
 
-          {/* NEXT */}
+          {/* NEXT BUTTON */}
           <button
             type="button"
-            className="absolute right-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/70 text-white/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-7 sm:h-11 sm:w-11"
+            className="absolute right-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/80 text-white/80 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-7 sm:h-11 sm:w-11"
             onClick={(e) => {
               e.stopPropagation();
               setZoomed(false);
@@ -627,15 +631,15 @@ function PortfolioPage() {
 
           {/* MAIN MODAL */}
           <div
-            className="relative flex h-[94vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111111]/95 shadow-2xl sm:h-[90vh] sm:rounded-3xl md:h-auto md:max-h-[88vh] md:flex-row"
+            className="relative isolate flex h-[94vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111111]/95 shadow-2xl sm:h-[90vh] sm:rounded-3xl md:h-auto md:max-h-[88vh] md:flex-row"
             onClick={(e) =>
               e.stopPropagation()
             }
           >
-            {/* CLOSE */}
+            {/* CLOSE BUTTON */}
             <button
               type="button"
-              className="absolute right-3 top-3 z-[10002] grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-black/75 text-white/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-5 sm:top-5"
+              className="absolute right-3 top-3 z-[10010] grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/20 bg-black/90 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-5 sm:top-5"
               onClick={() => {
                 setLightbox(null);
                 setZoomed(false);
