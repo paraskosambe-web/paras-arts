@@ -1,18 +1,17 @@
+
 import { Link } from "@tanstack/react-router";
 
 import logoMark from "@/assets/logo.png";
 
 export function Logo({ compact = false }: { compact?: boolean }) {
   const handleLogoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-
     if (window.location.pathname === "/") {
+      e.preventDefault();
+
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
-    } else {
-      window.location.href = "/";
     }
   };
 
