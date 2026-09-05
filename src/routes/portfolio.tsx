@@ -1,3 +1,4 @@
+
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -10,12 +11,19 @@ import {
   ZoomOut,
 } from "lucide-react";
 
-import { artworks, categories, mediums, sorts } from "@/data/artworks";
+import {
+  artworks,
+  categories,
+  mediums,
+  sorts,
+  type Artwork,
+} from "@/data/artworks";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ArtworkImage } from "@/components/ArtworkImage";
 import { ArtworkSkeleton } from "@/components/Skeleton";
 import { Reveal } from "@/components/Reveal";
 import { useLang } from "@/lib/i18n";
+import { api, assetUrl } from "@/lib/api";
 
 export const Route = createFileRoute("/portfolio")({
   head: () => ({
@@ -44,8 +52,70 @@ const PAGE_SIZE = 6;
 const chip =
   "rounded-full border px-5 py-2.5 text-xs tracking-[0.2em] uppercase transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light";
 
+type ApiArtwork = {
+  _id: string;
+  title: string;
+  category: string;
+  medium: string;
+  paperSize: string;
+  description: string;
+  image: string;
+  price?: number;
+  featured?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+function mapApiArtwork(a: ApiArtwork): Artwork {
+  const categoryMap: Record<string, Artwork["category"]> = {
+    Portrait: "Portrait",
+    Couple: "Portrait",
+    Family: "Portrait",
+    Pet: "Animals",
+    Automotive: "Cars",
+    Other: "Portrait",
+  };
+
+  const mappedCategory =
+    categoryMap[a.category] ?? "Portrait";
+
+  const mediumLower = (a.medium || "").toLowerCase();
+
+  const mappedMedium: Artwork["medium"] =
+    mediumLower.includes("charcoal")
+      ? "Charcoal"
+      : "Graphite";
+
+  const year = a.createdAt
+    ? new Date(a.createdAt).getFullYear()
+    : new Date().getFullYear();
+
+  return {
+    id: a._id,
+    title: a.title,
+    category: mappedCategory,
+    medium: mappedMedium,
+    mediumDetail:
+      a.medium || "Graphite on Archival Paper",
+    paperSize:
+      a.paperSize || "A3 · 297 × 420 mm",
+    image: assetUrl(a.image),
+    description: a.description || "",
+    popularity: a.featured ? 100 : 0,
+    year,
+    fit:
+      mappedCategory === "Cars"
+        ? "contain"
+        : "cover",
+  };
+}
+
 function PortfolioPage() {
   const { tr } = useLang();
+
+  const [mongoArtworks, setMongoArtworks] = useState<
+    Artwork[]
+  >([]);
 
   const [q, setQ] = useState("");
   const [cat, setCat] =
@@ -55,19 +125,73 @@ function PortfolioPage() {
   const [sort, setSort] =
     useState<(typeof sorts)[number]>("Newest");
   const [page, setPage] = useState(1);
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [lightbox, setLightbox] =
+    useState<number | null>(null);
   const [zoomed, setZoomed] = useState(false);
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let mounted = true;
+
+    async function loadMongoArtworks() {
+      try {
+        const { data } = await api.get("/artworks", {
+          params: {
+            page: 1,
+            limit: 100,
+          },
+        });
+
+        if (!mounted) return;
+
+        const items: ApiArtwork[] = Array.isArray(
+          data?.items
+        )
+          ? data.items
+          : [];
+
+        const mapped = items.map(mapApiArtwork);
+
+        setMongoArtworks(mapped);
+      } catch (error) {
+        console.error(
+          "Failed to load portfolio artworks:",
+          error
+        );
+
+        if (mounted) {
+          setMongoArtworks([]);
+        }
+      } finally {
+        if (mounted) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadMongoArtworks();
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   useEffect(() => {
     const t = setTimeout(() => setLoading(false), 450);
     return () => clearTimeout(t);
   }, []);
 
+  const allArtworks = useMemo(() => {
+    return [...artworks, ...mongoArtworks];
+  }, [mongoArtworks]);
+
   const filtered = useMemo(() => {
-    const list = artworks.filter((a) => {
-      const matchCat = cat === "All" || a.category === cat;
-      const matchMed = med === "All" || a.medium === med;
+    const list = allArtworks.filter((a) => {
+      const matchCat =
+        cat === "All" || a.category === cat;
+
+      const matchMed =
+        med === "All" || a.medium === med;
 
       const needle = q.trim().toLowerCase();
 
@@ -90,9 +214,18 @@ function PortfolioPage() {
         return a.title.localeCompare(b.title);
       }
 
-      return b.year - a.year || b.popularity - a.popularity;
+      return (
+        b.year - a.year ||
+        b.popularity - a.popularity
+      );
     });
-  }, [q, cat, med, sort]);
+  }, [
+    allArtworks,
+    q,
+    cat,
+    med,
+    sort,
+  ]);
 
   const totalPages = Math.max(
     1,
@@ -105,7 +238,15 @@ function PortfolioPage() {
   );
 
   const active =
-    lightbox !== null ? paged[lightbox] : undefined;
+    lightbox !== null
+      ? paged[lightbox]
+      : undefined;
+
+  useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages);
+    }
+  }, [page, totalPages]);
 
   useEffect(() => {
     if (!active) return;
@@ -119,7 +260,9 @@ function PortfolioPage() {
       if (e.key === "ArrowRight") {
         setZoomed(false);
         setLightbox((i) =>
-          i === null ? i : (i + 1) % paged.length
+          i === null
+            ? i
+            : (i + 1) % paged.length
         );
       }
 
@@ -128,7 +271,8 @@ function PortfolioPage() {
         setLightbox((i) =>
           i === null
             ? i
-            : (i - 1 + paged.length) % paged.length
+            : (i - 1 + paged.length) %
+              paged.length
         );
       }
     };
@@ -136,7 +280,10 @@ function PortfolioPage() {
     window.addEventListener("keydown", onKey);
 
     return () =>
-      window.removeEventListener("keydown", onKey);
+      window.removeEventListener(
+        "keydown",
+        onKey
+      );
   }, [active, paged.length]);
 
   return (
@@ -255,11 +402,16 @@ function PortfolioPage() {
       {/* GRID */}
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading
-          ? Array.from({ length: 6 }).map((_, i) => (
-              <ArtworkSkeleton key={i} />
-            ))
+          ? Array.from({ length: 6 }).map(
+              (_, i) => (
+                <ArtworkSkeleton key={i} />
+              )
+            )
           : paged.map((a, i) => (
-              <Reveal key={a.id} delay={i * 70}>
+              <Reveal
+                key={a.id}
+                delay={i * 70}
+              >
                 <div className="card-luxe group h-full overflow-hidden">
                   <button
                     type="button"
@@ -325,11 +477,12 @@ function PortfolioPage() {
             ))}
       </div>
 
-      {!loading && filtered.length === 0 && (
-        <div className="mt-24 text-center text-muted-foreground">
-          {tr("No artworks match those filters.")}
-        </div>
-      )}
+      {!loading &&
+        filtered.length === 0 && (
+          <div className="mt-24 text-center text-muted-foreground">
+            {tr("No artworks match those filters.")}
+          </div>
+        )}
 
       {/* PAGINATION */}
       {!loading && totalPages > 1 && (
@@ -338,40 +491,53 @@ function PortfolioPage() {
             type="button"
             disabled={page === 1}
             onClick={() =>
-              setPage((p) => Math.max(1, p - 1))
+              setPage((p) =>
+                Math.max(1, p - 1)
+              )
             }
-            aria-label={tr("Previous page")}
+            aria-label={tr(
+              "Previous page"
+            )}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronLeft size={16} />
           </button>
 
-          {Array.from({ length: totalPages }).map(
-            (_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setPage(i + 1)}
-                aria-current={
-                  page === i + 1 ? "page" : undefined
-                }
-                className={`h-10 min-w-10 rounded-full border px-4 text-sm ${
-                  page === i + 1
-                    ? "border-transparent bg-gold-gradient text-[#121212]"
-                    : "border-white/10 text-white/70 hover:border-gold-light"
-                }`}
-              >
-                {i + 1}
-              </button>
-            )
-          )}
+          {Array.from({
+            length: totalPages,
+          }).map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() =>
+                setPage(i + 1)
+              }
+              aria-current={
+                page === i + 1
+                  ? "page"
+                  : undefined
+              }
+              className={`h-10 min-w-10 rounded-full border px-4 text-sm ${
+                page === i + 1
+                  ? "border-transparent bg-gold-gradient text-[#121212]"
+                  : "border-white/10 text-white/70 hover:border-gold-light"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
 
           <button
             type="button"
-            disabled={page === totalPages}
+            disabled={
+              page === totalPages
+            }
             onClick={() =>
               setPage((p) =>
-                Math.min(totalPages, p + 1)
+                Math.min(
+                  totalPages,
+                  p + 1
+                )
               )
             }
             aria-label={tr("Next page")}
@@ -408,9 +574,14 @@ function PortfolioPage() {
                     paged.length
               );
             }}
-            aria-label={tr("Previous artwork")}
+            aria-label={tr(
+              "Previous artwork"
+            )}
           >
-            <ChevronLeft size={19} strokeWidth={1.8} />
+            <ChevronLeft
+              size={19}
+              strokeWidth={1.8}
+            />
           </button>
 
           {/* NEXT BUTTON */}
@@ -423,18 +594,26 @@ function PortfolioPage() {
               setLightbox((i) =>
                 i === null
                   ? i
-                  : (i + 1) % paged.length
+                  : (i + 1) %
+                    paged.length
               );
             }}
-            aria-label={tr("Next artwork")}
+            aria-label={tr(
+              "Next artwork"
+            )}
           >
-            <ChevronRight size={19} strokeWidth={1.8} />
+            <ChevronRight
+              size={19}
+              strokeWidth={1.8}
+            />
           </button>
 
           {/* MAIN MODAL BOX */}
           <div
             className="relative flex max-h-[88vh] w-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#111111]/95 shadow-2xl md:flex-row"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) =>
+              e.stopPropagation()
+            }
           >
             {/* CLOSE BUTTON — INSIDE THE BOX */}
             <button
@@ -444,9 +623,14 @@ function PortfolioPage() {
                 setLightbox(null);
                 setZoomed(false);
               }}
-              aria-label={tr("Close preview")}
+              aria-label={tr(
+                "Close preview"
+              )}
             >
-              <X size={19} strokeWidth={1.8} />
+              <X
+                size={19}
+                strokeWidth={1.8}
+              />
             </button>
 
             {/* ARTWORK */}
@@ -455,7 +639,9 @@ function PortfolioPage() {
                 <img
                   src={active.image}
                   alt={`${active.title} — hand-drawn by Paras Arts`}
-                  onClick={() => setZoomed((z) => !z)}
+                  onClick={() =>
+                    setZoomed((z) => !z)
+                  }
                   className={`max-h-[50vh] max-w-full rounded-2xl object-contain shadow-luxe transition-transform duration-500 ${
                     zoomed
                       ? "scale-[1.5] cursor-zoom-out"
@@ -468,7 +654,8 @@ function PortfolioPage() {
             {/* INFORMATION */}
             <div className="flex w-full flex-col justify-center overflow-y-auto border-t border-white/10 p-6 pt-16 sm:p-8 sm:pt-16 md:w-[38%] md:border-l md:border-t-0 md:p-7 md:pt-14 lg:w-[390px] lg:p-10 lg:pt-16">
               <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">
-                {active.category} · {active.medium}
+                {active.category} ·{" "}
+                {active.medium}
               </div>
 
               <h2 className="mt-3 font-display text-3xl leading-tight sm:text-4xl">
@@ -492,7 +679,9 @@ function PortfolioPage() {
               <div className="mt-8 flex flex-wrap gap-3">
                 <button
                   type="button"
-                  onClick={() => setZoomed((z) => !z)}
+                  onClick={() =>
+                    setZoomed((z) => !z)
+                  }
                   className="btn-ghost-gold text-sm"
                   aria-label={
                     zoomed
@@ -515,13 +704,17 @@ function PortfolioPage() {
                   to="/order"
                   className="btn-gold text-sm"
                 >
-                  {tr("Order a Custom Sketch")}
+                  {tr(
+                    "Order a Custom Sketch"
+                  )}
                   <ArrowRight size={14} />
                 </Link>
               </div>
 
               <p className="mt-6 text-[10px] tracking-[0.15em] uppercase text-white/30">
-                {tr("Click the artwork to zoom")}
+                {tr(
+                  "Click the artwork to zoom"
+                )}
               </p>
             </div>
           </div>
