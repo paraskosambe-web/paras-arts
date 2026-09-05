@@ -18,6 +18,7 @@ import {
   sorts,
   type Artwork,
 } from "@/data/artworks";
+
 import { SectionHeader } from "@/components/SectionHeader";
 import { ArtworkImage } from "@/components/ArtworkImage";
 import { ArtworkSkeleton } from "@/components/Skeleton";
@@ -118,16 +119,23 @@ function PortfolioPage() {
   >([]);
 
   const [q, setQ] = useState("");
+
   const [cat, setCat] =
     useState<(typeof categories)[number]>("All");
+
   const [med, setMed] =
     useState<(typeof mediums)[number]>("All");
+
   const [sort, setSort] =
     useState<(typeof sorts)[number]>("Newest");
+
   const [page, setPage] = useState(1);
+
   const [lightbox, setLightbox] =
     useState<number | null>(null);
+
   const [zoomed, setZoomed] = useState(false);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -177,7 +185,11 @@ function PortfolioPage() {
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(() => setLoading(false), 450);
+    const t = setTimeout(
+      () => setLoading(false),
+      450
+    );
+
     return () => clearTimeout(t);
   }, []);
 
@@ -259,6 +271,7 @@ function PortfolioPage() {
 
       if (e.key === "ArrowRight") {
         setZoomed(false);
+
         setLightbox((i) =>
           i === null
             ? i
@@ -268,6 +281,7 @@ function PortfolioPage() {
 
       if (e.key === "ArrowLeft") {
         setZoomed(false);
+
         setLightbox((i) =>
           i === null
             ? i
@@ -277,7 +291,10 @@ function PortfolioPage() {
       }
     };
 
-    window.addEventListener("keydown", onKey);
+    window.addEventListener(
+      "keydown",
+      onKey
+    );
 
     return () =>
       window.removeEventListener(
@@ -495,9 +512,7 @@ function PortfolioPage() {
                 Math.max(1, p - 1)
               )
             }
-            aria-label={tr(
-              "Previous page"
-            )}
+            aria-label={tr("Previous page")}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronLeft size={16} />
@@ -548,10 +563,10 @@ function PortfolioPage() {
         </div>
       )}
 
-      {/* LIGHTBOX / ARTWORK DETAILS */}
+      {/* LIGHTBOX */}
       {active && (
         <div
-          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-black/95 p-4 backdrop-blur-xl sm:p-6"
+          className="fixed inset-0 z-[9999] flex items-center justify-center overflow-hidden bg-black/95 p-2 backdrop-blur-xl sm:p-6"
           role="dialog"
           aria-modal="true"
           aria-label={`${active.title} preview`}
@@ -560,13 +575,14 @@ function PortfolioPage() {
             setZoomed(false);
           }}
         >
-          {/* PREVIOUS BUTTON */}
+          {/* PREVIOUS */}
           <button
             type="button"
-            className="absolute left-4 top-1/2 z-[10001] grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/60 text-white/80 backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:left-7"
+            className="absolute left-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/70 text-white/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:left-7 sm:h-11 sm:w-11"
             onClick={(e) => {
               e.stopPropagation();
               setZoomed(false);
+
               setLightbox((i) =>
                 i === null
                   ? i
@@ -584,13 +600,14 @@ function PortfolioPage() {
             />
           </button>
 
-          {/* NEXT BUTTON */}
+          {/* NEXT */}
           <button
             type="button"
-            className="absolute right-4 top-1/2 z-[10001] grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/60 text-white/80 backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-7"
+            className="absolute right-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/70 text-white/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-7 sm:h-11 sm:w-11"
             onClick={(e) => {
               e.stopPropagation();
               setZoomed(false);
+
               setLightbox((i) =>
                 i === null
                   ? i
@@ -608,17 +625,17 @@ function PortfolioPage() {
             />
           </button>
 
-          {/* MAIN MODAL BOX */}
+          {/* MAIN MODAL */}
           <div
-            className="relative flex max-h-[88vh] w-full max-w-6xl flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#111111]/95 shadow-2xl md:flex-row"
+            className="relative flex h-[94vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111111]/95 shadow-2xl sm:h-[90vh] sm:rounded-3xl md:h-auto md:max-h-[88vh] md:flex-row"
             onClick={(e) =>
               e.stopPropagation()
             }
           >
-            {/* CLOSE BUTTON — INSIDE THE BOX */}
+            {/* CLOSE */}
             <button
               type="button"
-              className="absolute right-4 top-4 z-[10002] grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-black/70 text-white/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-5 sm:top-5"
+              className="absolute right-3 top-3 z-[10002] grid h-10 w-10 place-items-center rounded-full border border-white/15 bg-black/75 text-white/80 shadow-lg backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-5 sm:top-5"
               onClick={() => {
                 setLightbox(null);
                 setZoomed(false);
@@ -633,26 +650,39 @@ function PortfolioPage() {
               />
             </button>
 
-            {/* ARTWORK */}
-            <div className="flex min-h-[42vh] min-w-0 flex-1 items-center justify-center bg-black/30 p-5 pt-16 sm:p-8 sm:pt-16 md:min-h-0 md:p-8 md:pr-14 lg:p-10 lg:pr-16">
-              <div className="flex max-h-full max-w-full items-center justify-center overflow-auto rounded-2xl">
+            {/* ARTWORK AREA */}
+            <div className="relative flex min-h-0 w-full shrink-0 items-center justify-center overflow-hidden bg-black/30 px-8 pb-4 pt-14 sm:px-12 sm:pb-6 sm:pt-16 md:min-h-0 md:flex-1 md:px-8 md:py-8 md:pr-14 lg:px-10 lg:pr-16">
+              <div
+                className={`flex h-full w-full items-center justify-center overflow-auto rounded-2xl ${
+                  zoomed
+                    ? "touch-pan-x touch-pan-y"
+                    : ""
+                }`}
+              >
                 <img
                   src={active.image}
                   alt={`${active.title} — hand-drawn by Paras Arts`}
                   onClick={() =>
                     setZoomed((z) => !z)
                   }
-                  className={`max-h-[50vh] max-w-full rounded-2xl object-contain shadow-luxe transition-transform duration-500 ${
+                  className={`block max-h-full max-w-full rounded-2xl object-contain shadow-luxe transition-transform duration-500 ${
                     zoomed
-                      ? "scale-[1.5] cursor-zoom-out"
+                      ? "scale-[1.35] cursor-zoom-out sm:scale-[1.5]"
                       : "scale-100 cursor-zoom-in"
                   }`}
                 />
               </div>
+
+              {/* MOBILE ZOOM HINT */}
+              <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1.5 text-[9px] tracking-[0.15em] uppercase text-white/40 backdrop-blur md:hidden">
+                {zoomed
+                  ? tr("Tap image to zoom out")
+                  : tr("Tap image to zoom")}
+              </div>
             </div>
 
-            {/* INFORMATION */}
-            <div className="flex w-full flex-col justify-center overflow-y-auto border-t border-white/10 p-6 pt-16 sm:p-8 sm:pt-16 md:w-[38%] md:border-l md:border-t-0 md:p-7 md:pt-14 lg:w-[390px] lg:p-10 lg:pt-16">
+            {/* INFORMATION AREA */}
+            <div className="min-h-0 w-full flex-1 overflow-y-auto border-t border-white/10 p-6 pt-6 md:flex-none md:w-[38%] md:border-l md:border-t-0 md:p-7 md:pt-14 lg:w-[390px] lg:p-10 lg:pt-16">
               <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">
                 {active.category} ·{" "}
                 {active.medium}
@@ -662,27 +692,27 @@ function PortfolioPage() {
                 {active.title}
               </h2>
 
-              <p className="mt-5 text-sm leading-7 text-white/65">
+              <p className="mt-4 text-sm leading-7 text-white/65 sm:mt-5">
                 {active.description}
               </p>
 
-              <div className="mt-6 border-t border-white/10 pt-5">
+              <div className="mt-5 border-t border-white/10 pt-5 sm:mt-6">
                 <div className="text-[10px] tracking-[0.25em] uppercase text-muted-foreground">
                   {tr("Medium")}
                 </div>
 
-                <div className="mt-2 text-sm text-white/80">
+                <div className="mt-2 text-sm leading-6 text-white/80">
                   {active.mediumDetail}
                 </div>
               </div>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap">
                 <button
                   type="button"
                   onClick={() =>
                     setZoomed((z) => !z)
                   }
-                  className="btn-ghost-gold text-sm"
+                  className="btn-ghost-gold w-full justify-center text-sm sm:w-auto"
                   aria-label={
                     zoomed
                       ? tr("Zoom out")
@@ -702,7 +732,7 @@ function PortfolioPage() {
 
                 <Link
                   to="/order"
-                  className="btn-gold text-sm"
+                  className="btn-gold w-full justify-center text-sm sm:w-auto"
                 >
                   {tr(
                     "Order a Custom Sketch"
@@ -711,7 +741,7 @@ function PortfolioPage() {
                 </Link>
               </div>
 
-              <p className="mt-6 text-[10px] tracking-[0.15em] uppercase text-white/30">
+              <p className="mt-5 text-center text-[10px] tracking-[0.15em] uppercase text-white/30 sm:text-left">
                 {tr(
                   "Click the artwork to zoom"
                 )}
