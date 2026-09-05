@@ -515,7 +515,7 @@ function PortfolioPage() {
                   to="/order"
                   className="btn-gold text-sm"
                 >
-                  {tr("Order this sketch")}
+                  {tr("Order a Custom Sketch")}
                   <ArrowRight size={14} />
                 </Link>
               </div>
