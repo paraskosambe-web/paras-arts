@@ -1,5 +1,5 @@
 import gThor from "@/assets/thor.jpeg";
-import gStrange from "@/assets/strange.jpeg";
+import gStrange from "@/assets/drStrange.jpeg";
 import gKrishna from "@/assets/krishna.jpeg";
 import gGanesha from "@/assets/ganesha.jpeg";
 import gGaneshaTurban from "@/assets/ganpati1.jpeg";
