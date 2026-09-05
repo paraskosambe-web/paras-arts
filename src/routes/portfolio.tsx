@@ -1,4 +1,3 @@
-
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -77,8 +76,7 @@ function mapApiArtwork(a: ApiArtwork): Artwork {
     Other: "Portrait",
   };
 
-  const mappedCategory =
-    categoryMap[a.category] ?? "Portrait";
+  const mappedCategory = categoryMap[a.category] ?? "Portrait";
 
   const mediumLower = (a.medium || "").toLowerCase();
 
@@ -96,46 +94,30 @@ function mapApiArtwork(a: ApiArtwork): Artwork {
     title: a.title,
     category: mappedCategory,
     medium: mappedMedium,
-    mediumDetail:
-      a.medium || "Graphite on Archival Paper",
-    paperSize:
-      a.paperSize || "A3 · 297 × 420 mm",
+    mediumDetail: a.medium || "Graphite on Archival Paper",
+    paperSize: a.paperSize || "A3 · 297 × 420 mm",
     image: assetUrl(a.image),
     description: a.description || "",
     popularity: a.featured ? 100 : 0,
     year,
-    fit:
-      mappedCategory === "Cars"
-        ? "contain"
-        : "cover",
+    fit: mappedCategory === "Cars" ? "contain" : "cover",
   };
 }
 
 function PortfolioPage() {
   const { tr } = useLang();
 
-  const [mongoArtworks, setMongoArtworks] = useState<
-    Artwork[]
-  >([]);
-
+  const [mongoArtworks, setMongoArtworks] = useState<Artwork[]>([]);
   const [q, setQ] = useState("");
-
   const [cat, setCat] =
     useState<(typeof categories)[number]>("All");
-
   const [med, setMed] =
     useState<(typeof mediums)[number]>("All");
-
   const [sort, setSort] =
     useState<(typeof sorts)[number]>("Newest");
-
   const [page, setPage] = useState(1);
-
-  const [lightbox, setLightbox] =
-    useState<number | null>(null);
-
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const [zoomed, setZoomed] = useState(false);
-
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -152,9 +134,7 @@ function PortfolioPage() {
 
         if (!mounted) return;
 
-        const items: ApiArtwork[] = Array.isArray(
-          data?.items
-        )
+        const items: ApiArtwork[] = Array.isArray(data?.items)
           ? data.items
           : [];
 
@@ -185,10 +165,7 @@ function PortfolioPage() {
   }, []);
 
   useEffect(() => {
-    const t = setTimeout(
-      () => setLoading(false),
-      450
-    );
+    const t = setTimeout(() => setLoading(false), 450);
 
     return () => clearTimeout(t);
   }, []);
@@ -231,13 +208,7 @@ function PortfolioPage() {
         b.popularity - a.popularity
       );
     });
-  }, [
-    allArtworks,
-    q,
-    cat,
-    med,
-    sort,
-  ]);
+  }, [allArtworks, q, cat, med, sort]);
 
   const totalPages = Math.max(
     1,
@@ -291,16 +262,10 @@ function PortfolioPage() {
       }
     };
 
-    window.addEventListener(
-      "keydown",
-      onKey
-    );
+    window.addEventListener("keydown", onKey);
 
     return () =>
-      window.removeEventListener(
-        "keydown",
-        onKey
-      );
+      window.removeEventListener("keydown", onKey);
   }, [active, paged.length]);
 
   return (
@@ -419,16 +384,11 @@ function PortfolioPage() {
       {/* GRID */}
       <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {loading
-          ? Array.from({ length: 6 }).map(
-              (_, i) => (
-                <ArtworkSkeleton key={i} />
-              )
-            )
+          ? Array.from({ length: 6 }).map((_, i) => (
+              <ArtworkSkeleton key={i} />
+            ))
           : paged.map((a, i) => (
-              <Reveal
-                key={a.id}
-                delay={i * 70}
-              >
+              <Reveal key={a.id} delay={i * 70}>
                 <div className="card-luxe group h-full overflow-hidden">
                   <button
                     type="button"
@@ -494,12 +454,11 @@ function PortfolioPage() {
             ))}
       </div>
 
-      {!loading &&
-        filtered.length === 0 && (
-          <div className="mt-24 text-center text-muted-foreground">
-            {tr("No artworks match those filters.")}
-          </div>
-        )}
+      {!loading && filtered.length === 0 && (
+        <div className="mt-24 text-center text-muted-foreground">
+          {tr("No artworks match those filters.")}
+        </div>
+      )}
 
       {/* PAGINATION */}
       {!loading && totalPages > 1 && (
@@ -508,13 +467,9 @@ function PortfolioPage() {
             type="button"
             disabled={page === 1}
             onClick={() =>
-              setPage((p) =>
-                Math.max(1, p - 1)
-              )
+              setPage((p) => Math.max(1, p - 1))
             }
-            aria-label={tr(
-              "Previous page"
-            )}
+            aria-label={tr("Previous page")}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronLeft size={16} />
@@ -526,13 +481,9 @@ function PortfolioPage() {
             <button
               key={i}
               type="button"
-              onClick={() =>
-                setPage(i + 1)
-              }
+              onClick={() => setPage(i + 1)}
               aria-current={
-                page === i + 1
-                  ? "page"
-                  : undefined
+                page === i + 1 ? "page" : undefined
               }
               className={`h-10 min-w-10 rounded-full border px-4 text-sm ${
                 page === i + 1
@@ -546,20 +497,13 @@ function PortfolioPage() {
 
           <button
             type="button"
-            disabled={
-              page === totalPages
-            }
+            disabled={page === totalPages}
             onClick={() =>
               setPage((p) =>
-                Math.min(
-                  totalPages,
-                  p + 1
-                )
+                Math.min(totalPages, p + 1)
               )
             }
-            aria-label={tr(
-              "Next page"
-            )}
+            aria-label={tr("Next page")}
             className="grid h-10 w-10 place-items-center rounded-full border border-white/10 text-white/70 hover:border-gold-light hover:text-gold-light disabled:opacity-30"
           >
             <ChevronRight size={16} />
@@ -579,7 +523,7 @@ function PortfolioPage() {
             setZoomed(false);
           }}
         >
-          {/* PREVIOUS BUTTON */}
+          {/* PREVIOUS */}
           <button
             type="button"
             className="absolute left-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/80 text-white/80 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:left-7 sm:h-11 sm:w-11"
@@ -594,9 +538,7 @@ function PortfolioPage() {
                     paged.length
               );
             }}
-            aria-label={tr(
-              "Previous artwork"
-            )}
+            aria-label={tr("Previous artwork")}
           >
             <ChevronLeft
               size={19}
@@ -604,7 +546,7 @@ function PortfolioPage() {
             />
           </button>
 
-          {/* NEXT BUTTON */}
+          {/* NEXT */}
           <button
             type="button"
             className="absolute right-2 top-1/2 z-[10001] grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/80 text-white/80 shadow-xl backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-7 sm:h-11 sm:w-11"
@@ -615,13 +557,10 @@ function PortfolioPage() {
               setLightbox((i) =>
                 i === null
                   ? i
-                  : (i + 1) %
-                    paged.length
+                  : (i + 1) % paged.length
               );
             }}
-            aria-label={tr(
-              "Next artwork"
-            )}
+            aria-label={tr("Next artwork")}
           >
             <ChevronRight
               size={19}
@@ -631,12 +570,10 @@ function PortfolioPage() {
 
           {/* MAIN MODAL */}
           <div
-            className="relative isolate flex h-[94vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111111]/95 shadow-2xl sm:h-[90vh] sm:rounded-3xl md:h-auto md:max-h-[88vh] md:flex-row"
-            onClick={(e) =>
-              e.stopPropagation()
-            }
+            className="relative isolate mt-8 flex h-[82vh] w-full max-w-6xl flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#111111]/95 shadow-2xl sm:mt-6 sm:h-[86vh] sm:rounded-3xl md:mt-0 md:h-auto md:max-h-[88vh] md:flex-row"
+            onClick={(e) => e.stopPropagation()}
           >
-            {/* CLOSE BUTTON */}
+            {/* CLOSE */}
             <button
               type="button"
               className="absolute right-3 top-3 z-[10010] grid h-10 w-10 shrink-0 place-items-center rounded-full border border-white/20 bg-black/90 text-white shadow-xl backdrop-blur-md transition-all duration-300 hover:border-gold-light/60 hover:bg-white/10 hover:text-gold-light sm:right-5 sm:top-5"
@@ -644,9 +581,7 @@ function PortfolioPage() {
                 setLightbox(null);
                 setZoomed(false);
               }}
-              aria-label={tr(
-                "Close preview"
-              )}
+              aria-label={tr("Close preview")}
             >
               <X
                 size={19}
@@ -655,7 +590,7 @@ function PortfolioPage() {
             </button>
 
             {/* ARTWORK AREA */}
-            <div className="relative flex min-h-0 w-full shrink-0 items-center justify-center overflow-hidden bg-black/30 px-8 pb-4 pt-14 sm:px-12 sm:pb-6 sm:pt-16 md:min-h-0 md:flex-1 md:px-8 md:py-8 md:pr-14 lg:px-10 lg:pr-16">
+            <div className="relative flex min-h-0 w-full shrink-0 items-center justify-center overflow-hidden bg-black/30 px-6 pb-4 pt-10 sm:px-12 sm:pb-6 sm:pt-14 md:min-h-0 md:flex-1 md:px-8 md:py-8 md:pr-14 lg:px-10 lg:pr-16">
               <div
                 className={`flex h-full w-full items-center justify-center overflow-auto rounded-2xl ${
                   zoomed
@@ -677,7 +612,6 @@ function PortfolioPage() {
                 />
               </div>
 
-              {/* MOBILE ZOOM HINT */}
               <div className="pointer-events-none absolute bottom-3 left-1/2 -translate-x-1/2 rounded-full bg-black/60 px-3 py-1.5 text-[9px] tracking-[0.15em] uppercase text-white/40 backdrop-blur md:hidden">
                 {zoomed
                   ? tr("Tap image to zoom out")
@@ -688,8 +622,7 @@ function PortfolioPage() {
             {/* INFORMATION AREA */}
             <div className="min-h-0 w-full flex-1 overflow-y-auto border-t border-white/10 p-6 pt-6 md:flex-none md:w-[38%] md:border-l md:border-t-0 md:p-7 md:pt-14 lg:w-[390px] lg:p-10 lg:pt-16">
               <div className="text-[10px] tracking-[0.3em] uppercase text-gold-light">
-                {active.category} ·{" "}
-                {active.medium}
+                {active.category} · {active.medium}
               </div>
 
               <h2 className="mt-3 font-display text-3xl leading-tight sm:text-4xl">
@@ -738,17 +671,13 @@ function PortfolioPage() {
                   to="/order"
                   className="btn-gold w-full justify-center text-sm sm:w-auto"
                 >
-                  {tr(
-                    "Order a Custom Sketch"
-                  )}
+                  {tr("Order a Custom Sketch")}
                   <ArrowRight size={14} />
                 </Link>
               </div>
 
               <p className="mt-5 text-center text-[10px] tracking-[0.15em] uppercase text-white/30 sm:text-left">
-                {tr(
-                  "Click the artwork to zoom"
-                )}
+                {tr("Click the artwork to zoom")}
               </p>
             </div>
           </div>
