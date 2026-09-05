@@ -9,18 +9,32 @@ export const Route = createFileRoute("/admin/faqs")({
   component: AdminFaqs,
 });
 
-type F = { _id: string; question: string; answer: string; order?: number };
+type F = {
+  _id: string;
+  question: string;
+  answer: string;
+  category?: string;
+  order?: number;
+};
+
+const categories = [
+  "Commissions",
+  "Materials & Delivery",
+  "Payments & Revisions",
+];
 
 function AdminFaqs() {
   const [items, setItems] = useState<F[]>([]);
   const [modal, setModal] = useState<F | "new" | null>(null);
   const [busy, setBusy] = useState(false);
+
   const editing = modal !== "new" && modal ? modal : null;
 
   async function load() {
     const { data } = await api.get("/faqs");
     setItems(data.items);
   }
+
   useEffect(() => {
     load();
   }, []);
@@ -28,11 +42,17 @@ function AdminFaqs() {
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setBusy(true);
+
     const fd = new FormData(e.currentTarget);
     const payload = Object.fromEntries(fd.entries());
+
     try {
-      if (modal === "new") await api.post("/faqs", payload);
-      else if (modal) await api.put(`/faqs/${modal._id}`, payload);
+      if (modal === "new") {
+        await api.post("/faqs", payload);
+      } else if (modal) {
+        await api.put(`/faqs/${modal._id}`, payload);
+      }
+
       setModal(null);
       load();
     } finally {
@@ -54,12 +74,23 @@ function AdminFaqs() {
 
       <div className="space-y-4">
         {items.map((f) => (
-          <div key={f._id} className="rounded-2xl border border-white/5 bg-white/[0.02] p-6">
+          <div
+            key={f._id}
+            className="rounded-2xl border border-white/5 bg-white/[0.02] p-6"
+          >
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
                 <div className="font-display text-lg">{f.question}</div>
+
+                {f.category && (
+                  <div className="mt-1 text-xs text-gold-light">
+                    {f.category}
+                  </div>
+                )}
+
                 <p className="mt-2 text-sm text-white/70">{f.answer}</p>
               </div>
+
               <div className="flex gap-2">
                 <button
                   onClick={() => setModal(f)}
@@ -67,9 +98,11 @@ function AdminFaqs() {
                 >
                   <Pencil size={14} />
                 </button>
+
                 <button
                   onClick={async () => {
                     if (!confirm("Delete?")) return;
+
                     await api.delete(`/faqs/${f._id}`);
                     load();
                   }}
@@ -81,6 +114,7 @@ function AdminFaqs() {
             </div>
           </div>
         ))}
+
         {items.length === 0 && (
           <div className="rounded-2xl border border-white/5 p-16 text-center text-muted-foreground">
             No FAQs yet.
@@ -96,16 +130,50 @@ function AdminFaqs() {
         <form onSubmit={onSubmit} className="space-y-4">
           <label className="block">
             <span className={adminLabel}>Question</span>
-            <input required name="question" defaultValue={editing?.question} className={adminInput} />
+            <input
+              required
+              name="question"
+              defaultValue={editing?.question}
+              className={adminInput}
+            />
           </label>
+
           <label className="block">
             <span className={adminLabel}>Answer</span>
-            <textarea required name="answer" defaultValue={editing?.answer} rows={5} className={adminInput + " resize-none"} />
+            <textarea
+              required
+              name="answer"
+              defaultValue={editing?.answer}
+              rows={5}
+              className={adminInput + " resize-none"}
+            />
           </label>
+
+          <label className="block">
+            <span className={adminLabel}>Category</span>
+            <select
+              name="category"
+              defaultValue={editing?.category ?? "Commissions"}
+              className={adminInput}
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+          </label>
+
           <label className="block">
             <span className={adminLabel}>Display order</span>
-            <input type="number" name="order" defaultValue={editing?.order ?? 0} className={adminInput} />
+            <input
+              type="number"
+              name="order"
+              defaultValue={editing?.order ?? 0}
+              className={adminInput}
+            />
           </label>
+
           <button disabled={busy} className="btn-gold w-full">
             {busy ? "Saving…" : "Save FAQ"}
           </button>
