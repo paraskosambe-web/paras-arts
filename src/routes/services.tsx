@@ -20,7 +20,6 @@ import art5 from "@/assets/art-5.jpg";
 
 import { SectionHeader } from "@/components/SectionHeader";
 import { Reveal } from "@/components/Reveal";
-
 import { useLang } from "@/lib/i18n";
 import { api, assetUrl } from "@/lib/api";
 
@@ -44,7 +43,6 @@ export const Route = createFileRoute("/services")({
       },
     ],
   }),
-
   component: ServicesPage,
 });
 
@@ -69,8 +67,7 @@ export const PAGE_SIZES = [
   },
 ] as const;
 
-type SizeKey =
-  (typeof PAGE_SIZES)[number]["key"];
+type SizeKey = (typeof PAGE_SIZES)[number]["key"];
 
 type Service = {
   _id: string;
@@ -95,10 +92,7 @@ const ICONS = {
   Car,
 };
 
-const FALLBACK_IMAGES: Record<
-  string,
-  string
-> = {
+const FALLBACK_IMAGES: Record<string, string> = {
   "Custom Portrait": art1,
   "Couple Portrait": art2,
   "Car / Motorsports Sketch": art3,
@@ -106,10 +100,7 @@ const FALLBACK_IMAGES: Record<
   "Family Portrait": art5,
 };
 
-const FITS: Record<
-  string,
-  "cover" | "contain"
-> = {
+const FITS: Record<string, "cover" | "contain"> = {
   "Car / Motorsports Sketch": "contain",
 };
 
@@ -119,22 +110,16 @@ const inr = (n: number) =>
 function ServicesPage() {
   const { tr } = useLang();
 
-  const [size, setSize] =
-    useState<SizeKey>("A4");
+  const [size, setSize] = useState<SizeKey>("A4");
 
   const [services, setServices] =
     useState<DisplayService[]>([]);
 
-  const [loading, setLoading] =
-    useState(true);
-
-  const [error, setError] =
-    useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const add =
-    PAGE_SIZES.find(
-      (s) => s.key === size
-    )!.add;
+    PAGE_SIZES.find((s) => s.key === size)!.add;
 
   useEffect(() => {
     async function loadServices() {
@@ -142,8 +127,7 @@ function ServicesPage() {
         setLoading(true);
         setError(false);
 
-        const { data } =
-          await api.get("/services");
+        const { data } = await api.get("/services");
 
         const databaseServices: Service[] =
           data.items || [];
@@ -153,13 +137,10 @@ function ServicesPage() {
             ...service,
 
             fallbackImage:
-              FALLBACK_IMAGES[
-                service.title
-              ] || art1,
+              FALLBACK_IMAGES[service.title] || art1,
 
             fit:
-              FITS[service.title] ||
-              "cover",
+              FITS[service.title] || "cover",
           }));
 
         setServices(mappedServices);
@@ -224,8 +205,7 @@ function ServicesPage() {
           },
           {
             _id: "fallback-5",
-            title:
-              "Car / Motorsports Sketch",
+            title: "Car / Motorsports Sketch",
             description:
               "Chrome, carbon and reflection rendered in exacting detail — a modern collector's piece.",
             priceFrom: 4000,
@@ -255,7 +235,6 @@ function ServicesPage() {
       />
 
       {/* PAGE SIZE SELECTOR */}
-
       <div className="mt-10 flex flex-col items-center gap-4 lg:mt-14">
         <span className="text-[10px] tracking-[0.35em] uppercase text-gold-light">
           {tr("Select page size")}
@@ -267,8 +246,7 @@ function ServicesPage() {
           className="inline-flex flex-wrap justify-center gap-2 rounded-full border border-white/10 bg-white/[0.03] p-1.5"
         >
           {PAGE_SIZES.map((s) => {
-            const active =
-              s.key === size;
+            const active = s.key === size;
 
             return (
               <button
@@ -276,9 +254,7 @@ function ServicesPage() {
                 type="button"
                 role="radio"
                 aria-checked={active}
-                onClick={() =>
-                  setSize(s.key)
-                }
+                onClick={() => setSize(s.key)}
                 className={`rounded-full px-5 py-2.5 text-center transition-all duration-300 sm:px-7 ${
                   active
                     ? "bg-gold-gradient text-[#121212] shadow-luxe"
@@ -315,12 +291,9 @@ function ServicesPage() {
       </div>
 
       {/* LOADING */}
-
       {loading && (
         <div className="mt-16 grid gap-6 sm:gap-8 md:grid-cols-2 xl:grid-cols-3">
-          {Array.from({
-            length: 5,
-          }).map((_, i) => (
+          {Array.from({ length: 5 }).map((_, i) => (
             <div
               key={i}
               className="overflow-hidden rounded-2xl border border-white/5 bg-white/[0.02]"
@@ -340,7 +313,6 @@ function ServicesPage() {
       )}
 
       {/* SERVICE CARDS */}
-
       {!loading && (
         <div className="mt-12 grid gap-6 sm:gap-8 md:grid-cols-2 lg:mt-16 xl:grid-cols-3">
           {services.map((s, i) => {
@@ -352,6 +324,9 @@ function ServicesPage() {
             const imageSrc = s.image
               ? assetUrl(s.image)
               : s.fallbackImage;
+
+            const calculatedPrice =
+              s.priceFrom + add;
 
             return (
               <Reveal
@@ -396,7 +371,7 @@ function ServicesPage() {
 
                         <div className="mt-1 font-display text-2xl text-gold-gradient">
                           {inr(
-                            s.priceFrom + add
+                            calculatedPrice
                           )}
                           +
                         </div>
@@ -429,9 +404,7 @@ function ServicesPage() {
                     >
                       {tr("Order Now")}
 
-                      <ArrowRight
-                        size={16}
-                      />
+                      <ArrowRight size={16} />
                     </Link>
                   </div>
                 </div>
@@ -442,7 +415,6 @@ function ServicesPage() {
       )}
 
       {/* BACKEND ERROR NOTICE */}
-
       {error && (
         <div className="mt-6 text-center text-xs text-muted-foreground">
           {tr(
