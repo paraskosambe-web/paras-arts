@@ -1,3 +1,4 @@
+const cloudinary = require("../config/cloudinary");
 const Order = require("../models/Order");
 const { sendOrderStatusEmail } = require("../services/emailService");
 
@@ -11,12 +12,32 @@ exports.create = async (req, res, next) => {
     const mm = String(now.getMonth() + 1).padStart(2, "0");
     const dd = String(now.getDate()).padStart(2, "0");
     const randomNumber = Math.floor(1000 + Math.random() * 9000);
-    const orderId = `PA-${yyyy}${mm}${dd}-${randomNumber}`;
 
+    const orderId = `PA-${yyyy}${mm}${dd}-${randomNumber}`;
     data.orderId = orderId;
 
+    // Upload reference image to Cloudinary
     if (req.file) {
-      data.referenceImage = `/uploads/${req.file.filename}`;
+      const result = await new Promise((resolve, reject) => {
+        const uploadStream = cloudinary.uploader.upload_stream(
+          {
+            folder: "paras-arts/orders",
+            resource_type: "image",
+          },
+          (error, result) => {
+            if (error) {
+              reject(error);
+            } else {
+              resolve(result);
+            }
+          }
+        );
+
+        uploadStream.end(req.file.buffer);
+      });
+
+      // Save Cloudinary URL in MongoDB
+      data.referenceImage = result.secure_url;
     }
 
     const order = await Order.create(data);
