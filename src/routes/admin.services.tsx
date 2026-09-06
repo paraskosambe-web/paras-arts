@@ -1,3 +1,4 @@
+
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, Upload } from "lucide-react";
@@ -68,15 +69,11 @@ function AdminServices() {
 
     try {
       if (modal === "new") {
-        await api.post(
-          "/services",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-            },
-          }
-        );
+        await api.post("/services", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
       } else if (modal) {
         await api.put(
           `/services/${modal._id}`,
@@ -104,7 +101,11 @@ function AdminServices() {
   }
 
   async function deleteService(id: string) {
-    if (!confirm("Are you sure you want to delete this service?")) {
+    if (
+      !confirm(
+        "Are you sure you want to delete this service?"
+      )
+    ) {
       return;
     }
 
@@ -261,7 +262,7 @@ function AdminServices() {
       >
         <form
           onSubmit={onSubmit}
-          className="space-y-5"
+          className="max-h-[calc(100vh-180px)] space-y-5 overflow-y-auto pr-2"
         >
           <label className="block">
             <span className={adminLabel}>
@@ -289,9 +290,7 @@ function AdminServices() {
                 editing?.description || ""
               }
               rows={4}
-              className={
-                adminInput + " resize-none"
-              }
+              className={adminInput + " resize-none"}
               placeholder="Describe this service..."
             />
           </label>
@@ -377,7 +376,7 @@ function AdminServices() {
                 <img
                   src={assetUrl(editing.image)}
                   alt={editing.title}
-                  className="h-32 w-full rounded-xl object-cover"
+                  className="h-24 w-full max-w-md rounded-xl object-cover sm:h-28"
                 />
               </div>
             )}
