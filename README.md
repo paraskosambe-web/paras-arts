@@ -1,57 +1,76 @@
-🎨 Paras Arts
-Where Every Frame Remembers
+# 🎨 Paras Arts
 
-Paras Arts is a full-stack digital art portfolio and custom sketch ordering platform built for showcasing artwork, managing commissions, and providing customers with a simple way to explore services and place sketch orders online.
+### Where Every Frame Remembers
 
-The project combines a modern artist portfolio with a functional order-management system, allowing customers to browse artworks and services, submit custom sketch requests, make advance payments, and track their order status.
+**Paras Arts** is a full-stack digital art portfolio and custom sketch ordering platform developed for showcasing artwork, managing art services, and handling custom sketch commissions online.
 
-> Live Website: paras-arts.vercel.app
-> Repository: https://github.com/paraskosambe-web/paras-arts.git
+The platform combines a professional artist portfolio with a functional business workflow that allows customers to explore artwork, view services, submit custom sketch requests, upload reference images, make advance payments, and track their orders.
 
 ---
 
-📌 About the Project
+## 🌐 Project Overview
 
-Paras Arts was developed as a real-world portfolio and business platform for a digital artist.
+Paras Arts was built as a real-world full-stack web application for an artist and creative business.
 
-Instead of being only a static portfolio, the system provides functionality for both **customers and administrators**.
+Instead of functioning only as a static portfolio, the platform provides functionality for both **customers and administrators**.
 
-Customers can:
+### Customers can:
 
 * Explore the artist's portfolio
-* View available art services
-* Check pricing information
+* View artwork details
+* Browse available art services
+* View starting prices
 * Submit custom sketch orders
 * Upload reference images
-* Provide order requirements
-* Make the required advance payment
-* Receive an order tracking ID
-* Track the progress of their order
+* Provide project requirements
+* Make an advance payment
+* Receive a unique tracking ID
+* Track order progress
 * Contact the artist
 * Subscribe to updates
 
-The administrator can manage the website's content and customer orders through the admin panel.
+### Administrators can:
 
+* Manage artworks
+* Manage customer orders
+* Verify payments
+* Manage services and pricing
+* Manage FAQs
+* Manage testimonials
+* View customer messages
+* Manage newsletter subscribers
 
-✨ Key Features
+---
 
-🎨 Portfolio
+## ✨ Key Features
 
-* Browse artwork collections
-* Artwork categories and details
-* Featured artwork management
-* Artwork image management
-* Responsive gallery interface
-* Detailed artwork information
+### 🎨 Digital Art Portfolio
 
-🛍️ Custom Sketch Ordering
+The portfolio section provides a structured way to showcase the artist's work.
 
-Customers can submit custom sketch requests with information such as:
+Features include:
 
-* Customer name
+* Artwork gallery
+* Artwork categories
+* Artwork details
+* Featured artworks
+* Artwork descriptions
+* Medium information
+* Responsive gallery
+* Detailed artwork viewing
+
+---
+
+### 🛒 Custom Sketch Ordering
+
+Customers can submit custom sketch requests directly through the website.
+
+The order form supports:
+
+* Name
 * Email
-* Phone number
-* WhatsApp number
+* Phone
+* WhatsApp
 * Address
 * Country
 * Sketch type
@@ -61,13 +80,15 @@ Customers can submit custom sketch requests with information such as:
 * Additional notes
 * Preferred delivery date
 
-After submitting an order, the customer receives a **Track ID** that can be used to monitor the order.
+After an order is successfully submitted, the customer receives a **Track ID** for monitoring the order.
 
-📦 Order Tracking
+---
 
-Orders move through defined stages:
+## 📦 Order Management
 
+Orders follow a structured workflow:
 
+```text
 Pending
    ↓
 Accepted
@@ -75,41 +96,54 @@ Accepted
 In Progress
    ↓
 Completed
+```
 
-The system also supports cancelled orders where applicable.
+Orders can also be cancelled where applicable.
 
-Payment information is maintained separately from the order status:
+Payment status is managed separately:
 
-text
-Payment Pending
-Payment Paid
-Payment Verified
+```text
+Pending
+   ↓
+Paid
+   ↓
+Verified
+```
 
+This separation allows order progress and payment verification to be managed independently.
 
 ---
 
-💰 Art Services
+## 🔎 Order Tracking
 
-The platform currently supports services such as:
+Customers can use their **Track ID** to check the current status of their custom sketch order.
 
-| Service                  |     Starting Price |
-| ------------------------ | -----------------: |
-| Custom Portrait – A4     |            ₹1,000+ |
-| Couple Portrait          |            ₹3,000+ |
-| Family Portrait          |            ₹5,000+ |
-| Pet Portrait             |            ₹2,000+ |
-| Car / Motorsports Sketch |            ₹4,000+ |
-| A3 / A2 Artwork          | Additional ₹2,000+ |
+The tracking workflow allows customers to see the progress of their commission without requiring direct database access or administrator involvement for every status check.
+
+---
+
+## 💰 Art Services
+
+The platform currently includes services such as:
+
+| Service                  | Starting Price |
+| ------------------------ | -------------: |
+| Custom Portrait – A4     |        ₹1,000+ |
+| Couple Portrait          |        ₹3,000+ |
+| Family Portrait          |        ₹5,000+ |
+| Pet Portrait             |        ₹2,000+ |
+| Car / Motorsports Sketch |        ₹4,000+ |
+| A3 / A2 Artwork          |        +₹2,000 |
 
 > Final pricing depends on artwork complexity, requirements, paper size, and other project-specific factors.
 
 ---
 
-👨‍💼 Admin Panel
+## 👨‍💼 Admin Panel
 
-Paras Arts includes an administrative dashboard for managing website data and customer interactions.
+Paras Arts includes an administrative panel for managing website content and customer activity.
 
-The admin panel provides management for:
+The admin system provides management for:
 
 * 🎨 Artworks
 * 📦 Orders
@@ -120,105 +154,95 @@ The admin panel provides management for:
 * 📩 Customer Messages
 * 📧 Newsletter Subscribers
 
-Administrators can also update relevant order and website information without directly modifying the database.
+Administrators can update relevant website and order information through the application instead of directly modifying database records.
 
 ---
 
-🌐 Website Sections
+## 🌍 Multilingual Support
 
-The website includes:
-
-* Home
-* About
-* Portfolio
-* Artwork Details
-* Services
-* Order Sketch
-* Testimonials
-* Track Order
-* FAQ
-* Contact
-* Admin Panel
-
-Additional functionality includes:
-
-* Responsive navigation
-* Multilingual interface
-* Newsletter subscription
-* Customer messaging
-* Social media integration
-* WhatsApp integration
-* Email integration
-* Back-to-top functionality
-* Responsive design for desktop, tablet, and mobile
-
----
-
-🌍 Multilingual Support
-
-The website provides language options for:
+The website supports multiple languages:
 
 * 🇬🇧 English
 * 🇮🇳 Marathi
 * 🇮🇳 Hindi
 
-This allows the platform to be more accessible to a wider audience.
+The language selector allows visitors to switch between supported languages.
 
 ---
 
-🖼️ Image Management
+## 📱 Responsive Design
 
-Artwork images and uploaded assets are handled through **Cloudinary**.
+The website is designed for:
 
-The backend uses controlled image uploads with file-size validation before storing artwork assets.
+* 💻 Desktop
+* 📱 Mobile
+* 📲 Tablet
+
+The interface adapts its layout and navigation according to screen size.
 
 ---
 
-🏗️ System Architecture
+## 🔗 Communication & Engagement
 
-The project follows a full-stack architecture:
+The platform includes several ways for customers to interact with the artist:
+
+* WhatsApp
+* Email
+* Instagram
+* Contact form
+* Newsletter subscription
+* Website chatbot
+
+The website also includes navigation utilities such as:
+
+* Back-to-top button
+* Responsive navigation
+* Smooth page interactions
+
+---
+
+# 🏗️ System Architecture
 
 ```text
-                    ┌─────────────────────┐
-                    │     Customer        │
-                    └──────────┬──────────┘
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   React Frontend    │
-                    │      (Vite)         │
-                    └──────────┬──────────┘
-                               │
-                         REST API
-                               │
-                               ▼
-                    ┌─────────────────────┐
-                    │   Express Backend   │
-                    │       Node.js       │
-                    └──────┬───────┬──────┘
-                           │       │
-              ┌────────────┘       └─────────────┐
-              ▼                                  ▼
-      ┌─────────────────┐                ┌───────────────┐
-      │ MongoDB Atlas   │                │   Cloudinary  │
-      │                 │                │               │
-      │ Orders          │                │ Artwork       │
-      │ Artworks        │                │ Images        │
-      │ Services        │                │ Uploads       │
-      │ FAQs            │                └───────────────┘
-      │ Testimonials    │
-      │ Messages        │
-      │ Newsletter      │
-      └─────────────────┘
+                       ┌───────────────────┐
+                       │     Customer      │
+                       └─────────┬─────────┘
+                                 │
+                                 ▼
+                       ┌───────────────────┐
+                       │  React Frontend   │
+                       │      Vite         │
+                       └─────────┬─────────┘
+                                 │
+                              REST API
+                                 │
+                                 ▼
+                       ┌───────────────────┐
+                       │  Express Backend  │
+                       │     Node.js       │
+                       └───────┬─────┬─────┘
+                               │     │
+                 ┌─────────────┘     └──────────────┐
+                 ▼                                  ▼
+        ┌─────────────────┐                ┌─────────────────┐
+        │  MongoDB Atlas  │                │    Cloudinary   │
+        │                 │                │                 │
+        │ Orders          │                │ Artwork Images  │
+        │ Artworks        │                │ Reference Files │
+        │ Services        │                │                 │
+        │ FAQs            │                └─────────────────┘
+        │ Testimonials    │
+        │ Messages        │
+        │ Newsletter      │
+        └─────────────────┘
 ```
 
 ---
 
-## 🛠️ Technology Stack
+# 🛠️ Technology Stack
 
-### Frontend
+## Frontend
 
-* React
 * React 19
 * Vite
 * TanStack Router
@@ -226,46 +250,51 @@ The project follows a full-stack architecture:
 * HTML5
 * CSS
 
-### Backend
+## Backend
 
 * Node.js
 * Express.js
 * REST APIs
 
-### Database
+## Database
 
 * MongoDB Atlas
 
-### Image Storage
+## Image & File Management
 
 * Cloudinary
 * Multer
 
-### Development
+## Development Tools
 
 * Visual Studio Code
 * Git
 * GitHub
 
-### Deployment
+## Deployment
 
-* Vercel – Frontend
-* Render – Backend
-* MongoDB Atlas – Database
-* Cloudinary – Image Storage
+* Vercel — Frontend
+* Render — Backend
+* MongoDB Atlas — Database
+* Cloudinary — Image storage
 
 ---
 
-## 📂 Project Structure
+# 📂 Project Structure
 
-The project is organized into separate frontend and backend components.
+The project is organized into frontend and backend components.
 
 ```text
 Paras_arts/
 │
-├── client/
-│   ├── src/
-│   ├── public/
+├── public/
+│
+├── src/
+│   ├── components/
+│   ├── pages/
+│   ├── layouts/
+│   ├── hooks/
+│   ├── utils/
 │   └── ...
 │
 ├── server/
@@ -276,17 +305,20 @@ Paras_arts/
 │   └── ...
 │
 ├── package.json
+├── .gitignore
 ├── README.md
 └── ...
 ```
 
-> Update this structure if your current repository uses a different folder organization.
+> Update the structure above if your current repository differs.
 
 ---
 
-## 🔌 Backend API
+# 🔌 Backend API
 
-The backend provides API routes for major website functionality, including:
+The backend provides REST API routes for the major application features.
+
+Current route areas include:
 
 ```text
 /api/auth
@@ -301,54 +333,217 @@ The backend provides API routes for major website functionality, including:
 /api/health
 ```
 
-These APIs connect the frontend interface with the database and other backend services.
+These APIs connect the frontend application with MongoDB and other backend services.
 
 ---
 
-## 🔄 Order Workflow
+# 🗄️ Database
 
-The custom sketch ordering process follows this general workflow:
+Paras Arts uses **MongoDB Atlas** for storing application data.
+
+Major collections include:
 
 ```text
-Customer
-   │
-   ▼
-Select Sketch Service
-   │
-   ▼
-Submit Order + Reference Image
-   │
-   ▼
+artworks
+orders
+services
+faqs
+testimonials
+messages
+newsletters
+admins
+```
+
+The database stores structured information required by the portfolio, ordering system, administration panel, and customer communication features.
+
+---
+
+# 🖼️ Cloudinary Integration
+
+Cloudinary is used for managing artwork and uploaded image assets.
+
+The application supports image uploads through the backend and stores artwork assets in Cloudinary.
+
+Artwork assets are organized under the project-specific Cloudinary structure.
+
+---
+
+# 🔄 Custom Order Workflow
+
+The complete customer workflow can be represented as:
+
+```text
+Visit Paras Arts
+       │
+       ▼
+Explore Services
+       │
+       ▼
+Choose Sketch Type
+       │
+       ▼
+Submit Order
+       │
+       ├── Reference Image
+       ├── Customer Details
+       ├── Sketch Requirements
+       └── Additional Notes
+       │
+       ▼
 Advance Payment
-   │
-   ▼
-Order Created
-   │
-   ▼
+       │
+       ▼
 Track ID Generated
-   │
-   ▼
+       │
+       ▼
 Admin Reviews Order
-   │
-   ▼
+       │
+       ▼
 Accepted
-   │
-   ▼
+       │
+       ▼
 In Progress
-   │
-   ▼
+       │
+       ▼
 Completed
 ```
 
-This workflow allows the website to function as an actual commission-ordering platform rather than only an online portfolio.
+---
+
+# 💳 Payment Workflow
+
+The platform supports an advance-payment workflow for custom sketch orders.
+
+The customer can make the required advance payment and provide the relevant payment information.
+
+The administrator can then review and verify the payment from the admin panel.
+
+```text
+Order Submitted
+      ↓
+Payment Pending
+      ↓
+Payment Made
+      ↓
+Payment Verification
+      ↓
+Payment Verified
+```
 
 ---
 
-## 🔐 Environment Variables
+# 🤖 Related AI Project
 
-Create a `.env` file according to the environment variables required by the project.
+The Paras Arts platform is also being extended with a separate **AI-powered data agent**.
 
-Example:
+The AI agent connects with approved Paras Arts business data and provides natural-language analysis and controlled data operations.
+
+### Paras Arts AI Data Agent
+
+The agent can assist with:
+
+* Order analysis
+* Payment analysis
+* Sketch-type analysis
+* Budget analysis
+* Artwork analysis
+* Service analysis
+* FAQ analysis
+* Business summaries
+* Controlled data updates
+
+### Technology
+
+```text
+Python
+FastAPI
+MongoDB
+Gemini
+Generative AI
+Tool-based Agent Architecture
+```
+
+👉 **AI Agent Repository:**
+[View Paras Arts AI Data Agent](YOUR_AI_AGENT_REPOSITORY_URL)
+
+---
+
+# 🖥️ Screenshots
+
+Add screenshots of the actual application here.
+
+## Home Page
+
+![Paras Arts Home](./screenshots/home.png)
+
+## Portfolio
+
+![Paras Arts Portfolio](./screenshots/portfolio.png)
+
+## Order Sketch
+
+![Paras Arts Order Sketch](./screenshots/order-sketch.png)
+
+## Track Order
+
+![Paras Arts Track Order](./screenshots/track-order.png)
+
+## Admin Panel
+
+![Paras Arts Admin Panel](./screenshots/admin-panel.png)
+
+> Replace the paths above with the actual screenshot locations in your repository.
+
+GitHub supports relative image paths in README files, so keeping project screenshots inside the repository makes the README portable when the repository is cloned.
+
+---
+
+# 🚀 Getting Started
+
+## Prerequisites
+
+Make sure you have:
+
+* Node.js
+* npm
+* MongoDB Atlas account
+* Cloudinary account
+
+---
+
+## 1. Clone the Repository
+
+```bash
+git clone YOUR_PARAS_ARTS_REPOSITORY_URL
+```
+
+## 2. Navigate to the Project
+
+```bash
+cd paras-arts
+```
+
+## 3. Install Dependencies
+
+```bash
+npm install
+```
+
+If the frontend and backend have separate dependency configurations, install the required dependencies in their respective directories.
+
+---
+
+# 🔐 Environment Variables
+
+Create the required `.env` files locally.
+
+Example frontend configuration:
+
+```env
+VITE_API_URL=your_backend_api_url
+```
+
+Example backend configuration:
 
 ```env
 MONGODB_URI=your_mongodb_connection_string
@@ -360,153 +555,139 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 PORT=5000
 ```
 
-> Never commit real API keys, database credentials, passwords, or other secrets to GitHub.
+> **Never commit real API keys, database credentials, passwords, or other secrets to GitHub.**
 
-GitHub recommends using security features such as secret scanning and push protection to help prevent credentials from being committed accidentally.
+For a public repository, GitHub recommends security features such as secret scanning, push protection, Dependabot alerts, and code scanning where applicable.
 
 ---
 
-## 🚀 Getting Started
+# ▶️ Run Locally
 
-### 1. Clone the repository
-
-```bash
-git clone <your-repository-url>
-```
-
-### 2. Navigate to the project
+Start the backend:
 
 ```bash
-cd Paras_arts
+npm run server
 ```
 
-### 3. Install dependencies
-
-```bash
-npm install
-```
-
-If the frontend and backend use separate package files, install dependencies in their respective directories:
-
-```bash
-cd client
-npm install
-
-cd ../server
-npm install
-```
-
-### 4. Configure environment variables
-
-Create the required `.env` files and add your MongoDB, Cloudinary, and other configuration values.
-
-### 5. Start the development server
+Start the frontend:
 
 ```bash
 npm run dev
 ```
 
-If the frontend and backend run separately, start each application according to its package configuration.
+The exact commands may vary depending on the scripts defined in the current `package.json`.
 
 ---
 
-## 📸 Screenshots
-
-Add screenshots of the actual implemented website here.
-
-### Home Page
-
-![Paras Arts Home Page](./screenshots/home.png)
-
-### Portfolio
-
-![Paras Arts Portfolio](./screenshots/portfolio.png)
-
-### Order Sketch
-
-![Paras Arts Order Sketch](./screenshots/order-sketch.png)
-
-### Admin Panel
-
-![Paras Arts Admin Panel](./screenshots/admin.png)
-
-> Replace the image paths above with the screenshots available in your repository.
-
----
-
-## 🎯 Project Goals
+# 🎯 Project Goals
 
 The main goals of Paras Arts are to:
 
 * Build a professional digital presence for an artist
-* Showcase artwork in an organized portfolio
-* Provide a structured custom-order workflow
-* Reduce manual order-management work
-* Allow customers to track their commissions
-* Provide centralized administration of website content
-* Create a scalable foundation for future features
+* Showcase artwork through a structured portfolio
+* Provide an online custom sketch ordering workflow
+* Allow customers to submit reference images
+* Provide order tracking
+* Centralize order and website management
+* Reduce manual business-management work
+* Provide a foundation for future AI-powered features
 
 ---
 
-## 🔮 Future Improvements
+# 🧠 What I Worked On
 
-Possible future improvements include:
+This project provided practical experience with:
 
-* Enhanced AI-powered customer assistance
-* More advanced artwork search
-* Improved analytics dashboard
-* Automated customer notifications
+* Full-stack web development
+* React application development
+* REST API development
+* MongoDB database integration
+* Cloudinary image management
+* Authentication and admin functionality
+* Form handling
+* File uploads
+* Order-management workflows
+* Payment-status management
+* Responsive UI development
+* API integration
+* Deployment
+* Debugging frontend/backend integration issues
+
+The project was developed iteratively, with features being tested and refined based on the requirements of the actual Paras Arts platform.
+
+---
+
+# 🔮 Future Improvements
+
+Potential improvements include:
+
+* More advanced business analytics
+* Improved customer notifications
 * Online payment gateway integration
-* Advanced order analytics
-* Better recommendation systems
+* Enhanced AI-powered assistance
+* Advanced artwork search
+* Personalized artwork recommendations
+* Customer order history
+* More detailed admin analytics
 * Improved image processing
-* More detailed customer order history
+* Additional automation
 
 ---
 
-## 🤖 Related Project: Paras Arts AI Data Agent
+# 📌 Project Status
 
-A separate AI-powered data agent is being developed alongside the Paras Arts platform.
+**Status:** 🟢 Active / Maintained
 
-The agent is designed to interact with approved website data and assist with tasks such as:
-
-* Order analysis
-* Payment analysis
-* Artwork analysis
-* Service analysis
-* FAQ analysis
-* Business summaries
-* Controlled data updates
-
-The AI agent is being developed as an extension of the Paras Arts ecosystem and is currently undergoing testing and improvement.
+Paras Arts is an evolving project, with additional improvements and AI-powered functionality being developed as part of the broader Paras Arts ecosystem.
 
 ---
 
-## 👨‍💻 Developer
+# 👨‍💻 Developer
 
-**Paras Kosambe**
+## Paras Kosambe
 
-B.Sc. Computer Science Student
+**B.Sc. Computer Science Student**
+
 Aspiring Data Scientist | AI/ML | Python | SQL | Web Development
 
-Paras Arts was developed as a practical full-stack project combining **creative design, web development, database management, and real-world business functionality**.
+Paras Arts is a practical full-stack project developed to combine **creative work with software engineering and real-world business functionality**.
 
 ---
 
-## 📄 License
+# 🔗 Related Projects
 
-This project is currently intended for personal portfolio and educational purposes.
+### 🎨 Paras Arts Website
 
-All artwork, branding, logos, and original creative assets associated with Paras Arts belong to the respective creator.
+This repository.
+
+A full-stack digital art portfolio and custom sketch ordering platform.
+
+### 🤖 Paras Arts AI Data Agent
+
+AI-powered data analysis and business intelligence agent developed as an extension of the Paras Arts platform.
+
+👉 [View AI Agent Repository](https://github.com/paraskosambe-web/paras-arts-ai-agent.git)
+
+---
+
+# 📄 License
+
+This project is currently intended for personal portfolio, educational, and demonstration purposes.
+
+The **Paras Arts** brand, artwork, logo, and original creative assets belong to the respective creator.
 
 ---
 
 ## ⭐ Acknowledgements
 
-This project was developed and iteratively improved using modern web development tools and technologies.
+The project was developed using modern web-development technologies and AI-assisted development tools during the development process.
 
-The project may have used AI-assisted development tools during the development process, but the application has been customized, integrated, tested, and developed around the specific requirements of the Paras Arts platform.
+AI-assisted tools were used as part of the development workflow, while the application was customized, integrated, tested, debugged, and developed around the specific requirements of the Paras Arts platform.
 
 ---
 
-### © 2026 Paras Arts — Where Every Frame Remembers
+### 🎨 Paras Arts
+
+**Where Every Frame Remembers.**
+
+© 2026 Paras Arts
