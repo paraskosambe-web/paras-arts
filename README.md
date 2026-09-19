@@ -6,7 +6,7 @@ Paras Arts is a full-stack digital art portfolio and custom sketch ordering plat
 The project combines a modern artist portfolio with a functional order-management system, allowing customers to browse artworks and services, submit custom sketch requests, make advance payments, and track their order status.
 
 > Live Website: paras-arts.vercel.app
-> Repository:
+> Repository: https://github.com/paraskosambe-web/paras-arts.git
 
 ---
 
